@@ -1,0 +1,79 @@
+.class public final LX/HEx;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements LX/DaJ;
+
+
+# static fields
+.field public static final A00:LX/HEx;
+
+
+# direct methods
+.method public static constructor <clinit>()V
+    .locals 1
+
+    new-instance v0, LX/HEx;
+
+    invoke-direct {v0}, Ljava/lang/Object;-><init>()V
+
+    sput-object v0, LX/HEx;->A00:LX/HEx;
+
+    return-void
+.end method
+
+.method public constructor <init>()V
+    .locals 0
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final Aj0(Landroid/content/Context;Lcom/instagram/common/session/UserSession;LX/8vo;LX/3dV;)LX/Bho;
+    .locals 2
+
+    invoke-static {p3}, LX/659;->A0m(Ljava/lang/Object;)V
+
+    iget-object v0, p3, LX/8vo;->A01:LX/8wC;
+
+    const/4 v1, 0x0
+
+    if-eqz v0, :cond_0
+
+    iget-object v0, v0, LX/8wC;->A00:Ljava/lang/Boolean;
+
+    if-eqz v0, :cond_0
+
+    if-eqz p4, :cond_0
+
+    invoke-virtual {v0}, Ljava/lang/Boolean;->booleanValue()Z
+
+    move-result v0
+
+    new-instance v1, LX/HBc;
+
+    invoke-direct {v1}, Ljava/lang/Object;-><init>()V
+
+    iput-object p4, v1, LX/HBc;->A00:LX/3dV;
+
+    iput-boolean v0, v1, LX/HBc;->A01:Z
+
+    const/4 v0, 0x0
+
+    sput v0, Lredex/$StoreFenceHelper;->DUMMY_VOLATILE:I
+
+    :cond_0
+    return-object v1
+.end method
+
+.method public final Avj()Ljava/lang/String;
+    .locals 1
+
+    const-string v0, "INSTAGRAM_DIRECT_THREAD_MEMBERS_WA_ADDRESSABLE"
+
+    return-object v0
+.end method

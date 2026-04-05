@@ -1,0 +1,19 @@
+{
+  "identifier": "6f33b61b-18a0-4b27-ba4a-8eeae19f7fd9",
+  "enumCaseName": "videoExposureStretch",
+  "displayName": "Exposure stretch",
+  "loggingName": "video_exposure_stretch",
+  "legacyId": 2072,
+  "android": {
+    "previewAsset": {
+      "key": "9ac0778e",
+      "handle": "AQAD5OVsstd1",
+      "md5": "243316088a061a64f5ce336f9d1e165f"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADNWKNBdcE"
+    }
+  }
+}

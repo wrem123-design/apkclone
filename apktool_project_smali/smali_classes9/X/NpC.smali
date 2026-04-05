@@ -1,0 +1,110 @@
+.class public final LX/NpC;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements LX/Ptt;
+
+
+# instance fields
+.field public final synthetic A00:Lcom/facebook/common/callercontext/CallerContext;
+
+.field public final synthetic A01:LX/HGa;
+
+.field public final synthetic A02:LX/Pvi;
+
+.field public final synthetic A03:Ljava/lang/String;
+
+
+# direct methods
+.method public constructor <init>(Lcom/facebook/common/callercontext/CallerContext;LX/HGa;LX/Pvi;Ljava/lang/String;)V
+    .locals 0
+
+    iput-object p2, p0, LX/NpC;->A01:LX/HGa;
+
+    iput-object p4, p0, LX/NpC;->A03:Ljava/lang/String;
+
+    iput-object p1, p0, LX/NpC;->A00:Lcom/facebook/common/callercontext/CallerContext;
+
+    iput-object p3, p0, LX/NpC;->A02:LX/Pvi;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final EdX(Ljava/lang/Throwable;)V
+    .locals 4
+
+    iget-object v0, p0, LX/NpC;->A01:LX/HGa;
+
+    iget-object v3, v0, LX/HGa;->A02:LX/220;
+
+    iget-object v2, p0, LX/NpC;->A03:Ljava/lang/String;
+
+    iget-object v0, p0, LX/NpC;->A00:Lcom/facebook/common/callercontext/CallerContext;
+
+    invoke-virtual {v0}, Lcom/facebook/common/callercontext/CallerContext;->A02()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {p1}, Ljava/lang/Throwable;->getMessage()Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-virtual {v3, v2, v1, v0}, LX/220;->A08(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+
+    invoke-static {}, LX/1oi;->A00()LX/9FD;
+
+    move-result-object v2
+
+    invoke-static {v2}, LX/659;->A0g(Ljava/lang/Object;)V
+
+    iget-object v1, p0, LX/NpC;->A02:LX/Pvi;
+
+    new-instance v0, LX/G0m;
+
+    invoke-direct {v0, v1, p1}, LX/G0m;-><init>(LX/Pvi;Ljava/lang/Throwable;)V
+
+    invoke-interface {v2, v0}, LX/9FD;->Asm(LX/1pA;)V
+
+    return-void
+.end method
+
+.method public final FNN(Llibraries/fxcache/model/switcher/FxCalAccountLinkageInfoForSwitcher;)V
+    .locals 5
+
+    iget-object v4, p0, LX/NpC;->A01:LX/HGa;
+
+    iget-object v3, v4, LX/HGa;->A02:LX/220;
+
+    iget-object v2, p0, LX/NpC;->A03:Ljava/lang/String;
+
+    iget-object v1, p0, LX/NpC;->A00:Lcom/facebook/common/callercontext/CallerContext;
+
+    invoke-virtual {v1}, Lcom/facebook/common/callercontext/CallerContext;->A02()Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-virtual {v3, v2, v0}, LX/220;->A06(Ljava/lang/String;Ljava/lang/String;)V
+
+    invoke-virtual {v4, v1, p1}, LX/21X;->A0M(Lcom/facebook/common/callercontext/CallerContext;Llibraries/fxcache/model/switcher/FxCalAccountLinkageInfoForSwitcher;)V
+
+    invoke-static {}, LX/1oi;->A00()LX/9FD;
+
+    move-result-object v2
+
+    invoke-static {v2}, LX/659;->A0g(Ljava/lang/Object;)V
+
+    iget-object v1, p0, LX/NpC;->A02:LX/Pvi;
+
+    new-instance v0, LX/FzJ;
+
+    invoke-direct {v0, v1}, LX/FzJ;-><init>(LX/Pvi;)V
+
+    invoke-interface {v2, v0}, LX/9FD;->Asm(LX/1pA;)V
+
+    return-void
+.end method

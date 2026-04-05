@@ -1,0 +1,19 @@
+{
+  "identifier": "86df1a63-3fd8-4310-b689-75166d2c7b3c",
+  "enumCaseName": "videoLowRes",
+  "displayName": "Low res",
+  "loggingName": "video_low_res",
+  "legacyId": 3000,
+  "android": {
+    "previewAsset": {
+      "key": "af0f6b61",
+      "handle": "AQAGjKhSR8qs",
+      "md5": "4ab08db0403af9d785541d511488f9c8"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADkzNo5Mot"
+    }
+  }
+}

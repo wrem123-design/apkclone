@@ -1,0 +1,17 @@
+{
+  "identifier": "9005ba3e-affa-4cdb-bc5a-45e395205749",
+  "enumCaseName": "subjectSlide",
+  "displayName": "Slide",
+  "loggingName": "video_cutout_slide",
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": false
+  },
+  "customization": {
+    "speed": {
+      "default": 0.19,
+      "min": 0.0,
+      "max": 1.0
+    }
+  }
+}

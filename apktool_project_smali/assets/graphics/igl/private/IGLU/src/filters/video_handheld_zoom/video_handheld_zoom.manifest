@@ -1,0 +1,31 @@
+{
+  "identifier": "4d13651c-f44d-468e-b253-9188279f51b6",
+  "enumCaseName": "videoHandheldZoom",
+  "displayName": "Handheld zoom",
+  "loggingName": "video_handheld_zoom",
+  "legacyId": 2068,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 3000,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "3b2e171e",
+      "handle": "AQADsVaR-oK-",
+      "md5": "17ae4e2615f007e4a12357a5daac083f"
+    }
+  },
+  "assets": [
+    {
+      "name": "PerlinNoise",
+      "assetHash": "42393e620664a372495800bfcf40ca960aa0ab3e2ddfe42fbfe2b86098d33000",
+      "effectId": "1259354255546062"
+    }
+  ],
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAPZk1hBJ93"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "identifier": "4929f881-5ddf-4c1e-a600-41cd80a7d8c0",
+  "displayName": "Text Glitter",
+  "loggingName": "text_glitter",
+  "assets": [
+    {
+      "name": "VoronoiNoiseGlitterMin",
+      "assetHash": "5fcaa9799ff5f5b181440583f7b83b5132a47c85a880343143a1c2beecb50829",
+      "effectId": "4272768039637983"
+    }
+  ]
+}

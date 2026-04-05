@@ -1,0 +1,51 @@
+.class public final Lcom/instagram/urlhandlers/avatarquests/AvatarQuestsUrlHandlerActivity;
+.super Lcom/instagram/urlhandler/UserSessionUrlHandlerActivity;
+.source ""
+
+# interfaces
+.implements LX/AHT;
+.implements LX/Ba6;
+
+
+# direct methods
+.method public constructor <init>()V
+    .locals 0
+
+    invoke-direct {p0}, Lcom/instagram/base/activity/BaseFragmentActivity;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final getAnalyticsModule()LX/AHT;
+    .locals 0
+
+    return-object p0
+.end method
+
+.method public final synthetic getModuleClass()Ljava/lang/Class;
+    .locals 1
+
+    invoke-virtual {p0}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final getModuleName()Ljava/lang/String;
+    .locals 1
+
+    const-string v0, "AvatarQuestsUrlHandlerActivity"
+
+    return-object v0
+.end method
+
+.method public final synthetic getModuleNameV2()Ljava/lang/String;
+    .locals 1
+
+    const/4 v0, 0x0
+
+    return-object v0
+.end method

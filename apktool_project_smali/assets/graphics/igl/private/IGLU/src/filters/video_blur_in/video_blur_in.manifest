@@ -1,0 +1,24 @@
+{
+  "identifier": "0eb9c73b-bb14-461c-bfe2-5ac570e3969e",
+  "enumCaseName": "videoBlurIn",
+  "displayName": "Blur in",
+  "loggingName": "video_blur_in",
+  "legacyId": 2000,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 2000,
+    "curve": "sinusoidalInOut"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "a1170f98",
+      "handle": "AQAG04qm3i3U",
+      "md5": "f83dcc200c3018ebbfb4ce33094cf525"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEFFoFaolM"
+    }
+  }
+}

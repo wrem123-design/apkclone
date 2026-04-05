@@ -1,0 +1,11 @@
+{
+  "identifier": "3f8a1b2e-c4d5-4e6f-8a9b-0c1d2e3f4a5b",
+  "enumCaseName": "subjectDisplaceIn",
+  "displayName": "Displace In",
+  "loggingName": "video_cutout_displace_in",
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 1000,
+    "curve": "linear"
+  }
+}

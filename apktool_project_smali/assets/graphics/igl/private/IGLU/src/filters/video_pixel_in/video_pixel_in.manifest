@@ -1,0 +1,25 @@
+{
+  "identifier": "2523965e-2a4d-4bcb-afda-5d52b53354d8",
+  "enumCaseName": "videoPixelIn",
+  "displayName": "Pixel in",
+  "loggingName": "video_pixel_in",
+  "legacyId": 2020,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 1000,
+    "curve": "linear",
+    "reversed": true
+  },
+  "android": {
+    "previewAsset": {
+      "key": "d625dc55",
+      "handle": "AQAN6JKfRD2J",
+      "md5": "c58a6f473b592d5d76c8c87cf5a2acfd"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQBcR6Nyan3n"
+    }
+  }
+}

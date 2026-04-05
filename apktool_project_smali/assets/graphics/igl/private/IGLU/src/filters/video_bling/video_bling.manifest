@@ -1,0 +1,26 @@
+{
+  "identifier": "2a8bbefa-e19d-43ae-817e-2c38b9c36c1f",
+  "enumCaseName": "videoBling",
+  "displayName": "Bling",
+  "loggingName": "video_bling",
+  "legacyId": 3017,
+  "android": {
+    "previewAsset": {
+      "key": "3296a89f",
+      "handle": "AQAFhstpO-W4",
+      "md5": "1d757a3a9382e9ca5a7051a85e75c3a3"
+    }
+  },
+  "assets": [
+    {
+      "name": "PerlinNoise",
+      "assetHash": "42393e620664a372495800bfcf40ca960aa0ab3e2ddfe42fbfe2b86098d33000",
+      "effectId": "1259354255546062"
+    }
+  ],
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAGfdz5CCri"
+    }
+  }
+}

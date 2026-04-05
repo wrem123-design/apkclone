@@ -1,0 +1,137 @@
+.class public final LX/6E0;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# instance fields
+.field public final synthetic A00:LX/5OH;
+
+.field public final synthetic A01:LX/6D3;
+
+.field public final synthetic A02:LX/6E8;
+
+.field public final synthetic A03:Ljava/lang/String;
+
+.field public final synthetic A04:LX/6D5;
+
+.field public final synthetic A05:LX/6D5;
+
+.field public final synthetic A06:LX/6D5;
+
+
+# direct methods
+.method public constructor <init>(LX/5OH;LX/6D3;LX/6E8;Ljava/lang/String;LX/6D5;LX/6D5;LX/6D5;)V
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x8010,
+            0x1010,
+            0x1010,
+            0x1010,
+            0x1010,
+            0x1010,
+            0x1010
+        }
+        names = {
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        }
+    .end annotation
+
+    iput-object p1, p0, LX/6E0;->A00:LX/5OH;
+
+    iput-object p5, p0, LX/6E0;->A06:LX/6D5;
+
+    iput-object p3, p0, LX/6E0;->A02:LX/6E8;
+
+    iput-object p2, p0, LX/6E0;->A01:LX/6D3;
+
+    iput-object p4, p0, LX/6E0;->A03:Ljava/lang/String;
+
+    iput-object p6, p0, LX/6E0;->A05:LX/6D5;
+
+    iput-object p7, p0, LX/6E0;->A04:LX/6D5;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final run()V
+    .locals 8
+
+    :try_start_0
+    iget-object v1, p0, LX/6E0;->A06:LX/6D5;
+
+    iget-object v0, p0, LX/6E0;->A02:LX/6E8;
+
+    invoke-virtual {v0}, LX/6Hd;->get()Ljava/lang/Object;
+
+    move-result-object v0
+
+    iput-object v0, v1, LX/6D5;->A00:Ljava/lang/Object;
+
+    goto :goto_0
+    :try_end_0
+    .catch Ljava/lang/InterruptedException; {:try_start_0 .. :try_end_0} :catch_0
+    .catch Ljava/util/concurrent/ExecutionException; {:try_start_0 .. :try_end_0} :catch_0
+    .catch Ljava/util/concurrent/CancellationException; {:try_start_0 .. :try_end_0} :catch_0
+
+    :catch_0
+    iget-object v1, p0, LX/6E0;->A06:LX/6D5;
+
+    const/4 v0, 0x0
+
+    iput-object v0, v1, LX/6D5;->A00:Ljava/lang/Object;
+
+    :goto_0
+    iget-object v2, p0, LX/6E0;->A00:LX/5OH;
+
+    monitor-enter v2
+
+    :try_start_1
+    iget v0, v2, LX/5OH;->A00:I
+
+    or-int/lit8 v0, v0, 0x2
+
+    iput v0, v2, LX/5OH;->A00:I
+
+    iget-object v3, p0, LX/6E0;->A01:LX/6D3;
+
+    iget-object v7, p0, LX/6E0;->A03:Ljava/lang/String;
+
+    iget-object v0, p0, LX/6E0;->A05:LX/6D5;
+
+    iget-object v4, v0, LX/6D5;->A00:Ljava/lang/Object;
+
+    iget-object v5, v1, LX/6D5;->A00:Ljava/lang/Object;
+
+    iget-object v0, p0, LX/6E0;->A04:LX/6D5;
+
+    iget-object v6, v0, LX/6D5;->A00:Ljava/lang/Object;
+
+    invoke-static/range {v2 .. v7}, LX/5OH;->A00(LX/5OH;LX/6D3;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/String;)V
+
+    monitor-exit v2
+
+    return-void
+
+    :catchall_0
+    move-exception v0
+
+    monitor-exit v2
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+
+    throw v0
+.end method

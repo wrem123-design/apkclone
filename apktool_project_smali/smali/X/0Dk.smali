@@ -1,0 +1,41 @@
+.class public abstract synthetic LX/0Dk;
+.super Ljava/lang/Object;
+.source ""
+
+
+# direct methods
+.method public static synthetic A00(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/util/concurrent/atomic/AtomicReferenceFieldUpdater;)Z
+    .locals 1
+
+    .line 0
+    :cond_0
+    invoke-virtual {p3, p0, p1, p2}, Ljava/util/concurrent/atomic/AtomicReferenceFieldUpdater;->compareAndSet(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Z
+
+    .line 3
+    move-result v0
+
+    .line 4
+    if-eqz v0, :cond_1
+
+    .line 6
+    const/4 v0, 0x1
+
+    .line 7
+    return v0
+
+    .line 8
+    :cond_1
+    invoke-virtual {p3, p0}, Ljava/util/concurrent/atomic/AtomicReferenceFieldUpdater;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    .line 11
+    move-result-object v0
+
+    .line 12
+    if-eq v0, p1, :cond_0
+
+    .line 14
+    const/4 v0, 0x0
+
+    .line 15
+    return v0
+.end method

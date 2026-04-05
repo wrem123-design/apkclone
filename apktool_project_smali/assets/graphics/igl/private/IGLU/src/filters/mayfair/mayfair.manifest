@@ -1,0 +1,27 @@
+{
+  "identifier": "7de6cc69-5d19-4d98-a6a9-055a715c5f36",
+  "displayName": "Mayfair",
+  "loggingName": "mayfair",
+  "assets": [
+    {
+      "name": "ColorGradient",
+      "assetHash": "d3809068133924d83a844465e66eb510464633a8d70cdf5496334b71dde89819",
+      "effectId": "1477310157062743"
+    },
+    {
+      "name": "ColorOverlay",
+      "assetHash": "15f84ff251cd8b88341bced3f6e0b90de12c6567f6d7276cfa7be8f8acd78bd5",
+      "effectId": "1915669715709940"
+    },
+    {
+      "name": "GlowField",
+      "assetHash": "3621e07b46cf953f32fa15ecf387d8d2614bbb2ee40ab07e3f79c3d4fc2be1e3",
+      "effectId": "925641996650741"
+    },
+    {
+      "name": "OverlayMap100",
+      "assetHash": "84b56063e8efd2fa742bd5a62235c378606dc3406613606f99f3c4044b20e31a",
+      "effectId": "1236494364700999"
+    }
+  ]
+}

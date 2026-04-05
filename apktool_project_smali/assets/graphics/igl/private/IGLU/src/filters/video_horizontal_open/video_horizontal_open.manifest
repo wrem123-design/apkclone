@@ -1,0 +1,24 @@
+{
+  "identifier": "d5df1a62-e820-4154-8d68-dbd2c67ea050",
+  "enumCaseName": "videoHorizontalOpen",
+  "displayName": "Horizontal open",
+  "loggingName": "video_horizontal_open",
+  "legacyId": 2037,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 3000,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "f1ee787f",
+      "handle": "AQAERJI2kU2r",
+      "md5": "70396dcab383c20c5623781c07100cf5"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAGflUshJ96"
+    }
+  }
+}

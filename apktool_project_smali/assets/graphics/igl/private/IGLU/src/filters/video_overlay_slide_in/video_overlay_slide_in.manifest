@@ -1,0 +1,22 @@
+{
+  "identifier": "52847eb8-b9d9-48b5-a227-8949547158a8",
+  "enumCaseName": "overlaySlideIn",
+  "displayName": "Slide In",
+  "loggingName": "video_cutout_slide",
+  "legacyId": 5063,
+  "subject": {
+    "overlay": true
+  },
+  "android": {
+    "previewAsset": {
+      "key": "85a75acf",
+      "handle": "AQAD76mCgTqV",
+      "md5": "7745a4fc451760089d3e0172589dc1ba"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAFCkDasEp9"
+    }
+  }
+}

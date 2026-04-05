@@ -1,0 +1,208 @@
+[Filter VideoCompress]
+# Stretch looping animation — scales content along X/Y axes driven by animation texture curves.
+# Ported from GLSL text animation: "Stretch Classic" (2025 H2 Text Animations)
+# Animation texture encodes scale curves as rows of pixel data, sampled per-frame.
+# Uses system-provided time_sec base uniform for continuous animation.
+
+[Init]
+fun init(Filter filter) {
+    filter.parameters = {
+        {speed = 0.47058823529411764, min = 0.01, max = 5.0, description = "Animation speed"},
+        {loop = 1.0, description = "1 = loop animation, 0 = play once"},
+        {scale_xChannel = 0.25, description = "Animation row for X scale"},
+        {scale_xMin = 0.8423292636871338, description = "Minimum X scale"},
+        {scale_xMax = 1.0595968961715698, description = "Maximum X scale"},
+        {scale_yChannel = 0.75, description = "Animation row for Y scale"},
+        {scale_yMin = 0.7148670554161072, description = "Minimum Y scale"},
+        {scale_yMax = 1.9522401094436646, description = "Maximum Y scale"},
+        {tiling = 0.0, description = "1 = tile UV, 0 = clamp"},
+        {phase = 0.0, description = "Animation phase offset"},
+    };
+
+    loadTexture('animation, 'texture://TextEffectsSharedAssets/Stretch);
+
+    filter.passes = {{
+        name = 'stretch,
+        inputs = {'default, 'animation},
+        uniforms = {
+            speed = 0.47058823529411764,
+            loop = 1.0,
+            scale_xChannel = 0.25,
+            scale_xMin = 0.8423292636871338,
+            scale_xMax = 1.0595968961715698,
+            scale_yChannel = 0.75,
+            scale_yMin = 0.7148670554161072,
+            scale_yMax = 1.9522401094436646,
+            tiling = 0.0,
+            phase = 0.0,
+        },
+        glslShader = glsl,
+        metalShader = metal,
+    }};
+}
+
+[PreRender]
+fun preRender(Filter filter) {
+    setShaderUniform('stretch, 'speed, getParameterFloat('speed));
+    setShaderUniform('stretch, 'loop, getParameterFloat('loop));
+    setShaderUniform('stretch, 'scale_xChannel, getParameterFloat('scale_xChannel));
+    setShaderUniform('stretch, 'scale_xMin, getParameterFloat('scale_xMin));
+    setShaderUniform('stretch, 'scale_xMax, getParameterFloat('scale_xMax));
+    setShaderUniform('stretch, 'scale_yChannel, getParameterFloat('scale_yChannel));
+    setShaderUniform('stretch, 'scale_yMin, getParameterFloat('scale_yMin));
+    setShaderUniform('stretch, 'scale_yMax, getParameterFloat('scale_yMax));
+    setShaderUniform('stretch, 'tiling, getParameterFloat('tiling));
+    setShaderUniform('stretch, 'phase, getParameterFloat('phase));
+}
+
+
+# --- GLSL Shader ---
+
+string glsl = "
+    precision highp float;
+    varying vec2 sourceTextureCoordinate;
+
+    BaseUniformsOpenGL;
+    uniform float time_sec;
+    uniform float speed;
+    uniform float loop;
+    uniform float scale_xChannel;
+    uniform float scale_xMin;
+    uniform float scale_xMax;
+    uniform float scale_yChannel;
+    uniform float scale_yMin;
+    uniform float scale_yMax;
+    uniform float tiling;
+    uniform float phase;
+
+    uniform sampler2D auxSampler1;
+
+    float byteCombine(vec2 v) {
+        float highByte = v.r * 255.0;
+        float lowByte = v.g * 255.0;
+        float scaled = highByte * 256.0 + lowByte;
+        float normalized = scaled / 65535.0;
+        return normalized;
+    }
+
+    float mapValue(float x, float lowOut, float highOut) {
+        return lowOut + x * (highOut - lowOut);
+    }
+
+    vec4 sampleAnimation(sampler2D tex, float t, float channel) {
+        vec2 uv1 = vec2(t, channel);
+        return texture2D(tex, uv1);
+    }
+
+    float mirror(float x) {
+        return 1.0 - abs(mod(x, 2.0) - 1.0);
+    }
+
+    vec2 mirrorUV(vec2 uv) {
+        return vec2(mirror(uv.x), mirror(uv.y));
+    }
+
+    void main() {
+        float t = time_sec * speed + phase;
+        float lt = fract(t);
+        t = mix(t, lt, loop);
+
+        vec4 scalex_sample = sampleAnimation(auxSampler1, t, scale_xChannel);
+        vec4 scaley_sample = sampleAnimation(auxSampler1, t, scale_yChannel);
+        float s_x = byteCombine(scalex_sample.rg);
+        s_x = mapValue(s_x, scale_xMin, scale_xMax);
+        float s_y = byteCombine(scaley_sample.rg);
+        s_y = mapValue(s_y, scale_yMin, scale_yMax);
+
+        vec2 uv = sourceTextureCoordinate;
+        uv -= 0.5;
+        uv *= 1.0 / vec2(s_x, s_y);
+        uv += 0.5;
+        vec2 tileUV = fract(uv);
+
+        uv = mix(uv, tileUV, tiling);
+        uv = mirrorUV(uv);
+        vec4 color = sampleInput(uv);
+        gl_FragColor = toOutputFormat(color);
+    }
+";
+
+
+# --- Metal Shader ---
+
+string metal = "
+    struct fragmentOut { float4 _gl_FragColor [[color(0)]]; };
+    struct fragmentIn { float2 sourceTextureCoordinate [[user(locn1)]]; };
+
+    typedef struct {
+        float4x4 content_transform;
+        float4x4 texture_transform;
+        float time_sec;
+        float speed;
+        float loop;
+        float scale_xChannel;
+        float scale_xMin;
+        float scale_xMax;
+        float scale_yChannel;
+        float scale_yMin;
+        float scale_yMax;
+        float tiling;
+        float phase;
+    } Uniforms;
+
+    float byteCombine(float2 v) {
+        float highByte = v.r * 255.0;
+        float lowByte = v.g * 255.0;
+        float scaled = highByte * 256.0 + lowByte;
+        float normalized = scaled / 65535.0;
+        return normalized;
+    }
+
+    float mapValue(float x, float lowOut, float highOut) {
+        return lowOut + x * (highOut - lowOut);
+    }
+
+    float4 sampleAnimation(texture2d<float> tex, sampler texSmplr, float t, float channel) {
+        float2 uv1 = float2(t, channel);
+        return tex.sample(texSmplr, uv1);
+    }
+
+    float mirror(float x) {
+        return 1.0 - abs(fmod(x, 2.0) - 1.0);
+    }
+
+    float2 mirrorUV(float2 uv) {
+        return float2(mirror(uv.x), mirror(uv.y));
+    }
+
+    fragment fragmentOut fragmentShader(fragmentIn in [[stage_in]],
+                                        constant Uniforms & uniforms [[buffer(1)]],
+                                        DefaultInputs defaultInputs,
+                                        texture2d<float> tex1,
+                                        sampler tex1Smplr
+                                        ) {
+        float t = uniforms.time_sec * uniforms.speed + uniforms.phase;
+        float lt = fract(t);
+        t = mix(t, lt, uniforms.loop);
+
+        float4 scalex_sample = sampleAnimation(tex1, tex1Smplr, t, uniforms.scale_xChannel);
+        float4 scaley_sample = sampleAnimation(tex1, tex1Smplr, t, uniforms.scale_yChannel);
+        float s_x = byteCombine(scalex_sample.rg);
+        s_x = mapValue(s_x, uniforms.scale_xMin, uniforms.scale_xMax);
+        float s_y = byteCombine(scaley_sample.rg);
+        s_y = mapValue(s_y, uniforms.scale_yMin, uniforms.scale_yMax);
+
+        float2 uv = in.sourceTextureCoordinate;
+        uv -= 0.5;
+        uv *= 1.0 / float2(s_x, s_y);
+        uv += 0.5;
+        float2 tileUV = fract(uv);
+
+        uv = mix(uv, tileUV, uniforms.tiling);
+        uv = mirrorUV(uv);
+        float4 color = sampleInput(defaultInputs, uv);
+        fragmentOut out = {};
+        out._gl_FragColor = toOutputFormat(color);
+        return out;
+    }
+";

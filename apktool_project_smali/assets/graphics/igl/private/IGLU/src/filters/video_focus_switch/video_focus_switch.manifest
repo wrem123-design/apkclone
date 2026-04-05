@@ -1,0 +1,19 @@
+{
+  "identifier": "40fbfaab-9827-4c9e-b1b8-288799094ca7",
+  "enumCaseName": "videoFocusSwitch",
+  "displayName": "Focus switch",
+  "loggingName": "video_focus_switch",
+  "legacyId": 2055,
+  "android": {
+    "previewAsset": {
+      "key": "f3c6cac1",
+      "handle": "AQACW7ZwHnWV",
+      "md5": "d0f60c6d48528d1864af3bdc4be390cd"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAE8nALq5Ta"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "identifier": "9cce1c66-e337-45a8-bf6e-e067d1c60cae",
+  "enumCaseName": "subjectResize",
+  "displayName": "Amplify",
+  "loggingName": "cutout_resize",
+  "legacyId": 2083,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": true,
+    "typeSuggestions": [
+      "head",
+      "eyes",
+      "mouth"
+    ]
+  },
+  "customization": {
+    "size": {
+      "default": 0.38,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "offsetX": {
+      "default": 0.0,
+      "min": -50.0,
+      "max": 50.0
+    },
+    "offsetY": {
+      "default": 0.0,
+      "min": -50.0,
+      "max": 50.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "bbb69e29",
+      "handle": "AQAEFsjWoPOt",
+      "md5": "eef2e89f82064fcf294e1290fd9c068a"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEaHM9A7nA"
+    }
+  }
+}

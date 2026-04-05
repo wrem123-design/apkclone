@@ -1,0 +1,71 @@
+{
+  "identifier": "65f4fd44-6028-48b7-b626-0696be0863d4",
+  "enumCaseName": "subjectOutline",
+  "displayName": "Outline",
+  "loggingName": "video_cutout_outline",
+  "legacyId": 2090,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": false,
+    "typeSuggestions": [
+      "person",
+      "head",
+      "clothing"
+    ]
+  },
+  "customization": {
+    "color": {
+      "default": "#FFFFFF",
+      "available": [
+        "#FFFFFF",
+        "#000000",
+        "#FFD600",
+        "#FF7A00",
+        "#FE1D37",
+        "#FF0169",
+        "#D300C5",
+        "#7638FA",
+        "#37038B",
+        "#1CD164",
+        "#0095F6",
+        "#AD88FC",
+        "#FDD5FD",
+        "#FFABE1",
+        "#FFC584",
+        "#FFF8C2",
+        "#09FF00",
+        "#FFFF00",
+        "#5AFAC7",
+        "#0000FF"
+      ]
+    },
+    "size": {
+      "default": 0.26,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "distance": {
+      "default": 0.0,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "opacity": {
+      "default": 1.0,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "8a24444",
+      "handle": "AQAFk25Z6c2W",
+      "md5": "60474ddb8fb2273f87f3f5472592665d"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "isImageFormat": true,
+      "handle": "AQADMiG4oEmM"
+    }
+  }
+}

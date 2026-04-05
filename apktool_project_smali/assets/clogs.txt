@@ -1,0 +1,261 @@
+Release Date: 3/4/2026
+Base: 422.0.0.44.64
+Version: 6.1 (Base Updated)
+
+Added: Creative Fonts for DMs — You can send stylish text using cool fonts in your DMs, It makes your messages look unique and stand out from others. (Premium)
+Added: App Startup Tab — Choose which tab should open automatically when you start the app.
+Added: Reorder Navigation Tabs — Long Press and Drag to reorder navigation tabs. Toggle to show/hide tabs.
+Added: Choose WhatsApp Type — You can choose WhatsApp or WhatsApp Business based on what you need. Note: This option is only for reposting to your WhatsApp Story.
+Added: New iOS 26.4 Emoji.
+Fixed: Fonts and Emojis — Now you'll able to load .ttf file from Local Storage.
+Fixed: Random Crashes.
+Fixed: Story Crashes.
+Fixed: Hidden Mentions.
+Fixed: Hide Chats.
+Fixed: Copy Comments issues.
+Fixed: Download issues.
+Fixed: UI/UX.
+Improved: Ghost Mode.
+Improved: Performance.
+
+
+Release Date: 20/2/2026
+Base: 416.0.0.47.66
+Version: 6.0 (Base Updated)
+
+Added: View Blocked Profiles Secretly. (Premium)
+       — Posts: View and Download.
+       — Stories: View, Download and See Hidden Mentions.
+       — Highlights: View, Download and See Hidden Mentions.
+       — Much more: Coming Soon.
+Added: Mark as Seen after Reply (DMs) — The sender will see 'seen' only after you reply. (Premium)
+Added: Private Screen Mode — Prevent people around you from seeing your screen, only you can see your content clearly. (Premium)
+Added: Show Follow Indicator in User Profiles (Mutual, Following, Follower). (Premium)
+Added: Disable Group Creation When Sharing — Prevents from showing the 'Create Group' option when sharing posts, reels, or messages with multiple people. (Premium)
+Added: Mark as Seen (DMs) — You can manually mark a message as seen.
+Added: Hide Chats — You can now hide chats.
+Added: Filter Feed by Following.
+Added: Remove Bottom Space (Beta) — It removes bottom space from navigation bar.
+Added: Add Accounts without Limits.
+Fixed: Photos/Videos was not Showing in Gallery.
+Fixed: Follow Indicator bugs.
+Fixed: Mention Indicator bugs.
+Fixed: Add to Story Crashes.
+Fixed: Random Crash issues.
+Fixed: Some Random UI glitches.
+Improved: View Once Media Downloader in DMs — No need to enable Anti-View Once to download.
+Improved: Set Story Upload Time Format.
+Improved: Performance (2x faster).
+Improved: Pinch-to-Zoom in View Profile Picture.
+Misc: Re-arranged Filter Notifications from DMs to Long Press on Chat List.
+Misc: Re-arranged View Saved Bio and Caption from Main Settings to Miscellaneous.
+
+
+Release Date: 24/11/2025
+Base: 406.0.0.58.159
+Version: 5.1 (Bugs Fixed)
+
+Fixed: Popup Issues.
+Fixed: Developer Options — Now you'll see all flags instead of numbers.
+Fixed: Reels Download issues.
+Fixed: Profile Options not showing previously.
+Fixed: DM Load issues.
+Fixed: Fonts and Emojis — Now you'll able to load .ttf file from Local Storage.
+Fixed: Carousel Issues.
+Fixed: Some UI related bugs.
+Fixed: App Crashes.
+Improved: App Performance.
+
+
+Release Date: 21/11/2025
+Base: 406.0.0.58.159
+Version: 5.0 (Base Updated)
+
+Added: Option to Set Story Upload Time Format in different time formats like '5hrs left', '12:34:56 am/pm', 'Customize time format' etc.
+Added: Open by Phone Apps — Open video in your favorite video player.
+Added: Option to Show Follow Indicator in Hidden Mentions List.
+Added: Option to Enable/Disable Follow Indicator from Hidden Mentions List — InstaPrime Settings > Feed and Stories > Disable Follow Indicator in Mentions.
+Added: Option to Hide Profile Options Icon — InstaPrime Settings > UI Tweaks > Hide Profile Options Icon.
+Added: Option to Show progress while downloading Fonts or Emojis with Cancel Button.
+Fixed: Crash issues in 'Repost to WhatsApp Story'.
+Fixed: Crash issues in 'Repost to IG Post'.
+Fixed: Crash issues in 'Repost to IG Story'.
+Fixed: Crash issues related to Notifications.
+Fixed: Crash issues in Downloader.
+Fixed: Randomly Crashing in some devices.
+Misc: Re-arranged Option to Disable Follow Indicator "Follows You" — InstaPrime Settings > UI Tweaks > Hide Follow Indicator "Follows You".
+Misc: Re-arranged Option to Change Mention Indicator Style — InstaPrime Settings > Feed and Stories > Change Mention Indicator Style.
+Misc: Re-arranged Option to Disable Story Upload Time Tracker — InstaPrime Settings > Feed and Stories > Set Story Upload Time Format.
+Misc: Re-arranged Filter Notifications Options.
+
+
+Release Date: 2/11/2025
+Base: 402.0.0.49.70
+Version: 4.1 (Bugs Fixed)
+
+Added: View Once Media Downloader in DMs.
+Added: Option to Disable Filter Notifications Icon from DMs — InstaPrime Settings > UI Tweaks > Hide Filter Notifications Icon.
+Fixed: iOS Emojis related bugs.
+Fixed: Anti-View Once.
+Fixed: Disable Double Tap to Like (Post).
+Fixed: Some UI Glitches bugs.
+Fixed: App Crashes in some devices.
+
+
+Release Date: 20/10/2025
+Base: 402.0.0.49.70
+Version: 4.0 (Base Updated)
+
+Added: Filter Notifications — You can block specific notifications based on message types and keywords (Sent Text Message, Photo, Video, Post, Reel, Sticker, Gif, Story, Profile).
+Added: Download Audio (.mp3).
+Added: Pinch-to-Zoom in View Profile Picture.
+Added: Option to Change Mention Indicator Style (InstaPrime Settings > Miscellaneous > Change Mention Indicator Style).
+Added: Option to 'Restart App' in Menu.
+Added: Copy Selected Comment in Comment Section.
+Improved: iOS Emojis in Comments, Now iOS Emoji works on whole app.
+Improved: Set Background Image Performance.
+Fixed: Some UI related bugs.
+Fixed: App Crashes.
+
+
+Release Date: 14/09/2025
+Base: 396.0.0.46.242
+Version: 3.0 (Base Updated)
+
+Added: Story Upload Time Tracker — You can view the exact upload time of stories in HH:MM:SS format (Hours:Minutes:Seconds).
+Added: Option to Single Tap on (Hidden Mention) in stories to view all Mentions.
+Added: '.json' Support in Developer Options.
+Added: Focus Mode (Hide Stories, Feeds, Reels, Explore and all Comments).
+Added: Disable Storage Permission.
+Added: Long Press on Top Left corner (InstaPrime Logo) to get all the Settings.
+Added: Option to Hide 'InstaPrime Options' icon from Reels.
+Improved: Disable Ads.
+Improved: App Performance.
+Fixed: iOS Emojis in some parts of app.
+Fixed: App Icon (Now Supports Material You Theme).
+Fixed: Some UI related bugs.
+Fixed: App Crashes.
+
+
+Release Date: 7/08/2025
+Base: 391.0.0.42.82
+Version: 2.0 (Base Updated)
+
+Added: Hide all Home Options Icon from Home Screen (To access Home Options — Long Press on Home Button in Home Screen — InstaPrime Settings, Ghost Mode, Long Video Splitter, Dark Mode, Developer Options).
+Added: Disable Suggested Reels.
+Improved: Emoji and Fonts.
+Improved: Ghost Modes.
+Fixed: Calling issues.
+Fixed: Some UI glitches.
+Fixed: Major bugs like randomly crashing in some devices.
+
+
+Release Date: 15/07/2025
+Base: 384.0.0.46.83
+Version: 1.1 (Bugs Fixed)
+
+Added: Dark/Light Mode.
+Added: Options to Hide Home icons like (Video Splitter, Ghost Mode, Dark/Light Mode).
+Added: Option to Enable Default Story Fonts.
+Added: Option to Enable Replay Story.
+Fixed: Emoji and Fonts.
+Fixed: Repost to IG Post, IG Story and WhatsApp Story.
+Fixed: Developer Options also Improved Import/Export Backup files. (Only Supports '.zip' file instead of '.json' file).
+Fixed: Some UI related bugs.
+Fixed: Photo/Video was not sending in DMs.
+Fixed: Major bugs like randomly crashing in some devices.
+		
+
+Release Date: 1/07/2025
+Base: 384.0.0.46.83
+Version: 1.0 (First Release)
+
+Ghost Mode:
+Added: Secret View Story
+Added: Secret Read Messages
+Added: Secret Typing...
+Added: Secret View Live Stream
+Added: Secret Screenshot
+Added: Listen Voice Note Secretly
+Added: Anti-Reply Image
+Added: Anti-View Once
+Added: Anti-Replay Photo/Video Secretly
+Added: Hide Media in Chats
+
+Privacy:
+Added: Disable Ads
+Added: Disable Analytics Tracker
+
+Gestures:
+Added: Disable Reels Scrolling
+Added: Disable Accidental Swipe-to-Refresh Reels
+Added: Disable Double Tap to Like (Post)
+Added: Disable Double Tap to Like (Comment)
+Added: Disable Double Tap to Like (Reels)
+Added: Disable Swipe to Navigate
+
+Feed and Stories:
+Added: Copy Caption Without Hashtags
+Added: Repost With Caption in WhatsApp
+Added: Disable Comments Options
+Added: Disable Split Video in WhatsApp
+Added: Disable Auto Play Next Story
+Added: Force to Play Sound in Stories
+Added: Disable Auto Play Video
+Added: Enhance Story Upload Quality
+Added: Enhance Photo Quality
+
+UI Tweaks:
+Added: Set Background Image in Chats
+Added: Set iOS Emoji across the app
+Added: Set Custom Font across the app
+
+Miscellaneous:
+Added: Change Translator Language
+Added: Change Split Video Duration
+Added: Disable Follow Indicator "Follows You"
+Added: Disable Mention Indicator (Hidden Mentions)
+Added: Remove '... more' from User's Bio
+
+Downloads:
+Added: Change Download Path
+Added: Split Download Media by Username
+Added: Show Notification on Download
+
+Developer Options:
+Added: Import - Replace Existing Developer Settings
+Added: Import - Merge Developer Settings with Overwrite
+Added: Import - Merge Developer Settings without Overwrite
+Added: Export - Export Edited Developer Settings
+Added: Disable Developer Options
+Added: Reset Developer Settings
+
+Comment Options:
+Added: Copy Comments
+Added: Translate Comments
+Added: View Profile
+Added: Copy Username
+
+User Profile Options:
+Added: Copy Bio
+Added: View and Download Profile Pic
+Added: Save Bio
+Added: Translate Bio
+Added: Copy Links from Bio
+Added: Copy Username
+
+Extra features:
+Enabled: Developer Options
+Added: View Saved Bio
+Added: View Saved Captions
+Added: Long Video Splitter (This feature automatically cuts your long video into parts, It makes easier to upload full video as story.)
+Added: See Follow Indicator
+Added: See Hidden Mention with Indicator (Hidden Mention)
+Added: Download Post, Highlights, Reels, Stories etc
+Added: Repost as IG Post
+Added: Repost as IG Story
+Added: Repost as WhatsApp Story
+Added: Copy Caption
+Added: Save Caption
+Added: Translate Caption
+Added: Copy Hashtags

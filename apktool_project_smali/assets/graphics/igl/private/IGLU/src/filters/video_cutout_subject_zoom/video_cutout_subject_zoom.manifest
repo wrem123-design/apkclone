@@ -1,0 +1,35 @@
+{
+  "identifier": "ab08936e-d6a1-40a3-aff7-be2cf59352a3",
+  "enumCaseName": "videoCutoutSubjectZoom",
+  "displayName": "Amplify",
+  "loggingName": "video_cutout_subject_zoom",
+  "legacyId": 2108,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": false,
+    "typeSuggestions": [
+      "person",
+      "head"
+    ]
+  },
+  "customization": {
+    "speed": {
+      "default": 0.12,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "zoom": {
+      "default": 0.44,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+
+  "android": {
+    "previewAsset": {
+      "key": "c38144c",
+      "handle": "AQAEnQqvMuA9",
+      "md5": "a4c24c0ba17a1292af3b0b075afeffa6"
+    }
+  }
+}

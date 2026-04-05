@@ -1,0 +1,12 @@
+{
+  "identifier": "904ab4f7-8421-4c6f-96e4-5e5e30187abc",
+  "displayName": "Dramatic Black White",
+  "loggingName": "dramatic_black_white",
+  "assets": [
+    {
+      "name": "ClutBw",
+      "assetHash": "e2c966ab17d7e651991f3be0f0b01fd12f87c1700981a1384d86e6611671a84b",
+      "effectId": "2561237420940601"
+    }
+  ]
+}

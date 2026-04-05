@@ -1,0 +1,11 @@
+{
+  "identifier": "b2c3d4e5-f6a7-4b9c-8d1e-2f3a4b5c6d7e",
+  "displayName": "Soft mask out",
+  "loggingName": "video_soft_mask_out",
+  "legacyId": 3037,
+  "behavior": {
+    "type": "fixedOutro",
+    "durationMs": 1000,
+    "curve": "linear"
+  }
+}

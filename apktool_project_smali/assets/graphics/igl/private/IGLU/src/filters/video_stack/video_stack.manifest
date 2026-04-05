@@ -1,0 +1,19 @@
+{
+  "identifier": "2328c55a-3c88-47e2-8010-e83e539ad590",
+  "enumCaseName": "videoStack",
+  "displayName": "Stack",
+  "loggingName": "video_stack",
+  "legacyId": 2056,
+  "android": {
+    "previewAsset": {
+      "key": "2812182e",
+      "handle": "AQAEdzcVyB0n",
+      "md5": "368b6e260b6a4ffe98d7bc94e72020ef"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAFUsxP8tKE"
+    }
+  }
+}

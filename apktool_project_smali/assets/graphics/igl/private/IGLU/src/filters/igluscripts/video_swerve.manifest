@@ -1,0 +1,24 @@
+{
+  "identifier": "74213024-4e80-4098-aed8-b1a096a3151d",
+  "enumCaseName": "videoSwerve",
+  "displayName": "Swerve",
+  "loggingName": "video_swerve",
+  "legacyId": 3009,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 667,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "890d0985",
+      "handle": "AQBaRwUxUqrD",
+      "md5": "bbeaa93a23f73cfa8203a94fffbb2f1c"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAFLpmPgYIK"
+    }
+  }
+}

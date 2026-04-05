@@ -1,0 +1,24 @@
+{
+  "identifier": "1a7f7a56-f7e3-4138-b1b1-5f44c36fa78e",
+  "enumCaseName": "videoMirrorFrames",
+  "displayName": "Mirror frames",
+  "loggingName": "video_mirror_frames",
+  "legacyId": 3003,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 500,
+    "curve": "circularInOut"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "1be964ac",
+      "handle": "AQAIvSswcnrh",
+      "md5": "7ea9ac03ece3546d75ad68c729b2c506"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEVrFHkr96"
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "identifier": "3aeab9ff-6e6d-4ba1-866e-487c04d4f045",
+  "enumCaseName": "overlayScribble",
+  "displayName": "Scribble",
+  "loggingName": "video_cutout_scribble",
+  "legacyId": 5050,
+  "subject": {
+    "overlay": true
+  },
+  "customization": {
+    "color": {
+      "default": "#FFFFFF",
+      "available": [
+        "#FFFFFF",
+        "#000000",
+        "#FFD600",
+        "#FF7A00",
+        "#FE1D37",
+        "#FF0169",
+        "#D300C5",
+        "#7638FA",
+        "#37038B",
+        "#1CD164",
+        "#0095F6",
+        "#AD88FC",
+        "#FDD5FD",
+        "#FFABE1",
+        "#FFC584",
+        "#FFF8C2",
+        "#09FF00",
+        "#FFFF00",
+        "#5AFAC7",
+        "#0000FF"
+      ]
+    },
+    "size": {
+      "default": 0.29,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "distance": {
+      "default": 0.38,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "opacity": {
+      "default": 1.0,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "77814320",
+      "handle": "AQAErHptgSsu",
+      "md5": "9ad8ee1ec8d6fb363ce90ea3378a7c38"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEa7EEZKGe"
+    }
+  }
+}

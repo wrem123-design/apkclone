@@ -1,0 +1,12 @@
+{
+  "identifier": "5f4d61b9-b50f-4181-8ff2-ea401bf36e00",
+  "displayName": "Emerald",
+  "loggingName": "emerald",
+  "assets": [
+    {
+      "name": "LutEmerald",
+      "assetHash": "859eb157d517207f1b9e4427eeacc3aaf4c3cf1261b73310a84a91eaf0a8cd71",
+      "effectId": "1255864212662349"
+    }
+  ]
+}

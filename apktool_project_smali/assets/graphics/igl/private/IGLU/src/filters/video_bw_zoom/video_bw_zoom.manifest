@@ -1,0 +1,24 @@
+{
+  "identifier": "439a8fa5-cda5-4841-bb4e-35427e9e5119",
+  "enumCaseName": "videoBWZoom",
+  "displayName": "B&W zoom",
+  "loggingName": "video_bw_zoom",
+  "legacyId": 2035,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 3000,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "69b6bc55",
+      "handle": "AQAIhVmwhsCT",
+      "md5": "e9f611bf6d77f051cee81ec0216c50b4"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAIePjCYCtm"
+    }
+  }
+}

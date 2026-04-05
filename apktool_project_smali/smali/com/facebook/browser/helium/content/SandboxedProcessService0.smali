@@ -1,0 +1,15 @@
+.class public Lcom/facebook/browser/helium/content/SandboxedProcessService0;
+.super Lcom/facebook/browser/helium/content/SandboxedProcessService;
+.source ""
+
+
+# direct methods
+.method public constructor <init>()V
+    .locals 0
+
+    .line 0
+    invoke-direct {p0}, Lcom/facebook/browser/helium/content/SandboxedProcessService;-><init>()V
+
+    .line 3
+    return-void
+.end method

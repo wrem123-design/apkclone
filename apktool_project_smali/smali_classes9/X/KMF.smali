@@ -1,0 +1,68 @@
+.class public abstract LX/KMF;
+.super Ljava/lang/Object;
+.source ""
+
+
+# direct methods
+.method public static final A00(Lcom/instagram/common/session/UserSession;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;)LX/8kB;
+    .locals 3
+
+    const/4 v2, 0x0
+
+    invoke-static {p0, p2}, LX/177;->A1J(Ljava/lang/Object;Ljava/lang/Object;)V
+
+    invoke-static {p1}, LX/659;->A0m(Ljava/lang/Object;)V
+
+    invoke-static {p3}, LX/659;->A0n(Ljava/lang/Object;)V
+
+    const-string v0, " "
+
+    const/4 v1, 0x0
+
+    invoke-static {p2, v0, v2}, LX/1os;->A0m(Ljava/lang/CharSequence;Ljava/lang/CharSequence;Z)Z
+
+    move-result v0
+
+    if-nez v0, :cond_0
+
+    sget-object v1, LX/3SA;->A01:LX/3Sz;
+
+    sget-object v0, LX/Brw;->A00:LX/Brw;
+
+    invoke-static {v1, v0, p0}, LX/121;->A0e(LX/3Sz;LX/Izk;Lcom/instagram/common/session/UserSession;)LX/8lB;
+
+    move-result-object v2
+
+    filled-new-array {p2}, [Ljava/lang/Object;
+
+    move-result-object v1
+
+    const-string v0, "third_party_sharing/%s/get_profile_to_share_url/"
+
+    invoke-static {v2, v0, v1}, LX/1F3;->A1E(LX/9hg;Ljava/lang/String;[Ljava/lang/Object;)V
+
+    const-string v0, "create_profile_share_url"
+
+    invoke-static {v2, p1, v0, p3}, LX/210;->A1J(LX/9hg;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;)V
+
+    invoke-static {p0}, LX/MbS;->A01(Lcom/instagram/common/session/UserSession;)Z
+
+    move-result v1
+
+    const-string v0, "exposed_to_experiment"
+
+    invoke-virtual {v2, v0, v1}, LX/9hg;->A0F(Ljava/lang/String;Z)V
+
+    invoke-static {p0}, LX/41q;->A01(Lcom/instagram/common/session/UserSession;)Ljava/lang/String;
+
+    move-result-object v1
+
+    const-string v0, "qe_universe_name"
+
+    invoke-static {v2, v0, v1}, LX/132;->A0X(LX/9jd;Ljava/lang/String;Ljava/lang/String;)LX/8kB;
+
+    move-result-object v1
+
+    :cond_0
+    return-object v1
+.end method

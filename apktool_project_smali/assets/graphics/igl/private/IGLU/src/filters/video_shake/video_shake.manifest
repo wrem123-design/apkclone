@@ -1,0 +1,26 @@
+{
+  "identifier": "25b961e3-8687-4ac7-9c65-4a3aee195cc4",
+  "enumCaseName": "videoShake",
+  "displayName": "Shake",
+  "loggingName": "video_shake",
+  "legacyId": 2044,
+  "android": {
+    "previewAsset": {
+      "key": "19d87463",
+      "handle": "AQADvMIZdib0",
+      "md5": "1d8a07fa64957e45806f42387140bc24"
+    }
+  },
+  "assets": [
+    {
+      "name": "PerlinNoise",
+      "assetHash": "42393e620664a372495800bfcf40ca960aa0ab3e2ddfe42fbfe2b86098d33000",
+      "effectId": "1259354255546062"
+    }
+  ],
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAGZV8a3Vfs"
+    }
+  }
+}

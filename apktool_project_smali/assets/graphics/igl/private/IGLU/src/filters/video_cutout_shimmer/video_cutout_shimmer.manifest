@@ -1,0 +1,63 @@
+{
+  "identifier": "e24e683d-4f17-4c2b-bb31-6014d2228b88",
+  "enumCaseName": "subjectShimmer",
+  "displayName": "Shimmer",
+  "loggingName": "video_cutout_shimmer",
+  "legacyId": 2105,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": true,
+    "typeSuggestions": [
+      "person",
+      "head"
+    ]
+  },
+  "customization": {
+    "color": {
+      "default": "#FFFFFF",
+      "available": [
+        "#FFFFFF",
+        "#FFD600",
+        "#FF7A00",
+        "#FE1D37",
+        "#FF0169",
+        "#D300C5",
+        "#7638FA",
+        "#37038B",
+        "#1CD164",
+        "#0095F6",
+        "#AD88FC",
+        "#FDD5FD",
+        "#FFABE1",
+        "#FFC584",
+        "#FFF8C2",
+        "#09FF00",
+        "#FFFF00",
+        "#5AFAC7",
+        "#0000FF"
+      ]
+    },
+    "speed": {
+      "default": 0.75,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "opacity": {
+      "default": 1.0,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "39671bcd",
+      "handle": "AQAEn3olVtvW",
+      "md5": "0e30c78b6b83dd9c80ba2f8412a975b2"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAFz6IlsV4C"
+    }
+  }
+}

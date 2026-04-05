@@ -1,0 +1,12 @@
+{
+  "identifier": "77ec4d2c-fe33-47ab-895f-1a5338c642e9",
+  "displayName": "Vintage",
+  "loggingName": "vintage",
+  "assets": [
+    {
+      "name": "ClutVintage",
+      "assetHash": "feb6c7ef19e9024c5b213c4f742d097c72119c44d5a6a5cf0fe6b12602d7b61d",
+      "effectId": "938461411878787"
+    }
+  ]
+}

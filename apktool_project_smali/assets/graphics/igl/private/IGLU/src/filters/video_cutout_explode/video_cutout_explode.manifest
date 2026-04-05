@@ -1,0 +1,40 @@
+{
+  "identifier": "97856ee6-0308-493f-ad8d-ae7db98f498e",
+  "enumCaseName": "subjectExplode",
+  "displayName": "Explode",
+  "loggingName": "video_cutout_explode",
+  "legacyId": 2102,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": false,
+    "typeSuggestions": [
+      "head",
+      "person",
+      "clothing"
+    ]
+  },
+  "customization": {
+    "speed": {
+      "default": 0.85,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "amount": {
+      "default": 0.56,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "42f51791",
+      "handle": "AQAC_jzcwg5D",
+      "md5": "48bd29553edd6a075cc0f7fbeb9867b9"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEcUr24mgh"
+    }
+  }
+}

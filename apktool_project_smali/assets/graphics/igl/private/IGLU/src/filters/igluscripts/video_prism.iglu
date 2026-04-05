@@ -1,0 +1,219 @@
+[Filter IgluscriptVideoPrismFilter]
+[BehaviorType static]
+
+[Init]
+fun init(Filter filter) {
+  filter.parameters = {
+    {center = {0.5, 0.5}, min = {0.0, 0.0}, max = {1.0, 1.0}}
+  };
+
+  filter.passes = {{
+      name = 'prism, inputs = {'default},
+      uniforms = {
+        inputSize = {1080.0, 1920.0},
+        prismCopies = 5.0,
+        prismSpread = 0.6,
+        prismRotate = 0.25,
+        chroma = 4.0,
+        center = {0.5, 0.5},
+      },
+      glslShader = glsl, metalShader = metal
+    }};
+}
+
+[PreRender]
+fun preRender(Filter filter) {
+  # Get behavior parameters from parameter map (set by JNI/keyframe system)
+  f32 progressValue = getParameterFloat('progress);
+
+  # Apply to shader uniform
+  setShaderUniform('prism, 'progress, progressValue);
+  setShaderUniform('prism, 'center, getParameterVec2('center));
+
+  # scalesWithSize: pre-scale chroma by resolution factor
+  vec2 inputSize = getTextureSize('default);
+  setShaderUniform('prism, 'inputSize, inputSize);
+  f32 sizeScale = min(inputSize.x, inputSize.y) / 1080.0;
+  setShaderUniform('prism, 'chroma, 4.0 * sizeScale);
+}
+
+string glsl = "precision highp float;
+
+varying vec2 textureCoordinate;
+varying vec2 sourceTextureCoordinate;
+
+BaseUniformsOpenGL;
+
+uniform float time_sec;
+uniform vec2 inputSize;
+uniform float prismCopies;
+uniform float prismSpread;
+uniform float prismRotate;
+uniform float chroma;
+uniform vec2 center;
+
+vec3 sampleChroma(vec2 uv, vec2 offset){
+  // Guard against division by zero - use safe fallback value
+  vec2 safeInputSize = max(inputSize, vec2(1.0));
+  vec2 uvOffset = offset / safeInputSize;
+
+  // If inputSize is invalid, return unmodified color
+  if (inputSize.x <= 0.0 || inputSize.y <= 0.0) {
+    return sampleInput(uv).rgb;
+  }
+
+  // Get alpha from center UV for consistent premultiplication
+  float alpha = sampleInput(uv).a;
+
+  // Sample at chroma offsets
+  vec4 sL = sampleInput(uv - uvOffset);
+  vec4 sR = sampleInput(uv + uvOffset);
+
+  // Un-premultiply to get true color, split channels, re-premultiply with center alpha
+  vec3 straightL = alpha > 0.001 ? sL.rgb / max(sL.a, 0.001) : vec3(0.0);
+  vec3 straightR = alpha > 0.001 ? sR.rgb / max(sR.a, 0.001) : vec3(0.0);
+  return vec3(straightL.r, straightR.g, straightL.b) * alpha;
+}
+
+  void main() {
+
+  vec2 uv = sourceTextureCoordinate;
+
+  // Guard against division by zero if inputSize is not initialized
+  // Use safe fallback values for all calculations
+  vec2 safeInputSize = max(inputSize, vec2(1.0, 1.0));
+
+  if (inputSize.x <= 0.0 || inputSize.y <= 0.0) {
+    gl_FragColor = toOutputFormat(sampleInput(uv));
+    return;
+  }
+
+  vec2 ratio = vec2(safeInputSize.x / safeInputSize.y, 1.0);
+
+  vec3 accum = vec3(0.0);
+  float total = 0.0;
+  float alphaAccum = 0.0;
+
+  float stepA = 6.28318530718 / prismCopies;
+
+  for (int i = 0; i < int(prismCopies); i++){
+
+    float a = (prismRotate * time_sec) + stepA * float(i);
+    vec2 dir = vec2(cos(a), sin(a));
+   // dir = normalize(dir * ratio);
+
+    vec2 offUV = dir * prismSpread * 0.5;
+
+    float subRot = 0.02 * float(i);
+    float ca = cos(subRot);
+    float sa = sin(subRot);
+    mat2 rot = mat2(ca, -sa, sa, ca);
+
+    vec2 sampUV = rot * (uv - center) + center + offUV;
+
+    float m = 1.0  - smoothstep(0.5,1.0, length((uv - (center - offUV)) * 2.0));
+
+    vec2 chromaOffset = dir * chroma;
+    vec3 col = sampleChroma(sampUV, chromaOffset);
+    float alpha = sampleInput(sampUV).a;
+
+    accum += col * m;
+    alphaAccum += alpha * m;
+    total += m;
+  }
+
+  vec4 centerSample = sampleInput(uv);
+  vec3 centerCol = centerSample.rgb;
+  float centerAlpha = centerSample.a;
+  float r = length((uv - center) * ratio);
+  float centerMask = 1.0 - smoothstep(0.1, 0.3, r);
+
+  vec3 outColor = accum / max(total, 1e-4);
+  float outAlpha = alphaAccum / max(total, 1e-4);
+  vec4 color = vec4(mix(outColor, centerCol, centerMask), mix(outAlpha, centerAlpha, centerMask));
+  gl_FragColor = toOutputFormat(color);
+}
+";
+
+string metal = "using namespace metal;
+struct fragmentIn { float2 textureCoordinate [[user(locn0)]]; float2 sourceTextureCoordinate [[user(locn1)]]; };
+struct fragmentOut { float4 _gl_FragColor [[color(0)]]; };
+typedef struct {
+  BaseUniformsMetal;
+  float time_sec;
+  float2 input_size;
+  float prismCopies;
+  float prismSpread;
+  float prismRotate;
+  float chroma;
+  float2 center;
+ } Uniforms;
+
+float3 sampleChroma(float2 uv, float2 offset, DefaultInputs defaultInputs, constant Uniforms & uniforms){
+  float2 uvOffset = offset /  uniforms.input_size;
+
+  // Get alpha from center UV for consistent premultiplication
+  float alpha = sampleInput(defaultInputs, uv).a;
+
+  // Sample at chroma offsets
+  float4 sL = sampleInput(defaultInputs, uv - uvOffset);
+  float4 sR = sampleInput(defaultInputs, uv + uvOffset);
+
+  // Un-premultiply to get true color, split channels, re-premultiply with center alpha
+  float3 straightL = alpha > 0.001 ? sL.rgb / max(sL.a, 0.001) : float3(0.0);
+  float3 straightR = alpha > 0.001 ? sR.rgb / max(sR.a, 0.001) : float3(0.0);
+  return float3(straightL.r, straightR.g, straightL.b) * alpha;
+}
+
+fragment fragmentOut fragmentShader(fragmentIn in [[stage_in]],
+ constant Uniforms & uniforms [[buffer(1)]],
+ DefaultInputs defaultInputs) {
+
+  float2 uv = in.sourceTextureCoordinate;
+
+  float2 ratio = float2(uniforms.input_size.x / uniforms.input_size.y, 1.0);
+
+  float3 accum = float3(0.0);
+  float total = 0.0;
+  float alphaAccum = 0.0;
+
+  float stepA = 6.28318530718 / uniforms.prismCopies;
+
+  for (int i = 0; i < int(uniforms.prismCopies); i++){
+
+    float a = (uniforms.prismRotate * (1.0 - uniforms.time_sec)) + stepA * float(i);
+    float2 dir = float2(cos(a), sin(a));
+   // dir = normalize(dir * ratio);
+
+    float2 offUV = dir * uniforms.prismSpread * 0.5;
+
+    float subRot = 0.02 * float(i);
+    float ca = cos(subRot);
+    float sa = sin(subRot);
+    float2x2 rot = float2x2(ca, -sa, sa, ca);
+
+    float2 sampUV = rot * (uv - uniforms.center) + uniforms.center + offUV;
+
+    float m = 1.0  - smoothstep(0.5,1.0, length((uv - (uniforms.center - offUV)) * 2.0));
+
+    float2 chromaOffset = dir * uniforms.chroma;
+    float3 col = sampleChroma(sampUV, chromaOffset, defaultInputs, uniforms);
+    float alpha = sampleInput(defaultInputs, sampUV).a;
+
+    accum += col * m;
+    alphaAccum += alpha * m;
+    total += m;
+  }
+
+  float4 centerSample = sampleInput(defaultInputs, uv);
+  float3 centerCol = centerSample.rgb;
+  float centerAlpha = centerSample.a;
+  float r = length((uv - uniforms.center) * ratio);
+  float centerMask = 1.0 - smoothstep(0.1, 0.3, r);
+
+  float3 outColor = accum / max(total, 1e-4);
+  float outAlpha = alphaAccum / max(total, 1e-4);
+  float4 color = float4(mix(outColor, centerCol, centerMask), mix(outAlpha, centerAlpha, centerMask));
+  return {toOutputFormat(color)};
+}
+";

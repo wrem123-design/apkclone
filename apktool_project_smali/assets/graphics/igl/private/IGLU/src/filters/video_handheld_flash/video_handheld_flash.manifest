@@ -1,0 +1,26 @@
+{
+  "identifier": "a6115f0c-36de-4b4b-b929-c2c0ea31be29",
+  "enumCaseName": "videoHandheldFlash",
+  "displayName": "Handheld flash",
+  "loggingName": "video_handheld_flash",
+  "legacyId": 2053,
+  "android": {
+    "previewAsset": {
+      "key": "35ee984e",
+      "handle": "AQAHdzRUuDSU",
+      "md5": "af25df55109e7133aa69d75412e4d0bf"
+    }
+  },
+  "assets": [
+    {
+      "name": "PerlinNoise",
+      "assetHash": "42393e620664a372495800bfcf40ca960aa0ab3e2ddfe42fbfe2b86098d33000",
+      "effectId": "1259354255546062"
+    }
+  ],
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAHZBIB-R4z"
+    }
+  }
+}

@@ -1,0 +1,168 @@
+[Filter VideoGlitch2In]
+[BehaviorType fixedIntro]
+[BehaviorDuration 1000]
+[AnimationCurve linear]
+# Glitch transition effect — content appears/disappears with glitch distortion.
+# Ported from GLSL text animation: "Glitch In" / "Glitch Out" (2025 H2 Text Animations)
+#
+# Single-pass pipeline:
+#   Procedural noise-driven glitch offset with posterized time stepping.
+#   outro parameter controls direction: 0 = appearing, 1 = disappearing.
+
+[Init]
+fun init(Filter filter) {
+    filter.parameters = {
+        {outro = 0.0, min = 0.0, max = 1.0, description = "0 = Glitch In (appearing), 1 = Glitch Out (disappearing)"},
+        {maxOffset = 0.5, min = 0.0, max = 1.0, description = "Maximum glitch offset"},
+        {timeSteps = 25.0, min = 1.0, max = 32.0, description = "Posterization steps"},
+        {falloffCurve = 8.0, min = 0.1, max = 10.0, description = "Falloff curve exponent"},
+    };
+
+    filter.passes = {
+        {
+            name = 'pass0,
+            inputs = {'default},
+            uniforms = {
+                progress = 0.0,
+                outro = 0.0,
+                maxOffset = 0.5,
+                timeSteps = 25.0,
+                falloffCurve = 8.0,
+            },
+            glslShader = glslGlitch,
+            metalShader = metalGlitch,
+        },
+    };
+}
+
+[PreRender]
+fun preRender(Filter filter) {
+    f32 progress = getParameterFloat('progress);
+
+    f32 outro = getParameterFloat('outro);
+    f32 maxOffset = getParameterFloat('maxOffset);
+    f32 timeSteps = getParameterFloat('timeSteps);
+    f32 falloffCurve = getParameterFloat('falloffCurve);
+
+    setShaderUniform('pass0, 'progress, progress);
+    setShaderUniform('pass0, 'outro, outro);
+    setShaderUniform('pass0, 'maxOffset, maxOffset);
+    setShaderUniform('pass0, 'timeSteps, timeSteps);
+    setShaderUniform('pass0, 'falloffCurve, falloffCurve);
+}
+
+
+# --- GLSL Shader ---
+
+string glslGlitch = "
+    precision highp float;
+    varying vec2 sourceTextureCoordinate;
+    uniform float progress;
+    uniform float outro;
+    uniform float maxOffset;
+    uniform float timeSteps;
+    uniform float falloffCurve;
+    #define CHUNKS 7.0
+
+    float dot_noise(vec3 p) {
+        const float PHI = 1.618033988;
+        const mat3 GOLD = mat3(-0.571464913, +0.814921382, +0.096597072, -0.278044873, -0.303026659, +0.911518454, +0.772087367, +0.494042493, +0.399753815);
+        return dot(cos(GOLD * p), sin(PHI * p * GOLD));
+    }
+
+    vec4 sampleInputClipped(vec2 uv) {
+        vec4 color = sampleInput(uv);
+        float inBounds = step(0.0, uv.x) * step(uv.x, 1.0) * step(0.0, uv.y) * step(uv.y, 1.0);
+        return color * inBounds;
+    }
+
+    void main() {
+        vec2 uv = sourceTextureCoordinate;
+        float p = mix(progress, 1.0 - progress, step(0.5, outro));
+        float posterized = ceil(p * timeSteps) / timeSteps;
+        for(float x = 0.0; x < CHUNKS; x += 1.0) {
+            float vert = mod(x, 2.0);
+            vert = step(0.5, vert);
+            vec3 np = vec3(x * 113.45, posterized * 56.2, 0.0);
+            float dividing_line = dot_noise(np);
+            dividing_line += 3.0;
+            dividing_line /= 6.0;
+            float flip = step(0.0, dot_noise(np + vec3(5.0, 16.3, -9.0)));
+            vec2 offset_h = vec2(step(dividing_line, uv.y) - 0.5, 0.0);
+            vec2 offset_v = vec2(0.0, step(dividing_line, uv.x) - 0.5);
+            vec2 offset = mix(offset_h, offset_v, vert);
+            offset = mix(offset, offset * -1.0, flip);
+            float curve = 1.0 - posterized;
+            curve = pow(curve, falloffCurve);
+            offset *= max(0.0, maxOffset * curve);
+            uv += offset;
+        }
+        vec4 color = sampleInputClipped(uv);
+        color *= step(0.001, p);
+        gl_FragColor = toOutputFormat(color);
+    }
+";
+
+
+# --- Metal Shader ---
+
+string metalGlitch = "
+    struct fragmentOut { float4 _gl_FragColor [[color(0)]]; };
+    struct fragmentIn { float2 sourceTextureCoordinate [[user(locn1)]]; };
+
+    typedef struct {
+        BaseUniformsMetal;
+        float progress;
+        float outro;
+        float maxOffset;
+        float timeSteps;
+        float falloffCurve;
+    } Uniforms;
+
+    float dot_noise(float3 p) {
+        float PHI = 1.618033988;
+        float3x3 GOLD = float3x3(
+            float3(-0.571464913, +0.814921382, +0.096597072),
+            float3(-0.278044873, -0.303026659, +0.911518454),
+            float3(+0.772087367, +0.494042493, +0.399753815)
+        );
+        return dot(cos(GOLD * p), sin(PHI * p * GOLD));
+    }
+
+    float4 sampleInputClipped(DefaultInputs defaultInputs, float2 uv) {
+        float4 color = sampleInput(defaultInputs, uv);
+        float inBounds = step(0.0, uv.x) * step(uv.x, 1.0) * step(0.0, uv.y) * step(uv.y, 1.0);
+        return color * inBounds;
+    }
+
+    fragment fragmentOut fragmentShader(fragmentIn in [[stage_in]],
+                                        constant Uniforms & uniforms [[buffer(1)]],
+                                        DefaultInputs defaultInputs
+                                        ) {
+        float2 uv = in.sourceTextureCoordinate;
+        float p = mix(uniforms.progress, 1.0 - uniforms.progress, step(0.5, uniforms.outro));
+        float posterized = ceil(p * uniforms.timeSteps) / uniforms.timeSteps;
+        for(float x = 0.0; x < 7.0; x += 1.0) {
+            float vert = fmod(x, 2.0);
+            vert = step(0.5, vert);
+            float3 np = float3(x * 113.45, posterized * 56.2, 0.0);
+            float dividing_line = dot_noise(np);
+            dividing_line += 3.0;
+            dividing_line /= 6.0;
+            float flip = step(0.0, dot_noise(np + float3(5.0, 16.3, -9.0)));
+            float2 offset_h = float2(step(dividing_line, uv.y) - 0.5, 0.0);
+            float2 offset_v = float2(0.0, step(dividing_line, uv.x) - 0.5);
+            float2 offset = mix(offset_h, offset_v, vert);
+            offset = mix(offset, offset * -1.0, flip);
+            float curve = 1.0 - posterized;
+            curve = pow(curve, uniforms.falloffCurve);
+            offset *= max(0.0, uniforms.maxOffset * curve);
+            uv += offset;
+        }
+        float4 color = sampleInputClipped(defaultInputs, uv);
+        color *= step(0.001, p);
+        fragmentOut out = {};
+        out._gl_FragColor = toOutputFormat(color);
+        return out;
+    }
+";

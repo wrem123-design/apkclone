@@ -1,0 +1,49 @@
+{
+  "identifier": "a6802656-1b0a-4d92-88e1-ae677ddcbbaa",
+  "enumCaseName": "subjectFadeAway",
+  "displayName": "Fade Away",
+  "loggingName": "video_cutout_fade_away",
+  "legacyId": 2110,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": false,
+    "typeSuggestions": [
+      "person",
+      "head"
+    ]
+  },
+  "customization": {
+    "duration": {
+      "default": 0.5,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "zoom": {
+      "default": 0.4,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "offsetY": {
+      "default": 0.0,
+      "min": -50.0,
+      "max": 50.0
+    },
+    "filter": {
+      "default": 0.3,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "2467c809",
+      "handle": "AQAEJNjBgp94",
+      "md5": "9dff8b4c84448082b4b4c79cd0c55bf9"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAFCkfZywGy"
+    }
+  }
+}

@@ -1,0 +1,61 @@
+.class public final LX/FvT;
+.super LX/338;
+.source ""
+
+
+# instance fields
+.field public A00:LX/Tok;
+
+
+# virtual methods
+.method public final A0V(LX/F8C;Lcom/instagram/common/session/UserSession;)V
+    .locals 2
+
+    const v0, 0x2ba5d737
+
+    invoke-static {v0, p2, p1}, LX/338;->A00(ILjava/lang/Object;Ljava/lang/Object;)I
+
+    move-result v1
+
+    iget-object v0, p0, LX/FvT;->A00:LX/Tok;
+
+    invoke-static {p1, p2, v0}, LX/338;->A01(LX/F8C;Lcom/instagram/common/session/UserSession;LX/Tok;)V
+
+    const v0, -0x6aa0be48
+
+    invoke-static {v0, v1}, LX/3ZB;->A0A(II)V
+
+    return-void
+.end method
+
+.method public final bridge synthetic A0Y(Lcom/instagram/common/session/UserSession;Ljava/lang/Object;)V
+    .locals 4
+
+    const v0, -0x59cf5bd2
+
+    invoke-static {v0}, LX/3ZB;->A03(I)I
+
+    move-result v3
+
+    const v0, -0x2fb565fe
+
+    invoke-static {v0}, LX/3ZB;->A03(I)I
+
+    move-result v2
+
+    iget-object v1, p0, LX/FvT;->A00:LX/Tok;
+
+    const/4 v0, 0x0
+
+    invoke-interface {v1, v0, v0}, LX/Tok;->Ewo(LX/EMB;Ljava/lang/String;)V
+
+    const v0, -0x510c3d23
+
+    invoke-static {v0, v2}, LX/3ZB;->A0A(II)V
+
+    const v0, -0x5a188196
+
+    invoke-static {v0, v3}, LX/3ZB;->A0A(II)V
+
+    return-void
+.end method

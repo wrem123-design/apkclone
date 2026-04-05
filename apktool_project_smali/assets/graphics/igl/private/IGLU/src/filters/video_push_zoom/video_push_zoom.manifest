@@ -1,0 +1,24 @@
+{
+  "identifier": "4f38de9f-1dcf-4b58-9323-d795f1ba9de7",
+  "enumCaseName": "videoPushZoom",
+  "displayName": "Push zoom",
+  "loggingName": "video_push_zoom",
+  "legacyId": 2059,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 750,
+    "curve": "circularOut"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "b93c4798",
+      "handle": "AQADn7X05n0O",
+      "md5": "c9f119ff702611eb9537f3588ca179cf"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAGFPV4bIwa"
+    }
+  }
+}

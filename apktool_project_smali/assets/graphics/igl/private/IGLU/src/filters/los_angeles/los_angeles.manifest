@@ -1,0 +1,12 @@
+{
+  "identifier": "6e176527-3cfe-496d-b22d-7befe851563a",
+  "displayName": "Los Angeles",
+  "loggingName": "los_angeles",
+  "assets": [
+    {
+      "name": "MapLosAngeles",
+      "assetHash": "cc84f1946673d95122b58d58aff098dc414f9f668fdef8b3e41e8e434255587e",
+      "effectId": "1929041764382085"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "identifier": "c4be0905-bf01-4abe-85a3-afdf8dd5a9e9",
+  "enumCaseName": "overlayFadeIn",
+  "displayName": "Fade In",
+  "loggingName": "video_cutout_fade",
+  "legacyId": 5062,
+  "subject": {
+    "overlay": true
+  },
+  "android": {
+    "previewAsset": {
+      "key": "58fc57dd",
+      "handle": "AQACkj9tQbCL",
+      "md5": "58dcf8c2b0c4404700dfa9b93806bdc4"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAE_yL4l_3W"
+    }
+  }
+}

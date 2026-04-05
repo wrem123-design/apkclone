@@ -1,0 +1,24 @@
+{
+  "identifier": "fab9820b-8a10-4ca3-ae2e-96ae1e245cd8",
+  "enumCaseName": "videoRoulette",
+  "displayName": "Roulette",
+  "loggingName": "video_roulette",
+  "legacyId": 3008,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 1500,
+    "curve": "quarticOut"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "87c2f550",
+      "handle": "AQACVA2ZW_e7",
+      "md5": "4236e16abd23a1c9c9b409c4ac7e43ea"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADSIx9bJJo"
+    }
+  }
+}

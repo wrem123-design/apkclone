@@ -1,0 +1,61 @@
+.class public final LX/CRe;
+.super Ljava/lang/Object;
+.source ""
+
+
+# static fields
+.field public static final A01:LX/Pyj;
+
+.field public static final A02:LX/Pws;
+
+
+# instance fields
+.field public final A00:LX/306;
+
+
+# direct methods
+.method public static constructor <clinit>()V
+    .locals 2
+
+    const/4 v1, 0x1
+
+    new-instance v0, LX/76W;
+
+    invoke-direct {v0, v1}, LX/76W;-><init>(I)V
+
+    sput-object v0, LX/CRe;->A01:LX/Pyj;
+
+    const/4 v1, 0x6
+
+    new-instance v0, LX/D9D;
+
+    invoke-direct {v0, v1}, LX/D9D;-><init>(I)V
+
+    sput-object v0, LX/CRe;->A02:LX/Pws;
+
+    return-void
+.end method
+
+.method public constructor <init>(Lcom/instagram/common/session/UserSession;)V
+    .locals 4
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    sget-object v3, LX/CRe;->A01:LX/Pyj;
+
+    sget-object v2, LX/CRe;->A02:LX/Pws;
+
+    const/16 v1, 0x64
+
+    invoke-static {v3}, LX/659;->A0v(Ljava/lang/Object;)V
+
+    invoke-static {v2}, LX/659;->A0m(Ljava/lang/Object;)V
+
+    new-instance v0, LX/306;
+
+    invoke-direct {v0, p1, v3, v2, v1}, LX/306;-><init>(Lcom/instagram/common/session/UserSession;LX/Pyj;LX/Pws;I)V
+
+    iput-object v0, p0, LX/CRe;->A00:LX/306;
+
+    return-void
+.end method

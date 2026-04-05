@@ -1,0 +1,65 @@
+{
+  "identifier": "7b51939a-31e6-474c-9b2e-c7278746f3ad",
+  "enumCaseName": "subjectInnerGlow",
+  "displayName": "Inner Glow",
+  "loggingName": "video_cutout_inner_glow",
+  "legacyId": 2106,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": false,
+    "typeSuggestions": [
+      "person",
+      "head"
+    ]
+  },
+  "customization": {
+    "color": {
+      "default": "#FFFFFF",
+      "available": [
+        "#FFFFFF",
+        "#000000",
+        "#FFD600",
+        "#FF7A00",
+        "#FE1D37",
+        "#FF0169",
+        "#D300C5",
+        "#7638FA",
+        "#37038B",
+        "#1CD164",
+        "#0095F6",
+        "#AD88FC",
+        "#FDD5FD",
+        "#FFABE1",
+        "#FFC584",
+        "#FFF8C2",
+        "#09FF00",
+        "#FFFF00",
+        "#5AFAC7",
+        "#0000FF"
+      ]
+    },
+    "opacity": {
+      "default": 0.4,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "size": {
+      "default": 1.0,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "cbfb8074",
+      "handle": "AQAHgozWThy3",
+      "md5": "e59b8211038bb7f5118ec6721ac65a41"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "isImageFormat": true,
+      "handle": "AQBbSTiv-ISq"
+    }
+  }
+}

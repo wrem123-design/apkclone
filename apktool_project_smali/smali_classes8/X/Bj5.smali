@@ -1,0 +1,839 @@
+.class public final LX/Bj5;
+.super LX/371;
+.source ""
+
+
+# static fields
+.field public static final __redex_internal_original_name:Ljava/lang/String; = "UpdateProfilePictureBottomSheetFragment"
+
+
+# instance fields
+.field public A00:I
+
+.field public A01:Landroidx/viewpager2/widget/ViewPager2;
+
+.field public A02:Lcom/google/android/material/tabs/TabLayout;
+
+.field public A03:Ljava/lang/String;
+
+.field public A04:Ljava/lang/String;
+
+.field public final A05:Ljava/lang/String;
+
+.field public final A06:LX/Bbi;
+
+
+# direct methods
+.method public constructor <init>()V
+    .locals 4
+
+    invoke-direct {p0}, LX/371;-><init>()V
+
+    const/16 v0, 0x7a
+
+    new-instance v3, LX/ZrJ;
+
+    invoke-direct {v3, p0, v0}, LX/ZrJ;-><init>(Ljava/lang/Object;I)V
+
+    const-class v0, LX/89k;
+
+    invoke-static {v0}, LX/132;->A1B(Ljava/lang/Class;)LX/1sr;
+
+    move-result-object v2
+
+    const/16 v0, 0xb4
+
+    invoke-static {p0, v0}, LX/194;->A0h(Ljava/lang/Object;I)LX/lkP;
+
+    move-result-object v1
+
+    const/16 v0, 0xb5
+
+    invoke-static {p0, v1, v3, v2, v0}, LX/194;->A0J(Ljava/lang/Object;LX/LEL;LX/LEL;LX/nff;I)LX/0lr;
+
+    move-result-object v0
+
+    iput-object v0, p0, LX/Bj5;->A06:LX/Bbi;
+
+    const-string v0, "edit_profile_picture_bottom_sheet"
+
+    iput-object v0, p0, LX/Bj5;->A05:Ljava/lang/String;
+
+    return-void
+.end method
+
+.method public static final A00(LX/Bj5;Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;)Lcom/instagram/avatars/coinflip/ProfileCoinFlipView;
+    .locals 2
+
+    iget-object v1, p0, LX/Bj5;->A02:Lcom/google/android/material/tabs/TabLayout;
+
+    const/4 p0, 0x0
+
+    if-nez v1, :cond_0
+
+    const-string v0, "tabLayout"
+
+    invoke-static {v0}, LX/659;->A13(Ljava/lang/String;)V
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+
+    :cond_0
+    iget v0, p1, Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;->A00:I
+
+    invoke-virtual {v1, v0}, Lcom/google/android/material/tabs/TabLayout;->A07(I)LX/2Nt;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_1
+
+    iget-object v1, v0, LX/2Nt;->A03:Landroid/view/View;
+
+    if-eqz v1, :cond_1
+
+    const v0, 0x7f0b3000
+
+    invoke-virtual {v1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+
+    move-result-object v0
+
+    check-cast v0, Lcom/instagram/avatars/coinflip/ProfileCoinFlipView;
+
+    return-object v0
+
+    :cond_1
+    return-object p0
+.end method
+
+.method public static final A01(LX/Bj5;Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;)Lcom/instagram/common/ui/widget/imageview/CircularImageView;
+    .locals 2
+
+    iget-object v1, p0, LX/Bj5;->A02:Lcom/google/android/material/tabs/TabLayout;
+
+    const/4 p0, 0x0
+
+    if-nez v1, :cond_0
+
+    const-string v0, "tabLayout"
+
+    invoke-static {v0}, LX/659;->A13(Ljava/lang/String;)V
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+
+    :cond_0
+    iget v0, p1, Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;->A00:I
+
+    invoke-virtual {v1, v0}, Lcom/google/android/material/tabs/TabLayout;->A07(I)LX/2Nt;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_1
+
+    iget-object v1, v0, LX/2Nt;->A03:Landroid/view/View;
+
+    if-eqz v1, :cond_1
+
+    const v0, 0x7f0b3080
+
+    invoke-virtual {v1, v0}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+
+    move-result-object v0
+
+    check-cast v0, Lcom/instagram/common/ui/widget/imageview/CircularImageView;
+
+    return-object v0
+
+    :cond_1
+    return-object p0
+.end method
+
+.method public static final A02(LX/Bj5;Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;F)V
+    .locals 2
+
+    invoke-static {p0, p1}, LX/Bj5;->A01(LX/Bj5;Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;)Lcom/instagram/common/ui/widget/imageview/CircularImageView;
+
+    move-result-object v1
+
+    if-eqz v1, :cond_0
+
+    const v0, 0x1b58c4bd
+
+    invoke-static {v1, p2, v0}, LX/08R;->A05(Landroid/view/View;FI)V
+
+    :cond_0
+    invoke-static {p0, p1}, LX/Bj5;->A00(LX/Bj5;Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;)Lcom/instagram/avatars/coinflip/ProfileCoinFlipView;
+
+    move-result-object v1
+
+    if-eqz v1, :cond_1
+
+    const v0, -0x78f29776
+
+    invoke-static {v1, p2, v0}, LX/08R;->A05(Landroid/view/View;FI)V
+
+    :cond_1
+    return-void
+.end method
+
+.method public static final A03(LX/Bj5;Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;F)V
+    .locals 2
+
+    invoke-static {p0, p1}, LX/Bj5;->A01(LX/Bj5;Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;)Lcom/instagram/common/ui/widget/imageview/CircularImageView;
+
+    move-result-object v1
+
+    if-eqz v1, :cond_0
+
+    const v0, -0x20a0fe74
+
+    invoke-static {v1, p2, v0}, LX/08R;->A0D(Landroid/view/View;FI)V
+
+    const v0, -0x77caafaa
+
+    invoke-static {v1, p2, v0}, LX/08R;->A0E(Landroid/view/View;FI)V
+
+    :cond_0
+    invoke-static {p0, p1}, LX/Bj5;->A00(LX/Bj5;Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;)Lcom/instagram/avatars/coinflip/ProfileCoinFlipView;
+
+    move-result-object v1
+
+    if-eqz v1, :cond_1
+
+    const v0, -0x670c90cf
+
+    invoke-static {v1, p2, v0}, LX/08R;->A0D(Landroid/view/View;FI)V
+
+    const v0, -0x2a2ba8ea
+
+    invoke-static {v1, p2, v0}, LX/08R;->A0E(Landroid/view/View;FI)V
+
+    :cond_1
+    return-void
+.end method
+
+
+# virtual methods
+.method public final getLargeScreenPresentationMode()LX/292;
+    .locals 1
+
+    sget-object v0, LX/292;->A03:LX/292;
+
+    return-object v0
+.end method
+
+.method public final getModuleName()Ljava/lang/String;
+    .locals 1
+
+    iget-object v0, p0, LX/Bj5;->A05:Ljava/lang/String;
+
+    return-object v0
+.end method
+
+.method public final onCreateView(Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Landroid/os/Bundle;)Landroid/view/View;
+    .locals 3
+
+    const v0, 0x730e6177
+
+    invoke-static {v0}, LX/3ZB;->A02(I)I
+
+    move-result v2
+
+    const/4 v1, 0x0
+
+    invoke-static {p1, v1}, LX/659;->A0y(Ljava/lang/Object;I)V
+
+    const v0, 0x7f0e0755
+
+    invoke-virtual {p1, v0, p2, v1}, Landroid/view/LayoutInflater;->inflate(ILandroid/view/ViewGroup;Z)Landroid/view/View;
+
+    move-result-object v1
+
+    const v0, -0x7e3631e1
+
+    invoke-static {v0, v2}, LX/3ZB;->A09(II)V
+
+    return-object v1
+.end method
+
+.method public final onPause()V
+    .locals 3
+
+    const v0, -0x33ce3e37    # -4.6597924E7f
+
+    invoke-static {v0}, LX/3ZB;->A02(I)I
+
+    move-result v2
+
+    invoke-super {p0}, Landroidx/fragment/app/Fragment;->onPause()V
+
+    iget-object v1, p0, LX/Bj5;->A01:Landroidx/viewpager2/widget/ViewPager2;
+
+    if-nez v1, :cond_0
+
+    const-string v0, "viewPager"
+
+    invoke-static {v0}, LX/659;->A13(Ljava/lang/String;)V
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+
+    :cond_0
+    new-instance v0, LX/Loo;
+
+    invoke-direct {v0, p0}, LX/Loo;-><init>(LX/Bj5;)V
+
+    invoke-virtual {v1, v0}, Landroid/view/View;->post(Ljava/lang/Runnable;)Z
+
+    const v0, -0x2ee1fff3
+
+    invoke-static {v0, v2}, LX/3ZB;->A09(II)V
+
+    return-void
+.end method
+
+.method public final onResume()V
+    .locals 3
+
+    const v0, -0x5fc26621
+
+    invoke-static {v0}, LX/3ZB;->A02(I)I
+
+    move-result v2
+
+    invoke-super {p0}, LX/BXD;->onResume()V
+
+    iget-object v1, p0, LX/Bj5;->A01:Landroidx/viewpager2/widget/ViewPager2;
+
+    if-nez v1, :cond_0
+
+    const-string v0, "viewPager"
+
+    invoke-static {v0}, LX/659;->A13(Ljava/lang/String;)V
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+
+    :cond_0
+    new-instance v0, LX/LoZ;
+
+    invoke-direct {v0, p0}, LX/LoZ;-><init>(LX/Bj5;)V
+
+    invoke-virtual {v1, v0}, Landroid/view/View;->post(Ljava/lang/Runnable;)Z
+
+    const v0, -0x73698799
+
+    invoke-static {v0, v2}, LX/3ZB;->A09(II)V
+
+    return-void
+.end method
+
+.method public final onViewCreated(Landroid/view/View;Landroid/os/Bundle;)V
+    .locals 20
+
+    const/4 v6, 0x0
+
+    move-object/from16 v3, p1
+
+    invoke-static {v3, v6}, LX/659;->A0y(Ljava/lang/Object;I)V
+
+    move-object/from16 v0, p2
+
+    move-object/from16 v2, p0
+
+    invoke-super {v2, v3, v0}, LX/BXD;->onViewCreated(Landroid/view/View;Landroid/os/Bundle;)V
+
+    invoke-virtual {v2}, LX/371;->getSession()Lcom/instagram/common/session/UserSession;
+
+    move-result-object v5
+
+    invoke-virtual {v2}, LX/BXD;->getBaseAnalyticsModule()LX/AHT;
+
+    move-result-object v4
+
+    sget-object v1, LX/65R;->A0C:LX/65R;
+
+    invoke-static {v2}, LX/166;->A0k(LX/371;)Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-static {v1, v4, v5, v0}, LX/655;->A01(LX/65R;LX/AHT;Lcom/instagram/common/session/UserSession;Ljava/lang/String;)V
+
+    iget-object v1, v2, Landroidx/fragment/app/Fragment;->mArguments:Landroid/os/Bundle;
+
+    if-eqz v1, :cond_0
+
+    const-string v0, "tab_type_key"
+
+    invoke-virtual {v1, v0}, Landroid/os/Bundle;->getParcelable(Ljava/lang/String;)Landroid/os/Parcelable;
+
+    move-result-object v14
+
+    check-cast v14, Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;
+
+    if-nez v14, :cond_1
+
+    :cond_0
+    sget-object v14, Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;->A04:Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;
+
+    :cond_1
+    iget-object v1, v2, Landroidx/fragment/app/Fragment;->mArguments:Landroid/os/Bundle;
+
+    if-eqz v1, :cond_13
+
+    const-string v0, "logging_surface_key"
+
+    invoke-virtual {v1, v0}, Landroid/os/BaseBundle;->getString(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v1
+
+    if-eqz v1, :cond_13
+
+    iput-object v1, v2, LX/Bj5;->A04:Ljava/lang/String;
+
+    const-string v0, "ig_edit_profile"
+
+    invoke-virtual {v1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_10
+
+    sget-object v11, Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;->A04:Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;
+
+    if-ne v14, v11, :cond_f
+
+    const-string v0, "ig_edit_profile_identity_sheet_profile_picture"
+
+    :goto_0
+    iput-object v0, v2, LX/Bj5;->A03:Ljava/lang/String;
+
+    iget-object v1, v2, Landroidx/fragment/app/Fragment;->mArguments:Landroid/os/Bundle;
+
+    if-eqz v1, :cond_e
+
+    const-string v0, "coin_flip_setting_value_key"
+
+    invoke-virtual {v1, v0}, Landroid/os/BaseBundle;->getBoolean(Ljava/lang/String;)Z
+
+    move-result v10
+
+    :goto_1
+    iget-object v1, v2, Landroidx/fragment/app/Fragment;->mArguments:Landroid/os/Bundle;
+
+    const/4 v12, 0x1
+
+    if-eqz v1, :cond_d
+
+    const-string v0, "is_viewpager_scroll_enabled_key"
+
+    invoke-virtual {v1, v0}, Landroid/os/BaseBundle;->getBoolean(Ljava/lang/String;)Z
+
+    move-result v8
+
+    :goto_2
+    iget-object v1, v2, Landroidx/fragment/app/Fragment;->mArguments:Landroid/os/Bundle;
+
+    if-eqz v1, :cond_2
+
+    const-string v0, "is_enable_avatar_creation_flow"
+
+    invoke-virtual {v1, v0}, Landroid/os/BaseBundle;->getBoolean(Ljava/lang/String;)Z
+
+    move-result v12
+
+    :cond_2
+    const v0, 0x7f0b4561
+
+    invoke-static {v3, v0}, LX/011;->A06(Landroid/view/View;I)Landroid/view/View;
+
+    move-result-object v5
+
+    check-cast v5, Landroidx/viewpager2/widget/ViewPager2;
+
+    invoke-virtual {v2}, Landroidx/fragment/app/Fragment;->requireActivity()Landroidx/fragment/app/FragmentActivity;
+
+    move-result-object v1
+
+    invoke-virtual {v2}, LX/371;->getSession()Lcom/instagram/common/session/UserSession;
+
+    move-result-object v9
+
+    iget-object v7, v2, LX/Bj5;->A04:Ljava/lang/String;
+
+    if-nez v7, :cond_3
+
+    const-string v0, "surface"
+
+    :goto_3
+    invoke-static {v0}, LX/659;->A13(Ljava/lang/String;)V
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+
+    :cond_3
+    iget-object v4, v2, LX/Bj5;->A03:Ljava/lang/String;
+
+    if-nez v4, :cond_4
+
+    const-string v0, "mechanism"
+
+    goto :goto_3
+
+    :cond_4
+    if-eqz v12, :cond_5
+
+    invoke-virtual {v2}, LX/371;->getSession()Lcom/instagram/common/session/UserSession;
+
+    move-result-object v0
+
+    invoke-static {v0}, LX/3Be;->A04(Lcom/instagram/common/session/UserSession;)Z
+
+    move-result v0
+
+    if-nez v8, :cond_8
+
+    if-nez v0, :cond_9
+
+    sget-object v11, Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;->A03:Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;
+
+    :cond_5
+    :goto_4
+    invoke-static {v11}, Ljava/util/Collections;->singletonList(Ljava/lang/Object;)Ljava/util/List;
+
+    move-result-object v13
+
+    invoke-static {v13}, LX/659;->A0g(Ljava/lang/Object;)V
+
+    :goto_5
+    new-instance v12, LX/7Dn;
+
+    invoke-direct {v12, v9}, LX/7Dn;-><init>(Lcom/instagram/common/session/UserSession;)V
+
+    invoke-static {v9}, LX/659;->A0v(Ljava/lang/Object;)V
+
+    invoke-virtual {v1}, Landroidx/fragment/app/FragmentActivity;->A1L()LX/0en;
+
+    move-result-object v11
+
+    iget-object v0, v1, Landroidx/core/app/ComponentActivity;->A00:LX/0jq;
+
+    new-instance v1, LX/37w;
+
+    invoke-direct {v1, v11, v0}, LX/9ir;-><init>(LX/0en;LX/0jg;)V
+
+    iput-object v9, v1, LX/37w;->A00:Lcom/instagram/common/session/UserSession;
+
+    iput-object v7, v1, LX/37w;->A02:Ljava/lang/String;
+
+    iput-object v4, v1, LX/37w;->A01:Ljava/lang/String;
+
+    iput-boolean v10, v1, LX/37w;->A04:Z
+
+    iput-object v13, v1, LX/37w;->A03:Ljava/util/List;
+
+    iput-boolean v6, v1, LX/37w;->A05:Z
+
+    invoke-virtual {v12}, LX/7Dn;->A03()Z
+
+    move-result v0
+
+    iput-boolean v0, v1, LX/37w;->A06:Z
+
+    sput v6, Lredex/$StoreFenceHelper;->DUMMY_VOLATILE:I
+
+    invoke-virtual {v5, v1}, Landroidx/viewpager2/widget/ViewPager2;->setAdapter(LX/9hw;)V
+
+    new-instance v0, LX/O8B;
+
+    invoke-direct {v0, v2, v6}, LX/O8B;-><init>(Ljava/lang/Object;I)V
+
+    invoke-virtual {v5, v0}, Landroidx/viewpager2/widget/ViewPager2;->A08(LX/9is;)V
+
+    iput-object v5, v2, LX/Bj5;->A01:Landroidx/viewpager2/widget/ViewPager2;
+
+    invoke-static {v2, v6}, LX/140;->A0I(LX/371;I)LX/0AA;
+
+    move-result-object v4
+
+    const-wide v0, 0x8107ce00012d08L
+
+    invoke-static {v4, v0, v1}, LX/011;->A0l(Ljava/lang/Object;J)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_7
+
+    const v4, 0x7f0b455f
+
+    invoke-static {v3, v4}, LX/140;->A05(Landroid/view/View;I)Landroid/widget/TextView;
+
+    move-result-object v7
+
+    invoke-static {v2, v6}, LX/140;->A0I(LX/371;I)LX/0AA;
+
+    move-result-object v4
+
+    invoke-static {v4, v0, v1}, LX/011;->A0l(Ljava/lang/Object;J)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_6
+
+    invoke-virtual {v2}, Landroidx/fragment/app/Fragment;->requireContext()Landroid/content/Context;
+
+    move-result-object v1
+
+    const v0, 0x7f131f80
+
+    invoke-static {v1, v0}, LX/020;->A0n(Landroid/content/Context;I)Ljava/lang/String;
+
+    move-result-object v5
+
+    invoke-virtual {v2}, Landroidx/fragment/app/Fragment;->requireContext()Landroid/content/Context;
+
+    move-result-object v1
+
+    const v0, 0x7f135a91
+
+    invoke-static {v1, v5, v0}, LX/021;->A0F(Landroid/content/Context;Ljava/lang/Object;I)Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-static {v2}, LX/149;->A00(Landroidx/fragment/app/Fragment;)I
+
+    move-result v1
+
+    new-instance v0, LX/EMw;
+
+    invoke-direct {v0, v2, v1}, LX/EMw;-><init>(LX/Bj5;I)V
+
+    invoke-static {v0, v7, v5, v4}, LX/6v3;->A07(Landroid/text/style/ClickableSpan;Landroid/widget/TextView;Ljava/lang/String;Ljava/lang/String;)V
+
+    :cond_6
+    const v0, 0x37877968
+
+    invoke-static {v7, v6, v0}, LX/08R;->A0S(Landroid/view/View;II)V
+
+    :cond_7
+    sget-object v1, LX/009;->A0N:Ljava/lang/Integer;
+
+    invoke-virtual {v2}, LX/371;->getSession()Lcom/instagram/common/session/UserSession;
+
+    move-result-object v0
+
+    invoke-static {v0, v1}, LX/7UQ;->A00(Lcom/instagram/common/session/UserSession;Ljava/lang/Integer;)V
+
+    const v0, 0x7f0b4560
+
+    invoke-virtual {v3, v0}, Landroid/view/View;->requireViewById(I)Landroid/view/View;
+
+    move-result-object v0
+
+    check-cast v0, Lcom/google/android/material/tabs/TabLayout;
+
+    iput-object v0, v2, LX/Bj5;->A02:Lcom/google/android/material/tabs/TabLayout;
+
+    invoke-static {v2, v6}, LX/140;->A0I(LX/371;I)LX/0AA;
+
+    move-result-object v0
+
+    const-wide v3, 0x81057300001b0aL
+
+    invoke-static {v0, v3, v4}, LX/011;->A0l(Ljava/lang/Object;J)Z
+
+    move-result v0
+
+    iget-object v7, v2, LX/Bj5;->A02:Lcom/google/android/material/tabs/TabLayout;
+
+    if-nez v7, :cond_a
+
+    const-string v0, "tabLayout"
+
+    goto/16 :goto_3
+
+    :cond_8
+    if-eqz v0, :cond_9
+
+    goto/16 :goto_4
+
+    :cond_9
+    sget-object v0, Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;->A03:Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;
+
+    filled-new-array {v11, v0}, [Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;
+
+    move-result-object v0
+
+    invoke-static {v0}, LX/AuH;->A1g([Ljava/lang/Object;)Ljava/util/List;
+
+    move-result-object v13
+
+    goto/16 :goto_5
+
+    :cond_a
+    iget-object v5, v2, LX/Bj5;->A01:Landroidx/viewpager2/widget/ViewPager2;
+
+    if-eqz v5, :cond_c
+
+    new-instance v1, LX/Jm9;
+
+    invoke-direct {v1, v2, v8, v0}, LX/Jm9;-><init>(LX/Bj5;ZZ)V
+
+    new-instance v0, LX/HuZ;
+
+    invoke-direct {v0, v5, v7, v1}, LX/HuZ;-><init>(Landroidx/viewpager2/widget/ViewPager2;Lcom/google/android/material/tabs/TabLayout;LX/Nku;)V
+
+    invoke-virtual {v0}, LX/HuZ;->A00()V
+
+    if-eqz v8, :cond_b
+
+    invoke-virtual {v2}, LX/371;->getSession()Lcom/instagram/common/session/UserSession;
+
+    move-result-object v0
+
+    invoke-static {v0}, LX/3Be;->A04(Lcom/instagram/common/session/UserSession;)Z
+
+    move-result v0
+
+    if-nez v0, :cond_b
+
+    sget-object v1, Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;->A03:Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;
+
+    const v0, 0x3f19999a    # 0.6f
+
+    invoke-static {v2, v1, v0}, LX/Bj5;->A02(LX/Bj5;Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;F)V
+
+    invoke-static {v2, v6}, LX/140;->A0I(LX/371;I)LX/0AA;
+
+    move-result-object v0
+
+    invoke-static {v0, v3, v4}, LX/011;->A0l(Ljava/lang/Object;J)Z
+
+    move-result v0
+
+    if-nez v0, :cond_b
+
+    const v0, 0x3f4ccccd    # 0.8f
+
+    invoke-static {v2, v1, v0}, LX/Bj5;->A03(LX/Bj5;Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;F)V
+
+    :cond_b
+    iget-object v1, v2, LX/Bj5;->A01:Landroidx/viewpager2/widget/ViewPager2;
+
+    if-eqz v1, :cond_c
+
+    new-instance v0, LX/LyT;
+
+    invoke-direct {v0, v2, v14}, LX/LyT;-><init>(LX/Bj5;Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;)V
+
+    invoke-virtual {v1, v0}, Landroid/view/View;->post(Ljava/lang/Runnable;)Z
+
+    iget-object v1, v2, LX/Bj5;->A01:Landroidx/viewpager2/widget/ViewPager2;
+
+    if-eqz v1, :cond_c
+
+    new-instance v0, LX/Loo;
+
+    invoke-direct {v0, v2}, LX/Loo;-><init>(LX/Bj5;)V
+
+    invoke-virtual {v1, v0}, Landroid/view/View;->post(Ljava/lang/Runnable;)Z
+
+    sget-object v16, LX/0jf;->A06:LX/0jf;
+
+    invoke-virtual {v2}, Landroidx/fragment/app/Fragment;->getViewLifecycleOwner()LX/00V;
+
+    move-result-object v15
+
+    invoke-static {v15}, LX/0jn;->A00(LX/00V;)LX/0ji;
+
+    move-result-object v0
+
+    const/16 v18, 0x0
+
+    const/16 v19, 0x5
+
+    new-instance v13, LX/31t;
+
+    move-object/from16 v17, v2
+
+    invoke-direct/range {v13 .. v19}, LX/31t;-><init>(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;LX/igO;I)V
+
+    invoke-static {v13, v0}, LX/020;->A1V(LX/LEN;LX/jAX;)V
+
+    return-void
+
+    :cond_c
+    const-string v0, "viewPager"
+
+    goto/16 :goto_3
+
+    :cond_d
+    const/4 v8, 0x1
+
+    goto/16 :goto_2
+
+    :cond_e
+    const/4 v10, 0x0
+
+    goto/16 :goto_1
+
+    :cond_f
+    const-string v0, "ig_edit_profile_identity_sheet_avatar"
+
+    goto/16 :goto_0
+
+    :cond_10
+    const-string v0, "ig_self_profile"
+
+    invoke-virtual {v1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_12
+
+    sget-object v11, Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;->A04:Lcom/instagram/avatar/ui/UpdateProfilePicturePagerAdapter$UpdateProfileTabType;
+
+    if-ne v14, v11, :cond_11
+
+    const-string v0, "ig_self_profile_identity_sheet_profile_picture"
+
+    goto/16 :goto_0
+
+    :cond_11
+    const-string v0, "ig_self_profile_identity_sheet_avatar"
+
+    goto/16 :goto_0
+
+    :cond_12
+    const-string v0, "surface not recognized"
+
+    invoke-static {v0}, LX/011;->A0H(Ljava/lang/String;)Ljava/lang/IllegalStateException;
+
+    move-result-object v0
+
+    throw v0
+
+    :cond_13
+    const-string v0, "surface is required"
+
+    invoke-static {v0}, LX/011;->A0H(Ljava/lang/String;)Ljava/lang/IllegalStateException;
+
+    move-result-object v0
+
+    throw v0
+.end method

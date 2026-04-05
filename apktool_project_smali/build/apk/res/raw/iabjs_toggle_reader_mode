@@ -1,0 +1,15 @@
+/**
+ * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
+ */
+
+function(activate) {
+  if (activate === 'true') {
+    if (window._ActivateReaderMode) {
+      window._ActivateReaderMode();
+    }
+  } else {
+    if (window._DeactivateReaderMode) {
+      window._DeactivateReaderMode();
+    }
+  }
+}

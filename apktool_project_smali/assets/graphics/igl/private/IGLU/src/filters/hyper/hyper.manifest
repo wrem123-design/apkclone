@@ -1,0 +1,12 @@
+{
+  "identifier": "9c50c341-4fa8-4801-a0eb-97f67e55f200",
+  "displayName": "Hyper",
+  "loggingName": "hyper",
+  "assets": [
+    {
+      "name": "LutHyper",
+      "assetHash": "0d7a72e39f88007735b4b53f61b0eeee7e008ed8312194a3a000b1a4d71207aa",
+      "effectId": "2985908434931532"
+    }
+  ]
+}

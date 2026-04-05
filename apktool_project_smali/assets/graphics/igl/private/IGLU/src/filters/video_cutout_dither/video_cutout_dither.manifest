@@ -1,0 +1,60 @@
+{
+  "identifier": "5218b728-e392-4ff6-8fd3-faaa6ced7cba",
+  "enumCaseName": "subjectDither",
+  "displayName": "Dither",
+  "loggingName": "video_cutout_dither",
+  "legacyId": 2092,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": false,
+    "typeSuggestions": [
+      "person",
+      "head",
+      "clothing"
+    ]
+  },
+  "customization": {
+    "color": {
+      "default": "#FFFFFF",
+      "available": [
+        "#FFFFFF",
+        "#000000",
+        "#FFD600",
+        "#FF7A00",
+        "#FE1D37",
+        "#FF0169",
+        "#D300C5",
+        "#7638FA",
+        "#37038B",
+        "#1CD164",
+        "#0095F6",
+        "#AD88FC",
+        "#FDD5FD",
+        "#FFABE1",
+        "#FFC584",
+        "#FFF8C2",
+        "#09FF00",
+        "#FFFF00",
+        "#5AFAC7",
+        "#0000FF"
+      ]
+    },
+    "size": {
+      "default": 1.0,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "d322e0b6",
+      "handle": "AQACkqhc41Mc",
+      "md5": "41ad8118e6086afa0c95a92ba88268fe"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAFsh3Obuwb"
+    }
+  }
+}

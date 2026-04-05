@@ -1,0 +1,15 @@
+{
+  "identifier": "2e5fc4e9-4f8c-49cd-9f53-e99264189889",
+  "enumCaseName": "videoCutoutRawMask",
+  "displayName": "Cutout Raw Mask",
+  "loggingName": "video_cutout_raw_mask",
+  "legacyId": 2113,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": false,
+    "typeSuggestions": [
+      "person",
+      "head"
+    ]
+  }
+}

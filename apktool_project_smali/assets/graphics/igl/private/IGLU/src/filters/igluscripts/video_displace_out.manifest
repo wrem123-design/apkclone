@@ -1,0 +1,18 @@
+{
+  "identifier": "d1e2f3a4-b5c6-4d8e-9f0a-1b2c3d4e5f6a",
+  "displayName": "Displace out",
+  "loggingName": "video_displace_out",
+  "legacyId": 3038,
+  "behavior": {
+    "type": "fixedOutro",
+    "durationMs": 1000,
+    "curve": "linear"
+  },
+  "assets": [
+    {
+      "name": "DisplaceIn",
+      "assetHash": "b857707b9642cbf8c0a0a318af39116cff592a1e10c0d64c1a5946145501a2d5",
+      "effectId": "1234560632154926"
+    }
+  ]
+}

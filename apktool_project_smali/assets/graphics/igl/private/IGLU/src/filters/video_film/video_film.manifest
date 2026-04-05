@@ -1,0 +1,19 @@
+{
+  "identifier": "70be9c37-a68a-4aa3-a89e-50dbf98d9591",
+  "enumCaseName": "videoFilm",
+  "displayName": "Film",
+  "loggingName": "video_film",
+  "legacyId": 2074,
+  "android": {
+    "previewAsset": {
+      "key": "c0b2e49a",
+      "handle": "AQAD7LZc-MyE",
+      "md5": "0c6627e00e825e3f8f1d139fe4fcaf32"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEc2UX38Ay"
+    }
+  }
+}

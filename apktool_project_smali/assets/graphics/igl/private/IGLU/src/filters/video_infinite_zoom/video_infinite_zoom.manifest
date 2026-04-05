@@ -1,0 +1,19 @@
+{
+  "identifier": "2288c8cd-5dbb-4fc0-8655-d45e4ebdf4e6",
+  "enumCaseName": "videoInfiniteZoom",
+  "displayName": "Infinite scale",
+  "loggingName": "video_infinite_zoom",
+  "legacyId": 2052,
+  "android": {
+    "previewAsset": {
+      "key": "9f73c32",
+      "handle": "AQADnoENDKUI",
+      "md5": "1d0375cf2d9102d12da49674e6d2448d"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQACuCgxxU3y"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "identifier": "2c29fecb-3087-41d9-b27e-cfc6e427f887",
+  "enumCaseName": "videoStepFade",
+  "displayName": "Step fade",
+  "loggingName": "video_step_fade",
+  "legacyId": 3026,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 750,
+    "curve": "linear"
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAG_nNSaubQ"
+    }
+  }
+}

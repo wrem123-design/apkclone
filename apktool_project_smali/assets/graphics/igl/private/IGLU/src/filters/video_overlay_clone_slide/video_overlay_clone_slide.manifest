@@ -1,0 +1,29 @@
+{
+  "identifier": "e5b7d9ad-00a7-4452-b337-f092ce908459",
+  "enumCaseName": "overlayCloneSlide",
+  "displayName": "Clone Slide",
+  "loggingName": "video_cutout_clone_slide",
+  "legacyId": 5058,
+  "subject": {
+    "overlay": true
+  },
+  "customization": {
+    "speed": {
+      "default": 0.55,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "f8fef2b0",
+      "handle": "AQAF31dacQYC",
+      "md5": "a76997ad13a848d397908183b035cad9"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAGpPcbMR64"
+    }
+  }
+}

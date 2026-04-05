@@ -1,0 +1,19 @@
+{
+  "identifier": "2d6aedfb-81bf-40c8-bf31-46dd5888e02e",
+  "enumCaseName": "videoFisheye",
+  "displayName": "Fisheye",
+  "loggingName": "video_fisheye",
+  "legacyId": 2078,
+  "android": {
+    "previewAsset": {
+      "key": "e144c653",
+      "handle": "AQAFgsvMyD7_",
+      "md5": "17f54680d0653e37935fd94e51ca80c3"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAHjJJZs13-"
+    }
+  }
+}

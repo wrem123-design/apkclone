@@ -1,0 +1,112 @@
+[Filter IgluscriptVideoLowResFilter]
+[BehaviorType static]
+
+[Init]
+fun init(Filter filter) {
+  filter.passes = {{
+      name = 'low_res, inputs = {'default},
+      uniforms = {
+        inputSize = {1080.0, 1920.0},
+        blockSize = 5.0,
+        maxColors = 256.0,
+        aberration = 0.004,
+      },
+      glslShader = glsl,
+      metalShader = metal
+    }};
+
+  filter.parameters = {
+      {blockSize = 5.0, min = 1.0, max = 50.0, description = "Pixel block size"},
+      {maxColors = 256.0, min = 2.0, max = 512.0, description = "Maximum color palette size"},
+      {aberration = 0.004, min = 0.0, max = 0.05, description = "Chromatic aberration amount"}
+  };
+}
+
+fun getSizeScale() f32 {
+  vec2 inputSize = getTextureSize('default);
+  return min(inputSize.x, inputSize.y) / 1080.0;
+}
+
+[PreRender]
+fun preRender(Filter filter) {
+  vec2 inputSize = getTextureSize('default);
+  setShaderUniform('low_res, 'inputSize, inputSize);
+
+  f32 sizeScale = getSizeScale();
+  f32 blockSizeBase = getParameterFloat('blockSize);
+  f32 blockSize = blockSizeBase * sizeScale;
+  setShaderUniform('low_res, 'blockSize, blockSize);
+
+  f32 maxColors = getParameterFloat('maxColors);
+  setShaderUniform('low_res, 'maxColors, maxColors);
+
+  f32 aberration = getParameterFloat('aberration);
+  setShaderUniform('low_res, 'aberration, aberration);
+}
+
+string glsl = "
+varying vec2 sourceTextureCoordinate;
+
+BaseUniformsOpenGL;
+
+uniform float blockSize;
+uniform float maxColors;
+uniform float aberration;
+uniform vec2 inputSize;
+
+void main() {
+
+  vec2 uv = sourceTextureCoordinate;
+
+  vec2 st = (uv - 0.5) * inputSize;
+  vec2 pixelatedST = floor(st / blockSize) * blockSize + blockSize * 0.5;
+  vec2 pixelatedUV = pixelatedST / inputSize + 0.5;
+
+  vec4 baseR = sampleInput(pixelatedUV + aberration);
+  vec4 baseG = sampleInput(pixelatedUV);
+  vec4 baseB = sampleInput(pixelatedUV - aberration);
+  vec4 base = vec4(baseR.r, baseG.g, baseB.b, baseR.a);
+
+  // 8-bit color
+  vec3 color_resolution = vec3(8.0, 8.0, 4.0) * maxColors / 256.0;
+  vec3 color_bands = floor(base.rgb * color_resolution) / (color_resolution - 1.0);
+  vec4 color = vec4(min(color_bands, 1.0), base.a);
+
+  gl_FragColor = toOutputFormat(color);
+}
+";
+
+string metal = "
+using namespace metal;
+struct fragmentIn { float2 sourceTextureCoordinate [[user(locn1)]]; };
+struct fragmentOut { float4 _gl_FragColor [[color(0)]]; };
+typedef struct {
+  BaseUniformsMetal;
+  float2 inputSize;
+  float maxColors;
+  float blockSize;
+  float aberration;
+ } Uniforms;
+fragment fragmentOut fragmentShader(fragmentIn in [[stage_in]],
+ constant Uniforms & uniforms [[buffer(1)]],
+ DefaultInputs defaultInputs) {
+
+  float2 uv = in.sourceTextureCoordinate;
+
+  float2 st = (uv - 0.5) * uniforms.inputSize;
+  float2 pixelatedST = floor(st / uniforms.blockSize) * uniforms.blockSize + uniforms.blockSize * 0.5;
+  float2 pixelatedUV = pixelatedST / uniforms.inputSize + 0.5;
+
+  float4 baseR = sampleInput(defaultInputs, pixelatedUV + uniforms.aberration);
+  float4 baseG = sampleInput(defaultInputs, pixelatedUV);
+  float4 baseB = sampleInput(defaultInputs, pixelatedUV - uniforms.aberration);
+  float4 base = float4(baseR.r, baseG.g, baseB.b, baseR.a);
+
+  // 8-bit color
+  float3 color_resolution = float3(8.0, 8.0, 4.0) * uniforms.maxColors / 256.0;
+  float3 color_bands = floor(base.rgb * color_resolution) / (color_resolution - 1.0);
+  float4 color = float4(min(color_bands, 1.0), base.a);
+
+  return {toOutputFormat(color)};
+}
+";

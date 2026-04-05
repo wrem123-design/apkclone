@@ -1,0 +1,24 @@
+{
+  "identifier": "5612349b-5a64-4130-ae62-72f396d7e4e4",
+  "enumCaseName": "videoSwipeUp",
+  "displayName": "Swipe up",
+  "loggingName": "video_swipe_up",
+  "legacyId": 3010,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 1500,
+    "curve": "cubicOut"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "f5ed82fa",
+      "handle": "AQAEaWcesawz",
+      "md5": "fd71d443e5db571f5ce582bf67cf81b4"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEmUlEkH32"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+/**
+ * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
+ *
+ * IAB Inner Frame DocStart javascript
+ *
+ * @generated SignedSource<<886968f216c052f468a063d2f9c937e6>>
+ * @format
+ * @nolint
+ * @lightSyntaxTransform
+ * @no-auto-requires
+ * @noframework
+ * @oncall browser_agentic_interfaces
+ * @preserve-whitespace
+ * @providesInline fb.iab_inner_frame.docstart
+ */
+(()=>{(()=>{"use strict";function a(e){return e.timeStamp===0?performance.now():e.timeStamp}let n=null;function t(){return n!=null}function l(e){if(n!=null)throw new Error("Global pageshow handler already installed");window.addEventListener("pageshow",e,!0),n=e}function r(){n!=null&&window.removeEventListener("pageshow",n,!0),n=null}function w(e){window.__call_iabjs_unified_bridge!=null&&window.__iabjs_unified_bridge_nonce!=null&&window.__call_iabjs_unified_bridge("IABInnerFrameJS",window.__iabjs_unified_bridge_nonce,e)}function s(e){const _=e instanceof PageTransitionEvent?e.persisted:!1;w({event:"pageshow",persisted:_,eventTime:a(e)})}function d(){t()||l(s)}function u(){r()}var i;const o=(i=window._META)!=null?i:{};o.IABInnerFrameDS={onPageShow:d,removePageShowListener:u},window._META=o,o.IABInnerFrameDS.onPageShow()})();})()

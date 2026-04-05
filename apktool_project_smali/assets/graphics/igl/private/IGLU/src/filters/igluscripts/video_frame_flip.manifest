@@ -1,0 +1,24 @@
+{
+  "identifier": "85f087af-6317-4fb1-8344-e247260298b2",
+  "enumCaseName": "videoFrameFlip",
+  "displayName": "Frame flip",
+  "loggingName": "video_frame_flip",
+  "legacyId": 3018,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 1000,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "475be4e1",
+      "handle": "AQACY6wGXnZO",
+      "md5": "0ca495930cb5b9b4b7622c80f41469d3"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEdFiJSqeB"
+    }
+  }
+}

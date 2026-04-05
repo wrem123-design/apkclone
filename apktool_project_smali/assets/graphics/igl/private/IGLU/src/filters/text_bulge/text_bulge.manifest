@@ -1,0 +1,12 @@
+{
+  "identifier": "e812dc06-2c97-4426-97ca-a5efaccc3539",
+  "displayName": "Text Bulge",
+  "loggingName": "text_bulge",
+  "assets": [
+    {
+      "name": "Bulge",
+      "assetHash": "66f2ba5c28527e8220ff67c0f64914252d82c641748ef76e767277738eae87ab",
+      "effectId": "3641797072626941"
+    }
+  ]
+}

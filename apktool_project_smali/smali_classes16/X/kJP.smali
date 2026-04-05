@@ -1,0 +1,155 @@
+.class public final LX/kJP;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements LX/Ki7;
+
+
+# instance fields
+.field public final $t:I
+
+.field public final A00:Ljava/lang/Object;
+
+.field public final A01:Ljava/lang/Object;
+
+
+# direct methods
+.method public constructor <init>(ILjava/lang/Object;Ljava/lang/Object;)V
+    .locals 0
+
+    iput p1, p0, LX/kJP;->$t:I
+
+    iput-object p3, p0, LX/kJP;->A01:Ljava/lang/Object;
+
+    iput-object p2, p0, LX/kJP;->A00:Ljava/lang/Object;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final Ebh(Ljava/lang/Exception;)V
+    .locals 10
+
+    iget v0, p0, LX/kJP;->$t:I
+
+    if-eqz v0, :cond_1
+
+    const/4 v7, 0x0
+
+    invoke-static {p1, v7}, LX/659;->A0y(Ljava/lang/Object;I)V
+
+    iget-object v1, p0, LX/kJP;->A01:Ljava/lang/Object;
+
+    check-cast v1, LX/BVu;
+
+    invoke-virtual {p1}, Ljava/lang/Throwable;->getLocalizedMessage()Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-static {v1, v0}, LX/BVu;->A05(LX/BVu;Ljava/lang/String;)V
+
+    iget-object v0, v1, LX/BVu;->A02:LX/NBY;
+
+    iget-object v2, v0, LX/NBY;->A04:LX/LEo;
+
+    :cond_0
+    invoke-interface {v2}, LX/LEo;->getValue()Ljava/lang/Object;
+
+    move-result-object v1
+
+    move-object v5, v1
+
+    check-cast v5, LX/ELV;
+
+    const/16 v8, 0x7f
+
+    const/4 v3, 0x0
+
+    move-object v4, v3
+
+    move-object v6, v3
+
+    move v9, v7
+
+    invoke-static/range {v3 .. v9}, LX/ELV;->A00(Lcom/instagram/business/promote/model/AudienceGeoLocation;Lcom/instagram/business/promote/model/AudienceGeoLocation;LX/ELV;Ljava/lang/Boolean;IIZ)LX/ELV;
+
+    move-result-object v0
+
+    invoke-interface {v2, v1, v0}, LX/LEo;->AMA(Ljava/lang/Object;Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    :cond_1
+    return-void
+.end method
+
+.method public final onLocationChanged(Landroid/location/Location;)V
+    .locals 5
+
+    iget v0, p0, LX/kJP;->$t:I
+
+    if-eqz v0, :cond_0
+
+    iget-object v1, p0, LX/kJP;->A01:Ljava/lang/Object;
+
+    check-cast v1, LX/BVu;
+
+    iget-object v0, p0, LX/kJP;->A00:Ljava/lang/Object;
+
+    check-cast v0, Landroid/content/Context;
+
+    invoke-static {v0, v1}, LX/BVu;->A03(Landroid/content/Context;LX/BVu;)V
+
+    return-void
+
+    :cond_0
+    const/4 v4, 0x0
+
+    invoke-static {p1, v4}, LX/659;->A0y(Ljava/lang/Object;I)V
+
+    iget-object v3, p0, LX/kJP;->A01:Ljava/lang/Object;
+
+    check-cast v3, LX/7Dl;
+
+    invoke-static {}, LX/154;->A0L()LX/9Tn;
+
+    move-result-object v2
+
+    invoke-virtual {p1}, Landroid/location/Location;->getLatitude()D
+
+    move-result-wide v0
+
+    invoke-static {v0, v1}, Ljava/lang/Double;->valueOf(D)Ljava/lang/Double;
+
+    move-result-object v0
+
+    invoke-virtual {v2, v0, v4}, LX/9Tn;->A03(Ljava/lang/Object;I)V
+
+    invoke-virtual {p1}, Landroid/location/Location;->getLongitude()D
+
+    move-result-wide v0
+
+    invoke-static {v0, v1}, Ljava/lang/Double;->valueOf(D)Ljava/lang/Double;
+
+    move-result-object v0
+
+    invoke-virtual {v2, v0}, LX/9Tn;->A02(Ljava/lang/Object;)V
+
+    invoke-virtual {v2}, LX/9Tn;->A00()LX/9Ti;
+
+    move-result-object v1
+
+    iget-object v0, p0, LX/kJP;->A00:Ljava/lang/Object;
+
+    check-cast v0, LX/9Tg;
+
+    invoke-static {v0, v1, v3}, LX/9Tp;->A00(LX/9Tg;LX/9Ti;LX/7Dl;)Ljava/lang/Object;
+
+    return-void
+.end method

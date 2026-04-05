@@ -1,0 +1,24 @@
+{
+  "identifier": "e98e22aa-d18c-4b11-87f0-49e7101041e3",
+  "enumCaseName": "videoSuperCut",
+  "displayName": "Super cut",
+  "loggingName": "video_super_cut",
+  "legacyId": 2016,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 1500,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "186d0196",
+      "handle": "AQAGEVjBa4uJ",
+      "md5": "1edcb17a073e2c7ddd9e058917f0eb07"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAHEbdFaqs1"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "identifier": "92908ea8-e239-40c6-8d92-98d235518e0e",
+  "displayName": "Oscars 2026",
+  "loggingName": "oscars_2026",
+  "assets": [
+    {
+      "name": "LutNolitaco",
+      "assetHash": "2de4ef53d2c8d1caef69c9d35e131d3e4c40f2d062cd495bb79dbb75ba44a3c7",
+      "effectId": "1439774934514816"
+    }
+  ]
+}

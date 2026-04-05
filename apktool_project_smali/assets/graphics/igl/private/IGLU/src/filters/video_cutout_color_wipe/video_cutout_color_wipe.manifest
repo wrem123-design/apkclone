@@ -1,0 +1,60 @@
+{
+  "identifier": "d60ebf04-7cde-478f-90e9-3ba36e1ce0a8",
+  "enumCaseName": "subjectColorWipe",
+  "displayName": "Color Wipe",
+  "loggingName": "video_cutout_color_wipe",
+  "legacyId": 2085,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": true,
+    "typeSuggestions": [
+      "person",
+      "head",
+      "clothing"
+    ]
+  },
+  "customization": {
+    "speed": {
+      "default": 0.29,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "color": {
+      "default": "#000000",
+      "available": [
+        "#FFFFFF",
+        "#000000",
+        "#FFD600",
+        "#FF7A00",
+        "#FE1D37",
+        "#FF0169",
+        "#D300C5",
+        "#7638FA",
+        "#37038B",
+        "#1CD164",
+        "#0095F6",
+        "#AD88FC",
+        "#FDD5FD",
+        "#FFABE1",
+        "#FFC584",
+        "#FFF8C2",
+        "#09FF00",
+        "#FFFF00",
+        "#5AFAC7",
+        "#0000FF"
+      ]
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "f16646d3",
+      "handle": "AQAFJKE2vlYF",
+      "md5": "050a8a803c6c3e4e56c61c43c98b0798"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAETnKKvJJM"
+    }
+  }
+}

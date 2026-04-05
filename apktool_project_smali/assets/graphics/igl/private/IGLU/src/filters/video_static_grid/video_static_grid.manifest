@@ -1,0 +1,19 @@
+{
+  "identifier": "91da8beb-4c3a-44eb-8a64-40e0a607f368",
+  "enumCaseName": "videoStaticGrid",
+  "displayName": "Grid",
+  "loggingName": "video_static_grid",
+  "legacyId": 2001,
+  "android": {
+    "previewAsset": {
+      "key": "27ed651b",
+      "handle": "AQADno_Pkg9g",
+      "md5": "be5e8a52e26102d28c1a2cfac8e5eccf"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAGqbLaXrVW"
+    }
+  }
+}

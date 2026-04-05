@@ -1,0 +1,24 @@
+{
+  "identifier": "09f5d1d3-fe0d-4bf1-82f2-097c7318266d",
+  "enumCaseName": "videoZoomOut",
+  "displayName": "Zoom out",
+  "loggingName": "video_zoom_out",
+  "legacyId": 2010,
+  "behavior": {
+    "type": "fixedOutro",
+    "durationMs": 3000,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "107a4d90",
+      "handle": "AQAie4vqFWYP",
+      "md5": "eaa2335f0839eb6923fa50e41f0a7797"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAP4IJggPEZ"
+    }
+  }
+}

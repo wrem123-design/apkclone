@@ -1,0 +1,26 @@
+{
+  "identifier": "c28d1ca5-f800-4868-acb6-27573155e622",
+  "enumCaseName": "videoSuperShake",
+  "displayName": "Super shake",
+  "loggingName": "video_super_shake",
+  "legacyId": 2024,
+  "android": {
+    "previewAsset": {
+      "key": "52552220",
+      "handle": "AQAFEFLXqXly",
+      "md5": "e636be70cdc6ca20a6b1c96ec45e7dd7"
+    }
+  },
+  "assets": [
+    {
+      "name": "PerlinNoise",
+      "assetHash": "42393e620664a372495800bfcf40ca960aa0ab3e2ddfe42fbfe2b86098d33000",
+      "effectId": "1259354255546062"
+    }
+  ],
+  "ios": {
+    "previewAsset": {
+      "handle": "AQBc1e0c68oT"
+    }
+  }
+}

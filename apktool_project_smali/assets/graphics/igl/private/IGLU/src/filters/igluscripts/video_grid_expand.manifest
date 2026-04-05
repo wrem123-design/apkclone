@@ -1,0 +1,24 @@
+{
+  "identifier": "cf6ec7b3-9045-4509-adde-a5a759d3996d",
+  "enumCaseName": "videoGridExpand",
+  "displayName": "Grid expand",
+  "loggingName": "video_grid_expand",
+  "legacyId": 3001,
+  "behavior": {
+    "type": "fixedOutro",
+    "durationMs": 2000,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "69212842",
+      "handle": "AQAGOLn2SzCb",
+      "md5": "4a04dcc46ba4908a02c6e304b360cf82"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAF9G6pplUh"
+    }
+  }
+}

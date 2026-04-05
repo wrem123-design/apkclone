@@ -1,0 +1,6 @@
+{
+  "identifier": "0378d9f8-b1eb-43a5-ac43-95cf71d720da",
+  "enumCaseName": "subjectSoftFlicker",
+  "displayName": "Soft flicker",
+  "loggingName": "video_cutout_soft_flicker"
+}

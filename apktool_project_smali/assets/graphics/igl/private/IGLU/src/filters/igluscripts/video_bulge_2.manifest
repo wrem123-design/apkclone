@@ -1,0 +1,19 @@
+{
+  "identifier": "d73ef78a-88db-4535-8239-ae32b63e9c5a",
+  "enumCaseName": "videoBulge2",
+  "displayName": "Bulge 2",
+  "loggingName": "video_bulge_2",
+  "legacyId": 3035,
+  "assets": [
+    {
+      "name": "Bulge",
+      "assetHash": "66f2ba5c28527e8220ff67c0f64914252d82c641748ef76e767277738eae87ab",
+      "effectId": "3641797072626941"
+    }
+  ],
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAG_nNSaubQ"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "identifier": "7932d045-3954-4b01-8d26-62d16acd6d03",
+  "enumCaseName": "videoColorEcho",
+  "displayName": "Color echo 1",
+  "loggingName": "video_color_echo",
+  "legacyId": 2048,
+  "android": {
+    "previewAsset": {
+      "key": "5d3a509",
+      "handle": "AQADwYEwJ0EM",
+      "md5": "59ee7e351d2966d428a2755d4a15fc07"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQBc88nd2Adq"
+    }
+  }
+}

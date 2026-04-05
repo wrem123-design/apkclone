@@ -1,0 +1,19 @@
+{
+  "identifier": "ab73622c-10d4-4ff8-9c7c-c280c444da3b",
+  "enumCaseName": "videoTunnelVision",
+  "displayName": "Tunnel vision",
+  "loggingName": "video_tunnel_vision",
+  "legacyId": 2071,
+  "android": {
+    "previewAsset": {
+      "key": "896a65cc",
+      "handle": "AQAB5eX4tz3A",
+      "md5": "353a7350e1b1680c134a31e95edcbf47"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADSJIH1Iqu"
+    }
+  }
+}

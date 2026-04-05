@@ -1,0 +1,19 @@
+{
+  "identifier": "fa8a3852-41c2-4dc4-8179-95932813d0e3",
+  "enumCaseName": "videoSuperPulse",
+  "displayName": "Echo",
+  "loggingName": "video_super_pulse",
+  "legacyId": 2014,
+  "android": {
+    "previewAsset": {
+      "key": "2bd9fb7d",
+      "handle": "AQALCdeVlnEc",
+      "md5": "f6a4fd7ccf5ff38c647767f4ae52111b"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAGmTtPbKbP"
+    }
+  }
+}

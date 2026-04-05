@@ -1,0 +1,17 @@
+{
+  "identifier": "34f4172d-3983-45f2-a1be-ccc08d17e827",
+  "displayName": "Text Candy Chrome",
+  "loggingName": "text_candy_chrome",
+  "assets": [
+    {
+      "name": "CandyChromeMatcap",
+      "assetHash": "6af40058c129e103f891d969bda674d562ae435e8ad54c026a0d96f2f811a370",
+      "effectId": "2079771575930223"
+    },
+    {
+      "name": "MetalMatcap",
+      "assetHash": "1830bfd8dc60652e6ad1c056f0666390e89c9bf5cb4817d54733102903c0f9ec",
+      "effectId": "1597794694755957"
+    }
+  ]
+}

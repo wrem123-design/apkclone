@@ -1,0 +1,12 @@
+{
+  "identifier": "d28c233e-e9b8-4107-8660-882eb3f7feb2",
+  "displayName": "Text Paint",
+  "loggingName": "text_paint",
+  "assets": [
+    {
+      "name": "PerlinNoise",
+      "assetHash": "42393e620664a372495800bfcf40ca960aa0ab3e2ddfe42fbfe2b86098d33000",
+      "effectId": "1259354255546062"
+    }
+  ]
+}

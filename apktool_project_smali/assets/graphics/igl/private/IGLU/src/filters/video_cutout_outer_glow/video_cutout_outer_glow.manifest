@@ -1,0 +1,66 @@
+{
+  "identifier": "96a46828-03ac-4192-a098-d3d594845642",
+  "enumCaseName": "subjectOuterGlow",
+  "displayName": "Outer Glow",
+  "loggingName": "video_cutout_outer_glow",
+  "legacyId": 2091,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": false,
+    "typeSuggestions": [
+      "person",
+      "head",
+      "clothing"
+    ]
+  },
+  "customization": {
+    "color": {
+      "default": "#FFFFFF",
+      "available": [
+        "#FFFFFF",
+        "#000000",
+        "#FFD600",
+        "#FF7A00",
+        "#FE1D37",
+        "#FF0169",
+        "#D300C5",
+        "#7638FA",
+        "#37038B",
+        "#1CD164",
+        "#0095F6",
+        "#AD88FC",
+        "#FDD5FD",
+        "#FFABE1",
+        "#FFC584",
+        "#FFF8C2",
+        "#09FF00",
+        "#FFFF00",
+        "#5AFAC7",
+        "#0000FF"
+      ]
+    },
+    "opacity": {
+      "default": 0.75,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "size": {
+      "default": 0.8,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "86d8d726",
+      "handle": "AQAK9d53MPjU",
+      "md5": "26b6a5cf6338fd21bb64f4ff01f744b0"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "isImageFormat": true,
+      "handle": "AQAFEibNC5t0"
+    }
+  }
+}

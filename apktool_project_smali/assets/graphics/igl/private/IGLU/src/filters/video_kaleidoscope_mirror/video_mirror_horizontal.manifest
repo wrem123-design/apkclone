@@ -1,0 +1,19 @@
+{
+  "identifier": "bb143250-24a1-46f9-9abb-bb071bb15d23",
+  "enumCaseName": "videoMirrorHorizontal",
+  "displayName": "Mirror Horizontal",
+  "loggingName": "video_mirror_horizontal",
+  "legacyId": 2032,
+  "android": {
+    "previewAsset": {
+      "key": "523f9cd1",
+      "handle": "AQAEYgoMD4fU",
+      "md5": "99eb06ba687ff19937f5b9e34dd59fa6"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAFFIqKhRtG"
+    }
+  }
+}

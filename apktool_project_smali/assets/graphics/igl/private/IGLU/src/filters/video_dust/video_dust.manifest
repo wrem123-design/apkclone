@@ -1,0 +1,19 @@
+{
+  "identifier": "75fda311-eb2a-45df-86a0-dc169679daf4",
+  "enumCaseName": "videoDust",
+  "displayName": "Dust",
+  "loggingName": "video_dust",
+  "legacyId": 2080,
+  "android": {
+    "previewAsset": {
+      "key": "701f570c",
+      "handle": "AQAFF3Ty0jpF",
+      "md5": "4eea99f5880bf71d2ff24b82de77277e"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAFJ9MYImoM"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "identifier": "2680df9e-581c-4f5c-86ac-cabfe377c9eb",
+  "enumCaseName": "videoFrame",
+  "displayName": "Tall frame",
+  "loggingName": "video_frame",
+  "legacyId": 2076,
+  "android": {
+    "previewAsset": {
+      "key": "5fca9089",
+      "handle": "AQACmBuiBQ4M",
+      "md5": "73fe8ba3970a4d3ff3422c6d696f4201"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADR08s17VK"
+    }
+  }
+}

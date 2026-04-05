@@ -1,0 +1,19 @@
+{
+  "identifier": "a409461b-5e20-4074-9558-2b43131bc61b",
+  "enumCaseName": "videoPixel",
+  "displayName": "Pixel",
+  "loggingName": "video_pixelate",
+  "legacyId": 2058,
+  "android": {
+    "previewAsset": {
+      "key": "37d212b4",
+      "handle": "AQAE44CFaCxc",
+      "md5": "badd08bb5bf5440b12271fd8679508a4"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAE6-8M9LKz"
+    }
+  }
+}

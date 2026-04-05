@@ -1,0 +1,17 @@
+{
+  "identifier": "f09aa6c4-a725-48cf-b3a8-8ad845928268",
+  "enumCaseName": "videoPop",
+  "displayName": "Pop",
+  "loggingName": "video_pop",
+  "legacyId": 3021,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 750,
+    "curve": "linear"
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAG_nNSaubQ"
+    }
+  }
+}

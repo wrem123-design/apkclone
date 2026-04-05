@@ -1,0 +1,17 @@
+{
+  "identifier": "ccac72ac-7234-41d9-8fef-24e08e8c771f",
+  "enumCaseName": "videoZoom",
+  "displayName": "Zoom",
+  "loggingName": "video_zoom",
+  "legacyId": 3022,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 550,
+    "curve": "linear"
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAG_nNSaubQ"
+    }
+  }
+}

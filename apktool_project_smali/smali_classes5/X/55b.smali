@@ -1,0 +1,33 @@
+.class public final LX/55b;
+.super Ljava/lang/Object;
+.source ""
+
+
+# instance fields
+.field public A00:Landroid/view/View;
+
+.field public A01:Landroid/widget/TextView;
+
+.field public A02:Lcom/instagram/common/ui/widget/imageview/CircularImageView;
+
+.field public final A03:LX/KaG;
+
+
+# direct methods
+.method public constructor <init>(LX/KaG;)V
+    .locals 2
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, LX/55b;->A03:LX/KaG;
+
+    const/4 v1, 0x4
+
+    new-instance v0, LX/Hgi;
+
+    invoke-direct {v0, p0, v1}, LX/Hgi;-><init>(Ljava/lang/Object;I)V
+
+    invoke-interface {p1, v0}, LX/KaG;->GCu(LX/KUA;)V
+
+    return-void
+.end method

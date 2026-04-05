@@ -1,0 +1,24 @@
+{
+  "identifier": "35ab35ee-d4c1-4584-aaa0-0deb9d333e86",
+  "enumCaseName": "videoSuperWobble",
+  "displayName": "Super wobble",
+  "loggingName": "video_super_wobble",
+  "legacyId": 3004,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 1371,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "8f534fca",
+      "handle": "AQAObAEsFLoP",
+      "md5": "c0149fb2caf68626e9a4b21e1b9b1efe"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAG85CO5e9l"
+    }
+  }
+}

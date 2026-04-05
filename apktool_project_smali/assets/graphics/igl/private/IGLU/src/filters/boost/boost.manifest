@@ -1,0 +1,22 @@
+{
+  "identifier": "6bc62cbd-04b1-4def-a126-d1ead84bad63",
+  "displayName": "Boost",
+  "loggingName": "boost",
+  "assets": [
+    {
+      "name": "LutBoost",
+      "assetHash": "3ef161fe05c0652879ac531d962ebc42496ed4f68112bc2daf5c022f2aeb4710",
+      "effectId": "2379670322545380"
+    },
+    {
+      "name": "LutBoostCool",
+      "assetHash": "c65691118948cfd26c36d8c07e991f0f5313d1c5e271e21183ffc9af823fb93c",
+      "effectId": "4679550882285865"
+    },
+    {
+      "name": "LutBoostWarm",
+      "assetHash": "a3fea8398d9d09bc89438867cf35345dd5f98d8af22102fe4da7b6ccfe40f248",
+      "effectId": "916712450849273"
+    }
+  ]
+}

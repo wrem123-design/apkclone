@@ -1,0 +1,45 @@
+{
+  "identifier": "07310857-5ba6-464c-acf7-81978b85a6c9",
+  "enumCaseName": "subjectFloat",
+  "displayName": "Float",
+  "loggingName": "video_cutout_float",
+  "legacyId": 2099,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": false,
+    "typeSuggestions": [
+      "head",
+      "person",
+      "clothing"
+    ]
+  },
+  "customization": {
+    "amount": {
+      "default": 0.33,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "speed": {
+      "default": 0.8,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "size": {
+      "default": 0.33,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "2163e3a0",
+      "handle": "AQALp0kg0PSC",
+      "md5": "4eedeaddf740d18f2a2f93196690b4db"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEcSQcbdfG"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+.class public abstract LX/MrJ;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements LX/Nmr;
+
+
+# static fields
+.field public static final A00:Ljava/util/Set;
+
+
+# direct methods
+.method public static constructor <clinit>()V
+    .locals 1
+
+    const-string v0, "logging_data"
+
+    invoke-static {v0}, LX/1F3;->A0q(Ljava/lang/Object;)Ljava/util/Set;
+
+    move-result-object v0
+
+    sput-object v0, LX/MrJ;->A00:Ljava/util/Set;
+
+    return-void
+.end method

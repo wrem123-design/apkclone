@@ -1,0 +1,19 @@
+{
+  "identifier": "b941a26a-1d24-4d22-8080-37fec495b330",
+  "enumCaseName": "videoBounce",
+  "displayName": "Bounce",
+  "loggingName": "video_bounce",
+  "legacyId": 3006,
+  "android": {
+    "previewAsset": {
+      "key": "603e06ee",
+      "handle": "AQAFIcsBQe-F",
+      "md5": "3d36ff146819d073bca92189cfd716f9"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAPKxgLVHfL"
+    }
+  }
+}

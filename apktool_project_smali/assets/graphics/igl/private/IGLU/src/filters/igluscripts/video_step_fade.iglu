@@ -1,0 +1,93 @@
+[Filter IgluscriptVideoStepFadeFilter]
+[BehaviorType fixedIntro]
+[BehaviorDuration 750]
+[AnimationCurve linear]
+
+fun mix(f32 a, f32 b, f32 t) f32 {
+  return a * (1.0 - t) + b * t;
+}
+
+fun easeIn(f32 t) f32 {
+  return t * t;
+}
+
+# Step keyframe times (normalized 0.0-1.0)
+f32 step1End = 0.3333;
+f32 step2End = 0.6667;
+f32 step3End = 1.0;
+
+[Init]
+fun init(Filter filter) {
+  filter.passes = {{
+      name = 'stepfade, inputs = {'default},
+      uniforms = {
+        progress = 0.0,
+        opacity = 1.0,
+      },
+      glslShader = glsl, metalShader = metal
+    }};
+}
+
+[PreRender]
+fun preRender(Filter filter) {
+  f32 p = getParameterFloat('progress);
+
+  f32 opacity = 1.0;
+
+  # Stepped fade in - 3 steps
+  if (p < step1End) {
+    # Step 1: 0 to 0.33
+    f32 t = easeIn(p / step1End);
+    opacity = mix(0.0, 0.33, t);
+  } else if (p < step2End) {
+    # Step 2: 0.33 to 0.66
+    f32 t = easeIn((p - step1End) / (step2End - step1End));
+    opacity = mix(0.33, 0.66, t);
+  } else if (p < step3End) {
+    # Step 3: 0.66 to 1.0
+    f32 t = easeIn((p - step2End) / (step3End - step2End));
+    opacity = mix(0.66, 1.0, t);
+  } else {
+    opacity = 1.0;
+  }
+
+  setShaderUniform('stepfade, 'progress, p);
+  setShaderUniform('stepfade, 'opacity, opacity);
+}
+
+string glsl = "varying vec2 sourceTextureCoordinate;
+
+BaseUniformsOpenGL;
+
+uniform float progress;
+uniform float opacity;
+
+void main() {
+  vec2 uv = sourceTextureCoordinate;
+  vec4 color = sampleInput(uv);
+  color.a = color.a * opacity;
+  gl_FragColor = toOutputFormat(color);
+}
+";
+
+string metal = "
+using namespace metal;
+struct fragmentIn { float2 textureCoordinate [[user(locn0)]]; float2 sourceTextureCoordinate [[user(locn1)]]; };
+struct fragmentOut { float4 _gl_FragColor [[color(0)]]; };
+typedef struct {
+  float4x4 content_transform;
+  float4x4 texture_transform;
+  float progress;
+  float opacity;
+ } Uniforms;
+
+fragment fragmentOut fragmentShader(fragmentIn in [[stage_in]],
+ constant Uniforms & uniforms [[buffer(1)]],
+ DefaultInputs defaultInputs) {
+
+  float2 uv = in.sourceTextureCoordinate;
+  float4 color = sampleInput(defaultInputs, uv);
+  color.a = color.a * uniforms.opacity;
+  return {toOutputFormat(color)};
+}
+";

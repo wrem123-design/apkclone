@@ -1,0 +1,19 @@
+{
+  "identifier": "72dd2a2a-945a-45e9-92db-f93dd11cde70",
+  "enumCaseName": "videoSlowShutter",
+  "displayName": "Slow shutter",
+  "loggingName": "video_slow_shutter",
+  "legacyId": 2070,
+  "android": {
+    "previewAsset": {
+      "key": "b0059c4a",
+      "handle": "AQAHRMEMGD-f",
+      "md5": "b41cd0107058e1adfabbbac837987b6e"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADWuLE0rZR"
+    }
+  }
+}

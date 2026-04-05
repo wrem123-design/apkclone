@@ -1,0 +1,24 @@
+{
+  "identifier": "e65ed764-e775-44cb-9e84-c87f5ac8c411",
+  "enumCaseName": "videoSuperZoom",
+  "displayName": "Super Zoom",
+  "loggingName": "video_super_zoom",
+  "legacyId": 2011,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 1500,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "28d6f806",
+      "handle": "AQACRMZdEW82",
+      "md5": "e87b63cf84c8f4a1bbae5a06a7ae20f4"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAFNsMfRwoT"
+    }
+  }
+}

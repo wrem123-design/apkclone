@@ -1,0 +1,11 @@
+{
+  "identifier": "4g9b2c3f-d5e6-5f7g-9b0c-1d2e3f4g5h6i",
+  "enumCaseName": "subjectDisplaceOut",
+  "displayName": "Displace Out",
+  "loggingName": "video_cutout_displace_out",
+  "behavior": {
+    "type": "fixedOutro",
+    "durationMs": 1000,
+    "curve": "linear"
+  }
+}

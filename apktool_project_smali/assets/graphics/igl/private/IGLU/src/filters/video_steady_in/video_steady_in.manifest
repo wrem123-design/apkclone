@@ -1,0 +1,24 @@
+{
+  "identifier": "290be9ed-6e62-4124-ac23-f47c70786276",
+  "enumCaseName": "videoSteadyIn",
+  "displayName": "Steady in",
+  "loggingName": "video_steady_in",
+  "legacyId": 2002,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 3000,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "53db1f9f",
+      "handle": "AQACbjucrUmO",
+      "md5": "033a2fd12ec01ad96888b5bb82dde899"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAD3xSnvVbb"
+    }
+  }
+}

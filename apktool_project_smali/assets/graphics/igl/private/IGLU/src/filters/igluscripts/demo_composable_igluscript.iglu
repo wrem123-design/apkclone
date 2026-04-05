@@ -1,0 +1,48 @@
+[Filter ComposableIGLUDemo]
+
+[Init]
+fun init(Filter filter) {
+  filter.passes = {{
+    name = 'wide,
+    igid = 'igluscript:wide_angle,
+    inputs = {'default},
+    uniforms = {
+      strength = 1.0,
+      uInputImageSize = {1080.0, 1920.0}
+    }
+  },{
+    name = 'washed,
+    igid = 'igluscript:video_washed_out,
+    inputs = {'wide},
+    uniforms = {
+      inputSize = {1080.0, 1920.0}
+    }
+  },{
+    name = 'blur,
+    igid = 'igluscript:zoom_blur,
+    inputs = {'washed},
+    uniforms = {
+      strength = 1.0,
+      samples = 15.0,
+      abberation = 0.02,
+      innerRadius = 0.6,
+      sampleDistance = 0.125
+    }
+  }};
+
+  filter.parameters = {
+    {strength = 1.0, min = 0.0, max = 2.0}
+  };
+}
+
+[PreRender]
+fun preRender(Filter filter) {
+  f32 str = getParameterFloat('strength);
+  f32 radius = getParameterFloat('innerRadius);
+  f32 t = getLocalTime();
+
+  vec2 texSize = getTextureSize('default);
+  setShaderUniform('wide, 'uInputImageSize, texSize);
+  setShaderUniform('wide, 'strength, str);
+  setShaderUniform('washed, 'inputSize, texSize);
+}

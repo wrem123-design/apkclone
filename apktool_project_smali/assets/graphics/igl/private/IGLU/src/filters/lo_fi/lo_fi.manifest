@@ -1,0 +1,17 @@
+{
+  "identifier": "ec3bfc34-20d7-43f5-a700-cfbf6afb671a",
+  "displayName": "Lo Fi",
+  "loggingName": "lo_fi",
+  "assets": [
+    {
+      "name": "BlackOverlayMap",
+      "assetHash": "4f5b8cfd397d47bcb9ed7e894853352fbd19dfe5f4f78b8acd8c8fc5949e9306",
+      "effectId": "1162927705774564"
+    },
+    {
+      "name": "LomoMap",
+      "assetHash": "47245606f6c354688ff617bff9249f84b3f720b02f9af0bc4951f8ab10bf204e",
+      "effectId": "1277881657591092"
+    }
+  ]
+}

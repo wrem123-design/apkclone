@@ -1,0 +1,19 @@
+{
+  "identifier": "2bd2a65e-1e6e-466c-890f-034cc98de60c",
+  "enumCaseName": "videoMirrorVertical",
+  "displayName": "Mirror Vertical",
+  "loggingName": "video_mirror_vertical",
+  "legacyId": 2034,
+  "android": {
+    "previewAsset": {
+      "key": "ea5490e2",
+      "handle": "AQAB_RjMB2sZ",
+      "md5": "da272ad647f86351f38b2eb37a9c455e"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAITQ9DWnng"
+    }
+  }
+}

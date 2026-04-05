@@ -1,0 +1,24 @@
+{
+  "identifier": "99e347c8-fe91-4d47-b097-ad23f7b439b2",
+  "enumCaseName": "videoRoll",
+  "displayName": "Roll",
+  "loggingName": "video_roll",
+  "legacyId": 2038,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 1150,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "72ebcdd2",
+      "handle": "AQACCYMGvsST",
+      "md5": "34b9d42f27ebe6502d5da47186dcb787"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAIQNaReTym"
+    }
+  }
+}

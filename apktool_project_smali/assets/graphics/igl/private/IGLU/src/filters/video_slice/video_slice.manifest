@@ -1,0 +1,19 @@
+{
+  "identifier": "4efd01f5-348f-415d-ba09-24137ea4fae9",
+  "enumCaseName": "videoSlice",
+  "displayName": "Slice",
+  "loggingName": "video_slice",
+  "legacyId": 2063,
+  "android": {
+    "previewAsset": {
+      "key": "d6e58282",
+      "handle": "AQACCUvzGbub",
+      "md5": "cb79b4220a475d2c410528960c90b473"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAHFqzb-qxW"
+    }
+  }
+}

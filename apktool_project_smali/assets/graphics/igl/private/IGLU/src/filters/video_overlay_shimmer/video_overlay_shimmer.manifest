@@ -1,0 +1,58 @@
+{
+  "identifier": "935ee820-19f1-4654-a058-ded94741c7c4",
+  "enumCaseName": "overlayShimmer",
+  "displayName": "Shimmer",
+  "loggingName": "video_cutout_shimmer",
+  "legacyId": 5072,
+  "subject": {
+    "overlay": true
+  },
+  "customization": {
+    "color": {
+      "default": "#FFFFFF",
+      "available": [
+        "#FFFFFF",
+        "#FFD600",
+        "#FF7A00",
+        "#FE1D37",
+        "#FF0169",
+        "#D300C5",
+        "#7638FA",
+        "#37038B",
+        "#1CD164",
+        "#0095F6",
+        "#AD88FC",
+        "#FDD5FD",
+        "#FFABE1",
+        "#FFC584",
+        "#FFF8C2",
+        "#09FF00",
+        "#FFFF00",
+        "#5AFAC7",
+        "#0000FF"
+      ]
+    },
+    "speed": {
+      "default": 0.4,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "opacity": {
+      "default": 1.0,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "45fc83e4",
+      "handle": "AQACdVcIOIMv",
+      "md5": "b3fcc782defdb80631e0d4aa8f4ea987"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAOQmrGIwAB"
+    }
+  }
+}

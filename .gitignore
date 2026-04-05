@@ -1,0 +1,15 @@
+del/
+jadx/
+jadx_out/
+.android/
+apktool_framework/
+apktool_mcp_workspace/
+apktool_project_full/
+apktool_project_smali/dist/
+
+*.apk
+*.apks
+*.jar
+*.zip
+*.mdb
+*.keystore

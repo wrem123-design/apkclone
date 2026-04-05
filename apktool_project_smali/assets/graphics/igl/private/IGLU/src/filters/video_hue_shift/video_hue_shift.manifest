@@ -1,0 +1,19 @@
+{
+  "identifier": "380d21bd-d70d-4e57-a51b-a944764f934c",
+  "enumCaseName": "videoHueShift",
+  "displayName": "Hue shift",
+  "loggingName": "video_hue_shift",
+  "legacyId": 2005,
+  "android": {
+    "previewAsset": {
+      "key": "f681b23b",
+      "handle": "AQAEMOvvgU17",
+      "md5": "1785b992deb424a46b7ecf0832c1cbc3"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAFnwM7v-s1"
+    }
+  }
+}

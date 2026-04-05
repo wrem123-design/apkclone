@@ -1,0 +1,46 @@
+{
+  "identifier": "32b58c5c-b7ad-4049-a2a4-8484347d66bc",
+  "enumCaseName": "subjectSparkles",
+  "displayName": "Sparkle",
+  "loggingName": "video_cutout_sparkles",
+  "legacyId": 2104,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": true,
+    "typeSuggestions": [
+      "person",
+      "head"
+    ]
+  },
+  "customization": {
+    "size": {
+      "default": 0.26,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "speed": {
+      "default": 0.38,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "cd0d68b5",
+      "handle": "AQAE3uWFPbwJ",
+      "md5": "ba0bc575c1458c2074f09da51b798b8c"
+    }
+  },
+  "assets": [
+    {
+      "name": "Sparkle",
+      "assetHash": "2415f14f09363bd40d92336804dd819927481d951d25d97cc6f8cfdbd9e83de8",
+      "effectId": "787086830563012"
+    }
+  ],
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAGWncPiRqH"
+    }
+  }
+}

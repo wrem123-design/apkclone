@@ -1,0 +1,12 @@
+{
+  "identifier": "f3148b0c-0663-4931-a120-ce2352a3db40",
+  "enumCaseName": "videoGlitch2",
+  "displayName": "Glitch in",
+  "loggingName": "video_glitch_2_in",
+  "legacyId": 3036,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 1000,
+    "curve": "linear"
+  }
+}

@@ -1,0 +1,139 @@
+.class public final LX/Ckb;
+.super LX/Gy1;
+.source ""
+
+# interfaces
+.implements LX/Izk;
+
+
+# static fields
+.field public static final A00:LX/Ckb;
+
+
+# direct methods
+.method public static constructor <clinit>()V
+    .locals 1
+
+    new-instance v0, LX/Ckb;
+
+    invoke-direct {v0}, Ljava/lang/Object;-><init>()V
+
+    sput-object v0, LX/Ckb;->A00:LX/Ckb;
+
+    return-void
+.end method
+
+.method public constructor <init>()V
+    .locals 0
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+.method public static parseFromJson(LX/HTD;)LX/B7s;
+    .locals 1
+
+    sget-object v0, LX/Ckb;->A00:LX/Ckb;
+
+    invoke-virtual {v0, p0}, LX/Gy1;->parse(LX/HTD;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, LX/B7s;
+
+    return-object v0
+.end method
+
+
+# virtual methods
+.method public final bridge synthetic unsafeParseFromJson(LX/HTD;)Ljava/lang/Object;
+    .locals 4
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x1000
+        }
+        names = {
+            null
+        }
+    .end annotation
+
+    new-instance v3, LX/B7s;
+
+    invoke-direct {v3}, LX/9p8;-><init>()V
+
+    invoke-virtual {p1}, LX/HTD;->A1e()LX/2aW;
+
+    move-result-object v1
+
+    sget-object v0, LX/2aW;->A0D:LX/2aW;
+
+    if-eq v1, v0, :cond_0
+
+    invoke-virtual {p1}, LX/HTD;->A1f()V
+
+    const/4 v0, 0x0
+
+    return-object v0
+
+    :cond_0
+    :goto_0
+    invoke-virtual {p1}, LX/HTD;->A0s()LX/2aW;
+
+    move-result-object v1
+
+    sget-object v0, LX/2aW;->A09:LX/2aW;
+
+    if-eq v1, v0, :cond_2
+
+    invoke-static {p1}, LX/020;->A0s(LX/HTD;)Ljava/lang/String;
+
+    move-result-object v1
+
+    const-string v0, "review_status"
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_1
+
+    invoke-static {p1}, LX/020;->A0f(LX/HTD;)Ljava/lang/Integer;
+
+    move-result-object v0
+
+    iput-object v0, v3, LX/B7s;->A01:Ljava/lang/Integer;
+
+    :goto_1
+    invoke-virtual {p1}, LX/HTD;->A1f()V
+
+    goto :goto_0
+
+    :cond_1
+    invoke-static {p1, v3, v1}, LX/122;->A12(LX/HTD;LX/9x8;Ljava/lang/String;)V
+
+    goto :goto_1
+
+    :cond_2
+    iget-object v0, v3, LX/B7s;->A01:Ljava/lang/Integer;
+
+    invoke-static {v0}, LX/166;->A01(Ljava/lang/Number;)I
+
+    move-result v2
+
+    const-string v0, "XDTCheckTrustedNotificationStatusResponse"
+
+    new-instance v1, Lcom/instagram/wellbeing/loginnotification/api/TrustedNotificationStatusResponseImpl;
+
+    invoke-direct {v1, v0}, LX/25O;-><init>(Ljava/lang/String;)V
+
+    iput v2, v1, Lcom/instagram/wellbeing/loginnotification/api/TrustedNotificationStatusResponseImpl;->A00:I
+
+    const/4 v0, 0x0
+
+    sput v0, Lredex/$StoreFenceHelper;->DUMMY_VOLATILE:I
+
+    iput-object v1, v3, LX/B7s;->A00:Lcom/instagram/wellbeing/loginnotification/api/TrustedNotificationStatusResponse;
+
+    return-object v3
+.end method

@@ -1,0 +1,14 @@
+/**
+ * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
+ */
+
+function(cssSelector) {
+  try {
+    var element = document.querySelector(cssSelector);
+    var rect = element.getBoundingClientRect();
+    var inViewport = rect.top >= 0 && rect.top <= window.innerHeight;
+    return {success: !inViewport};
+  } catch (error) {
+    return {success: false};
+  }
+}

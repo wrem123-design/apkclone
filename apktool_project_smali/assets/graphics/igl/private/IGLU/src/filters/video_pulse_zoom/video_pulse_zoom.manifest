@@ -1,0 +1,19 @@
+{
+  "identifier": "cad7b2c4-39a5-4a59-a966-28d9c5ae5704",
+  "enumCaseName": "videoPulseZoom",
+  "displayName": "Pulse zoom",
+  "loggingName": "video_pulse_zoom",
+  "legacyId": 2019,
+  "android": {
+    "previewAsset": {
+      "key": "de94e9b9",
+      "handle": "AQADms8oysCA",
+      "md5": "2a2b51a3744ca32e251cb64413ac1730"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAKjiOAaHcm"
+    }
+  }
+}

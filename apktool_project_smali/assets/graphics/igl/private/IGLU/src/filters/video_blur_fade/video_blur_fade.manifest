@@ -1,0 +1,25 @@
+{
+  "identifier": "30d08d48-3dd0-41b8-832b-80f6db57af4c",
+  "enumCaseName": "videoBlurFade",
+  "displayName": "Blur fade",
+  "loggingName": "video_blur_fade",
+  "legacyId": 2066,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 2000,
+    "curve": "sinusoidalInOut",
+    "reversed": true
+  },
+  "android": {
+    "previewAsset": {
+      "key": "95c52dc6",
+      "handle": "AQAjBvPz7iR7",
+      "md5": "50f1396f38d4c6cfa46aca9381c6dff7"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEFFoFaolM"
+    }
+  }
+}

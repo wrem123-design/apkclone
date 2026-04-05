@@ -1,0 +1,19 @@
+{
+  "identifier": "5c32a0fa-625a-4da6-8919-5ba9e47fb747",
+  "enumCaseName": "videoPartyLights",
+  "displayName": "Flash pulse",
+  "loggingName": "video_party_lights",
+  "legacyId": 2047,
+  "android": {
+    "previewAsset": {
+      "key": "4c68a0ae",
+      "handle": "AQACY54UOZHL",
+      "md5": "cd8f009e3d927bbceb13113f830d9de7"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAFB-HFituA"
+    }
+  }
+}

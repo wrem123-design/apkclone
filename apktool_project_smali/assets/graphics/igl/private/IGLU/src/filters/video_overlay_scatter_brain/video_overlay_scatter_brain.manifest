@@ -1,0 +1,22 @@
+{
+  "identifier": "d2ef44c8-e695-4c9e-ac46-652bd3ce13ab",
+  "enumCaseName": "overlayScatterBrain",
+  "displayName": "Scatter Brain",
+  "loggingName": "video_cutout_scatter_brain",
+  "legacyId": 5073,
+  "subject": {
+    "overlay": true
+  },
+  "android": {
+    "previewAsset": {
+      "key": "4478d6cf",
+      "handle": "AQADAGZnyP4s",
+      "md5": "df0c8b9f4dea9d6d7df61248fc4f0b92"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADLWosHgOI"
+    }
+  }
+}

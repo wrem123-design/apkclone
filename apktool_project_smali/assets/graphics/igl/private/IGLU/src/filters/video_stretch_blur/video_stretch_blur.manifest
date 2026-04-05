@@ -1,0 +1,25 @@
+{
+  "identifier": "f0db7c74-ca72-4652-8c49-702232757ea3",
+  "enumCaseName": "videoStretchBlur",
+  "displayName": "Bounce in",
+  "loggingName": "video_stretch_blur",
+  "legacyId": 2031,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 350,
+    "curve": "linear",
+    "reversed": true
+  },
+  "android": {
+    "previewAsset": {
+      "key": "d0d01fe",
+      "handle": "AQAEV3nmFA2m",
+      "md5": "bf451d1223b2f005cd62d0c0141fa051"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAPP1KxdOq6"
+    }
+  }
+}

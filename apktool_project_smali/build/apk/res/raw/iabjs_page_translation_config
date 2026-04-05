@@ -1,0 +1,7 @@
+/**
+ * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
+ */
+
+function(configJson) {
+  window.__PAGE_TRANSLATION_CONFIG__ = JSON.parse(configJson);
+}

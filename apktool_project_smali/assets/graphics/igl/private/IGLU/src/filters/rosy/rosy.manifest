@@ -1,0 +1,12 @@
+{
+  "identifier": "cfb044af-8ec0-4e8c-a0a2-405040d0ca38",
+  "displayName": "Rosy",
+  "loggingName": "rosy",
+  "assets": [
+    {
+      "name": "LutRosy",
+      "assetHash": "8b401bda94821e9c0cd9d358c33e413e0b0a7d9437c3317990861e02bb5d8715",
+      "effectId": "772415542154351"
+    }
+  ]
+}

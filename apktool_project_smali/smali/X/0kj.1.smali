@@ -1,0 +1,15 @@
+.class public abstract LX/0kj;
+.super Ljava/lang/Object;
+.source ""
+
+
+# direct methods
+.method public static final A00(Landroid/app/Activity;Landroid/app/Application$ActivityLifecycleCallbacks;)V
+    .locals 0
+
+    .line 0
+    invoke-virtual {p0, p1}, Landroid/app/Activity;->registerActivityLifecycleCallbacks(Landroid/app/Application$ActivityLifecycleCallbacks;)V
+
+    .line 3
+    return-void
+.end method

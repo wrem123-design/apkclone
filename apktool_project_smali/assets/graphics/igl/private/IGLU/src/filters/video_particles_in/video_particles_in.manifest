@@ -1,0 +1,19 @@
+{
+  "identifier": "9ab97c3e-826f-46c2-8695-c3a7decdea7a",
+  "enumCaseName": "videoParticles",
+  "displayName": "Particles in",
+  "loggingName": "video_particles_in",
+  "legacyId": 3041,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 1000,
+    "curve": "linear"
+  },
+  "assets": [
+    {
+      "name": "RgbaNoise256",
+      "assetHash": "3415067e1e7cd2965854c813f34bdb028aed7f87695903797ff6ec62f156c506",
+      "effectId": "1274215854629798"
+    }
+  ]
+}

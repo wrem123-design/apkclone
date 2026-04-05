@@ -1,0 +1,294 @@
+[Filter VideoDisplaceOut]
+[BehaviorType fixedOutro]
+[BehaviorDuration 1000]
+[AnimationCurve linear]
+# Displace transition effect — zoom + noise distortion driven by animation texture.
+# Outro version of VideoDisplace — reuses same shaders with outro=1.
+# outro=1 → content disappears (Displace Out)
+
+[Init]
+fun init(Filter filter) {
+    filter.parameters = {
+        {outro = 1.0, description = "0 = appearing (In), 1 = disappearing (Out)"},
+        {fadeCutoff = 0.3, min = 0.0, max = 1.0, description = "Progress value at which fade-in completes (0-1)"},
+        {scale_xChannel = 0.25, description = "Scale animation channel"},
+        {scale_xMin = 0.0, description = "Scale min value"},
+        {scale_xMax = 1.0341674089431763, description = "Scale max value"},
+        {distortionChannel = 0.75, description = "Distortion animation channel"},
+        {distortionMin = 0.0, description = "Distortion min value"},
+        {distortionMax = 0.25, description = "Distortion max value"},
+        {phase = 0.0, description = "Animation phase offset"},
+    };
+
+    loadTexture('animation, 'texture://TextEffectsSharedAssets/DisplaceIn);
+
+    filter.passes = {{
+        name = 'displace,
+        inputs = {'default, 'animation},
+        uniforms = {
+            outputSize = {100.0, 100.0},
+            progress = 0.0,
+            fadeCutoff = 0.3,
+            scale_xChannel = 0.25,
+            scale_xMin = 0.0,
+            scale_xMax = 1.0341674089431763,
+            distortionChannel = 0.75,
+            distortionMin = 0.0,
+            distortionMax = 0.25,
+            phase = 0.0,
+            outro = 1.0,
+        },
+        glslShader = glsl,
+        metalShader = metal,
+    }};
+}
+
+[PreRender]
+fun preRender(Filter filter) {
+    f32 progress = getParameterFloat('progress);
+
+    vec2 defaultSize = getTextureSize('default);
+
+    setShaderUniform('displace, 'outputSize, defaultSize);
+    setShaderUniform('displace, 'progress, progress);
+    setShaderUniform('displace, 'fadeCutoff, getParameterFloat('fadeCutoff));
+    setShaderUniform('displace, 'outro, getParameterFloat('outro));
+    setShaderUniform('displace, 'scale_xChannel, getParameterFloat('scale_xChannel));
+    setShaderUniform('displace, 'scale_xMin, getParameterFloat('scale_xMin));
+    setShaderUniform('displace, 'scale_xMax, getParameterFloat('scale_xMax));
+    setShaderUniform('displace, 'distortionChannel, getParameterFloat('distortionChannel));
+    setShaderUniform('displace, 'distortionMin, getParameterFloat('distortionMin));
+    setShaderUniform('displace, 'distortionMax, getParameterFloat('distortionMax));
+    setShaderUniform('displace, 'phase, getParameterFloat('phase));
+}
+
+
+# --- GLSL Shader ---
+
+string glsl = "
+    precision highp float;
+    varying vec2 sourceTextureCoordinate;
+
+    BaseUniformsOpenGL;
+    uniform vec2 outputSize;
+    uniform float progress;
+    uniform float fadeCutoff;
+    uniform float scale_xChannel;
+    uniform float scale_xMin;
+    uniform float scale_xMax;
+    uniform float distortionChannel;
+    uniform float distortionMin;
+    uniform float distortionMax;
+    uniform float phase;
+    uniform float outro;
+
+    uniform sampler2D auxSampler1;
+
+    vec4 sampleAnimation(sampler2D tex, float t, float channel) {
+        vec2 uv1 = vec2(t, channel);
+        vec4 samp1 = texture2D(tex, uv1);
+        return samp1;
+    }
+
+    float map(float x, float lowIn, float highIn, float lowOut, float highOut) {
+        if (highIn == lowIn)
+            return highIn;
+        float w = highIn - lowIn;
+        x = x - lowIn;
+        x /= w;
+        float ow = highOut - lowOut;
+        x *= ow;
+        x += lowOut;
+        return x;
+    }
+
+    float mapSimple(float x, float lowOut, float highOut) {
+        return map(x, 0.0, 1.0, lowOut, highOut);
+    }
+
+    float byteCombine(vec2 v) {
+        float highByte = v.r * 255.0;
+        float lowByte = v.g * 255.0;
+        float scaled = highByte * 256.0 + lowByte;
+        float normalized = scaled / 65535.0;
+        return normalized;
+    }
+
+    float dot_noise(vec3 p) {
+        const float PHI = 1.618033988;
+        const mat3 GOLD = mat3(
+            -0.571464913, +0.814921382, +0.096597072,
+            -0.278044873, -0.303026659, +0.911518454,
+            +0.772087367, +0.494042493, +0.399753815);
+        return dot(cos(GOLD * p), sin(PHI * p * GOLD));
+    }
+
+    vec4 blendAlphaPremult(vec4 base, vec4 blend) {
+        return blend + base * (1.0 - blend.a);
+    }
+
+    vec4 sampleInputClipped(vec2 uv) {
+        vec4 color = sampleInput(uv);
+        float inBounds = step(0.0, uv.x) * step(uv.x, 1.0) * step(0.0, uv.y) * step(uv.y, 1.0);
+        return color * inBounds;
+    }
+
+    void main() {
+        vec4 color = vec4(0.0);
+        float flippedProgress = mix(progress, 1.0 - progress, step(0.5, outro));
+        float t = flippedProgress + phase;
+
+        vec4 scale_sample = sampleAnimation(auxSampler1, t, scale_xChannel);
+        vec4 distortion_sample = sampleAnimation(auxSampler1, t, distortionChannel);
+
+        float scale = byteCombine(scale_sample.rg);
+        scale = mapSimple(scale, scale_xMin, scale_xMax);
+        float distortion = byteCombine(distortion_sample.rg);
+        distortion = mapSimple(distortion, distortionMin, distortionMax);
+
+        vec2 aspect = vec2(1.0, outputSize.x / outputSize.y);
+        vec2 uv = sourceTextureCoordinate;
+
+        uv -= 0.5;
+        uv /= aspect;
+        float safeScale = max(scale, 0.001);
+        uv /= safeScale;
+        float noise_scale = mix(0.4, 1.0, smoothstep(0.4, 0.8, flippedProgress));
+        vec3 np = vec3(uv * 50.0 * noise_scale, flippedProgress * 15.0);
+        float distortion_mod = dot_noise(np);
+        distortion_mod -= length(uv) * 20.0;
+        distortion_mod /= 3.0;
+        distortion_mod *= distortion;
+        float safeDivisor = max(1.0 + distortion_mod, 0.001);
+        uv /= safeDivisor;
+        uv *= aspect;
+        uv += 0.5;
+
+        vec4 samp = sampleInputClipped(uv);
+        color = blendAlphaPremult(color, samp * samp.a);
+
+        float opacity = clamp(flippedProgress / max(fadeCutoff, 0.001), 0.0, 1.0);
+        color *= opacity;
+
+        gl_FragColor = toOutputFormat(color);
+    }
+";
+
+
+# --- Metal Shader ---
+
+string metal = "
+    struct fragmentOut { float4 _gl_FragColor [[color(0)]]; };
+    struct fragmentIn { float2 sourceTextureCoordinate [[user(locn1)]]; };
+
+    typedef struct {
+        BaseUniformsMetal;
+        float2 outputSize;
+        float progress;
+        float fadeCutoff;
+        float scale_xChannel;
+        float scale_xMin;
+        float scale_xMax;
+        float distortionChannel;
+        float distortionMin;
+        float distortionMax;
+        float phase;
+        float outro;
+    } Uniforms;
+
+    float4 sampleAnimation(texture2d<float> tex, sampler texSmplr, float t, float channel) {
+        float2 uv1 = float2(t, channel);
+        float4 samp1 = tex.sample(texSmplr, uv1);
+        return samp1;
+    }
+
+    float mapRange(float x, float lowIn, float highIn, float lowOut, float highOut) {
+        if (highIn == lowIn)
+            return highIn;
+        float w = highIn - lowIn;
+        x = x - lowIn;
+        x /= w;
+        float ow = highOut - lowOut;
+        x *= ow;
+        x += lowOut;
+        return x;
+    }
+
+    float mapSimple(float x, float lowOut, float highOut) {
+        return mapRange(x, 0.0, 1.0, lowOut, highOut);
+    }
+
+    float byteCombine(float2 v) {
+        float highByte = v.r * 255.0;
+        float lowByte = v.g * 255.0;
+        float scaled = highByte * 256.0 + lowByte;
+        float normalized = scaled / 65535.0;
+        return normalized;
+    }
+
+    float dot_noise(float3 p) {
+        float PHI = 1.618033988;
+        float3x3 GOLD = float3x3(
+            -0.571464913, +0.814921382, +0.096597072,
+            -0.278044873, -0.303026659, +0.911518454,
+            +0.772087367, +0.494042493, +0.399753815);
+        return dot(cos(GOLD * p), sin(PHI * p * GOLD));
+    }
+
+    float4 blendAlphaPremult(float4 base, float4 blend) {
+        return blend + base * (1.0 - blend.a);
+    }
+
+    float4 sampleInputClipped(DefaultInputs defaultInputs, float2 uv) {
+        float4 color = sampleInput(defaultInputs, uv);
+        float inBounds = step(0.0, uv.x) * step(uv.x, 1.0) * step(0.0, uv.y) * step(uv.y, 1.0);
+        return color * inBounds;
+    }
+
+    fragment fragmentOut fragmentShader(fragmentIn in [[stage_in]],
+                                        constant Uniforms & uniforms [[buffer(1)]],
+                                        DefaultInputs defaultInputs,
+                                        texture2d<float> tex1,
+                                        sampler tex1Smplr
+                                        ) {
+        float4 color = float4(0.0);
+        float flippedProgress = mix(uniforms.progress, 1.0 - uniforms.progress, step(0.5, uniforms.outro));
+        float t = flippedProgress + uniforms.phase;
+
+        float4 scale_sample = sampleAnimation(tex1, tex1Smplr, t, uniforms.scale_xChannel);
+        float4 distortion_sample = sampleAnimation(tex1, tex1Smplr, t, uniforms.distortionChannel);
+
+        float scale = byteCombine(scale_sample.rg);
+        scale = mapSimple(scale, uniforms.scale_xMin, uniforms.scale_xMax);
+        float distortion = byteCombine(distortion_sample.rg);
+        distortion = mapSimple(distortion, uniforms.distortionMin, uniforms.distortionMax);
+
+        float2 aspect = float2(1.0, uniforms.outputSize.x / uniforms.outputSize.y);
+        float2 uv = in.sourceTextureCoordinate;
+
+        uv -= 0.5;
+        uv /= aspect;
+        float safeScale = max(scale, 0.001f);
+        uv /= safeScale;
+        float noise_scale = mix(0.4f, 1.0f, smoothstep(0.4f, 0.8f, flippedProgress));
+        float3 np = float3(uv * 50.0 * noise_scale, flippedProgress * 15.0);
+        float distortion_mod = dot_noise(np);
+        distortion_mod -= length(uv) * 20.0;
+        distortion_mod /= 3.0;
+        distortion_mod *= distortion;
+        float safeDivisor = max(1.0f + distortion_mod, 0.001f);
+        uv /= safeDivisor;
+        uv *= aspect;
+        uv += 0.5;
+
+        float4 samp = sampleInputClipped(defaultInputs, uv);
+        color = blendAlphaPremult(color, samp * samp.a);
+
+        float opacity = clamp(flippedProgress / max(uniforms.fadeCutoff, 0.001f), 0.0f, 1.0f);
+        color *= opacity;
+
+        fragmentOut out = {};
+        out._gl_FragColor = toOutputFormat(color);
+        return out;
+    }
+";

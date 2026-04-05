@@ -1,0 +1,24 @@
+{
+  "identifier": "8749f31a-f60b-41d1-b5de-175566d7e628",
+  "enumCaseName": "videoSpin",
+  "displayName": "Spin",
+  "loggingName": "video_spin",
+  "legacyId": 2029,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 750,
+    "curve": "circularInOut"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "91bd94ad",
+      "handle": "AQAGAvt7fkV7",
+      "md5": "96863c8a8466df6a52519e28dced71c8"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAHijxdgzjl"
+    }
+  }
+}

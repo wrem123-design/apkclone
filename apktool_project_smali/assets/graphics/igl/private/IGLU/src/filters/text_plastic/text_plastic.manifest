@@ -1,0 +1,17 @@
+{
+  "identifier": "ec3fa426-afe0-4e71-a231-c3092c138c3e",
+  "displayName": "Text Plastic",
+  "loggingName": "text_plastic",
+  "assets": [
+    {
+      "name": "BlackPlasticMatcap",
+      "assetHash": "15064eadffb50f7e5e7d1502105261bbeb7e066d9b1da61f71a62abc9076c86c",
+      "effectId": "1976298233771543"
+    },
+    {
+      "name": "WhitePlasticMatcap",
+      "assetHash": "022c6dc7c52247b5ea782ac6749bedb420203cc8d61af4edbb688bfe38e053cc",
+      "effectId": "942536021682183"
+    }
+  ]
+}

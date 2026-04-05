@@ -1,0 +1,29 @@
+{
+  "identifier": "2e0fa3b0-d512-4b22-82b9-d7d462429309",
+  "enumCaseName": "overlayNegativeFlash",
+  "displayName": "Negative Flash",
+  "loggingName": "video_cutout_negative_flash",
+  "legacyId": 5070,
+  "subject": {
+    "overlay": true
+  },
+  "customization": {
+    "speed": {
+      "default": 0.41,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "cfd9d36a",
+      "handle": "AQADedbMi9XM",
+      "md5": "108d8c1ac7e38e542bbd3b4312db01f4"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAGmudR1CHA"
+    }
+  }
+}

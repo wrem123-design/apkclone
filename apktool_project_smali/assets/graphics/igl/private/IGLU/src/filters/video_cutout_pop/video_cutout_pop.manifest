@@ -1,0 +1,17 @@
+{
+  "identifier": "49a27374-127c-4777-b8fb-36f353b488f6",
+  "enumCaseName": "subjectPop",
+  "displayName": "Pop",
+  "loggingName": "video_cutout_pop",
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": false
+  },
+  "customization": {
+    "speed": {
+      "default": 0.3,
+      "min": 0.0,
+      "max": 1.0
+    }
+  }
+}

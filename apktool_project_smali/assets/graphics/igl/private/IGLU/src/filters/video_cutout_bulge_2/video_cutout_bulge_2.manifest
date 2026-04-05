@@ -1,0 +1,13 @@
+{
+  "identifier": "5h0c3d4g-e6f7-6g8h-0c1d-2e3f4g5h6i7j",
+  "enumCaseName": "subjectBulge2",
+  "displayName": "Bulge",
+  "loggingName": "video_cutout_bulge_2",
+  "assets": [
+    {
+      "name": "Bulge",
+      "assetHash": "66f2ba5c28527e8220ff67c0f64914252d82c641748ef76e767277738eae87ab",
+      "effectId": "3641797072626941"
+    }
+  ]
+}

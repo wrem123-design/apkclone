@@ -1,0 +1,181 @@
+.class public final LX/Omz;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements LX/Lxj;
+
+
+# instance fields
+.field public final A00:Lcom/instagram/common/session/UserSession;
+
+
+# direct methods
+.method public constructor <init>(Lcom/instagram/common/session/UserSession;)V
+    .locals 0
+    .annotation build Ldalvik/annotation/optimization/NeverInline;
+    .end annotation
+
+    invoke-static {p1}, LX/659;->A0u(Ljava/lang/Object;)V
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, LX/Omz;->A00:Lcom/instagram/common/session/UserSession;
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final Bva()Ljava/lang/Integer;
+    .locals 1
+
+    const v0, 0x7f0821bf
+
+    invoke-static {v0}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final CE2(Lcom/instagram/feed/media/Media;)Ljava/lang/String;
+    .locals 1
+
+    const/4 v0, 0x0
+
+    return-object v0
+.end method
+
+.method public final CkI(Landroid/content/Context;Lcom/instagram/common/session/UserSession;Lcom/instagram/feed/media/Media;LX/6Aa;)Ljava/lang/CharSequence;
+    .locals 1
+
+    const/4 v0, 0x0
+
+    return-object v0
+.end method
+
+.method public final CkL(LX/6Aa;LX/4KI;)Ljava/util/List;
+    .locals 1
+
+    const/4 v0, 0x0
+
+    return-object v0
+.end method
+
+.method public final D3q(Landroid/content/Context;Lcom/instagram/common/session/UserSession;Lcom/instagram/feed/media/Media;LX/6Aa;)Ljava/lang/CharSequence;
+    .locals 3
+
+    invoke-static {p1, p3}, LX/011;->A0c(Ljava/lang/Object;Ljava/lang/Object;)V
+
+    invoke-static {}, LX/031;->A0m()V
+
+    const v0, -0x781e116e
+
+    invoke-static {p3, v0}, LX/2cc;->A0H(Lcom/facebook/graphql/modelutil/TypeModelData;I)Ljava/lang/Integer;
+
+    move-result-object v0
+
+    invoke-static {v0}, LX/021;->A02(Ljava/lang/Number;)I
+
+    move-result v2
+
+    invoke-virtual {p1}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+
+    move-result-object v1
+
+    const v0, 0x7f11016a
+
+    invoke-static {v1, v2, v0}, LX/177;->A0V(Landroid/content/res/Resources;II)Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-static {v0}, LX/659;->A0g(Ljava/lang/Object;)V
+
+    return-object v0
+.end method
+
+.method public final GPZ(Lcom/instagram/feed/media/Media;LX/6Aa;I)Z
+    .locals 5
+
+    invoke-static {p1, p2}, LX/121;->A1a(Ljava/lang/Object;Ljava/lang/Object;)Z
+
+    move-result v4
+
+    iget-boolean v0, p2, LX/6Aa;->A3o:Z
+
+    const/4 v3, 0x1
+
+    if-nez v0, :cond_1
+
+    iget-object v0, p1, Lcom/instagram/feed/media/Media;->A04:Lcom/instagram/feed/media/MutableMediaDictIntf;
+
+    invoke-interface {v0}, LX/DAD;->DYB()Z
+
+    move-result v0
+
+    if-nez v0, :cond_1
+
+    iget-object v0, p1, Lcom/instagram/feed/media/Media;->A04:Lcom/instagram/feed/media/MutableMediaDictIntf;
+
+    invoke-interface {v0}, LX/DAD;->BIC()Ljava/lang/Integer;
+
+    move-result-object v0
+
+    invoke-static {v0}, LX/021;->A02(Ljava/lang/Number;)I
+
+    move-result v2
+
+    invoke-static {}, LX/031;->A0m()V
+
+    sget-object v1, LX/5kf;->A09:LX/5kf;
+
+    const v0, -0x151c02d8
+
+    invoke-static {p1, v1, v0}, LX/2cc;->A0F(Lcom/facebook/graphql/modelutil/TypeModelData;Ljava/lang/Enum;I)Ljava/lang/Enum;
+
+    move-result-object v1
+
+    if-eqz v1, :cond_2
+
+    sget-object v0, LX/5kf;->A06:LX/5kf;
+
+    if-eq v1, v0, :cond_0
+
+    sget-object v0, LX/5kf;->A08:LX/5kf;
+
+    if-ne v1, v0, :cond_2
+
+    :cond_0
+    if-lez v2, :cond_2
+
+    iget-object v0, p0, LX/Omz;->A00:Lcom/instagram/common/session/UserSession;
+
+    invoke-static {v0}, LX/2ef;->A02(LX/1G1;)LX/0AA;
+
+    move-result-object v2
+
+    const-wide v0, 0x20810492000a1643L    # 4.061598226817567E-152
+
+    invoke-static {v2, v0, v1}, LX/011;->A0l(Ljava/lang/Object;J)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_2
+
+    return v3
+
+    :cond_1
+    iput-boolean v3, p2, LX/6Aa;->A3o:Z
+
+    :cond_2
+    return v4
+.end method
+
+.method public final GPr()Z
+    .locals 1
+
+    const/4 v0, 0x0
+
+    return v0
+.end method

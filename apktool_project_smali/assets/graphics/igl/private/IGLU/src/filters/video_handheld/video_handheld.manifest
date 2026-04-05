@@ -1,0 +1,19 @@
+{
+  "identifier": "50ea0277-9bcc-40af-867b-bf5edca5a21c",
+  "enumCaseName": "videoHandheld",
+  "displayName": "Handheld",
+  "loggingName": "video_handheld",
+  "legacyId": 2004,
+  "android": {
+    "previewAsset": {
+      "key": "a0983227",
+      "handle": "AQAGD15FPxBU",
+      "md5": "df388b4f10b96bba10b9297b1a50c0cb"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEZ5ydrtjm"
+    }
+  }
+}

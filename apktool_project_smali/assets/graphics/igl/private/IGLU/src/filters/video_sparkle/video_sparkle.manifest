@@ -1,0 +1,19 @@
+{
+  "identifier": "7409a972-162e-4114-890e-f36d8c5ff877",
+  "enumCaseName": "videoSparkle",
+  "displayName": "Sparkle",
+  "loggingName": "video_sparkle",
+  "legacyId": 3016,
+  "android": {
+    "previewAsset": {
+      "key": "9a9d9e90",
+      "handle": "AQAPSsXJ3pDc",
+      "md5": "755d4fd83756baf2f96bfc5c31509872"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADPkBOO2Xy"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "identifier": "0d2ef5b5-0cc8-4955-9ce1-99f24c718ed0",
+  "displayName": "Whatsapp Cool Filter",
+  "loggingName": "whatsapp_cool_filter",
+  "assets": [
+    {
+      "name": "LutCool",
+      "assetHash": "fe8cd6d46cf5c49f6e96c102d34edb3e9ac18556a7e0f497a7a8aed044aa5bfa",
+      "effectId": "687272641076946"
+    }
+  ]
+}

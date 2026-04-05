@@ -1,0 +1,40 @@
+.class public final LX/1he;
+.super Ljava/lang/Object;
+.source ""
+
+
+# instance fields
+.field public A00:Landroid/content/Context;
+
+
+# virtual methods
+.method public final A00()Ljava/lang/String;
+    .locals 3
+
+    .line 0
+    const-string v2, "libhelium_standalone.dex.so"
+
+    .line 2
+    iget-object v0, p0, LX/1he;->A00:Landroid/content/Context;
+
+    .line 4
+    invoke-virtual {v0}, Landroid/content/Context;->getApplicationInfo()Landroid/content/pm/ApplicationInfo;
+
+    .line 7
+    move-result-object v0
+
+    .line 8
+    iget-object v1, v0, Landroid/content/pm/ApplicationInfo;->nativeLibraryDir:Ljava/lang/String;
+
+    .line 10
+    sget-object v0, Ljava/io/File;->separator:Ljava/lang/String;
+
+    .line 12
+    invoke-static {v1, v0, v2}, LX/003;->A08(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+
+    .line 15
+    move-result-object v0
+
+    .line 16
+    return-object v0
+.end method

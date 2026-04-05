@@ -1,0 +1,17 @@
+{
+  "identifier": "66988209-e3c4-4758-8fe2-56478b344bca",
+  "displayName": "Xpro2",
+  "loggingName": "xpro2",
+  "assets": [
+    {
+      "name": "PlusDarker",
+      "assetHash": "2454f31179de8542c983a2eacdfba807d5cb19c9f0760eae7cb53411880e4d77",
+      "effectId": "5254031321487828"
+    },
+    {
+      "name": "XproMap",
+      "assetHash": "25bb3bbdbe8db366ec05c8dee320f5da3cfd5ff3abf2c1872ef94bda298e96da",
+      "effectId": "2119162288842273"
+    }
+  ]
+}

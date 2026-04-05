@@ -1,0 +1,24 @@
+{
+  "identifier": "aa7a5f0e-f1a3-48f4-b575-1975100d083d",
+  "enumCaseName": "videoPopups",
+  "displayName": "Popups",
+  "loggingName": "video_popups",
+  "legacyId": 3019,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 3000,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "7e5b7403",
+      "handle": "AQAJaw2L1oAV",
+      "md5": "b0f5daaca05bab8b79ee55fa8212f5d4"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAFIBlwt0-c"
+    }
+  }
+}

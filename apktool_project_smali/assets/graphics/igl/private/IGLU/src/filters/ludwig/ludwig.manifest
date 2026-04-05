@@ -1,0 +1,12 @@
+{
+  "identifier": "f7076814-08b6-49d6-a02d-02d43bebb9bb",
+  "displayName": "Ludwig",
+  "loggingName": "ludwig",
+  "assets": [
+    {
+      "name": "MapLudwig",
+      "assetHash": "df477d2e4f74f4a8f643d53a9e64e82cf77274c99e36095b6e5f9f032fc2f7be",
+      "effectId": "2153113068848412"
+    }
+  ]
+}

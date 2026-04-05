@@ -1,0 +1,12 @@
+{
+  "identifier": "efba555b-2cf9-417e-aed6-6aae54eac27a",
+  "displayName": "Cinema Red",
+  "loggingName": "cinema_red",
+  "assets": [
+    {
+      "name": "ClutCinemaRed",
+      "assetHash": "e63cc5f803bb3af2f61c1c09ff47df95a8390466819d70c34dd2a757e284f772",
+      "effectId": "1275032664504071"
+    }
+  ]
+}

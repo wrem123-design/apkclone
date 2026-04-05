@@ -1,0 +1,19 @@
+{
+  "identifier": "d9165699-d5ec-4520-b5ad-d7b7e7e005bb",
+  "enumCaseName": "videoColorShift",
+  "displayName": "Color shift",
+  "loggingName": "video_color_shift",
+  "legacyId": 2012,
+  "android": {
+    "previewAsset": {
+      "key": "1c800793",
+      "handle": "AQACbkCN4Uvz",
+      "md5": "d4d49bdb5db26fa6ef7014b301e7f902"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQBdDu1wbKKb"
+    }
+  }
+}

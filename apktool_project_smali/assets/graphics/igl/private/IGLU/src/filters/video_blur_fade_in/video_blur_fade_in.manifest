@@ -1,0 +1,12 @@
+{
+  "identifier": "9515d4c8-ba76-4917-a751-a2e1cb04df45",
+  "enumCaseName": "videoBlurFadeIn",
+  "displayName": "Blur fade in",
+  "loggingName": "video_blur_fade_in",
+  "legacyId": 3040,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 1000,
+    "curve": "linear"
+  }
+}

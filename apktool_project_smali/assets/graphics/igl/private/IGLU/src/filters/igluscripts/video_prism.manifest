@@ -1,0 +1,19 @@
+{
+  "identifier": "6804736b-b4c3-4fed-ae15-36076efa0231",
+  "enumCaseName": "videoPrism",
+  "displayName": "Prism",
+  "loggingName": "video_prism",
+  "legacyId": 3013,
+  "android": {
+    "previewAsset": {
+      "key": "d25dbec1",
+      "handle": "AQAikJEceT1w",
+      "md5": "a2a400491ac86422fcb30222bfd614a8"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADWcF5Rr63"
+    }
+  }
+}

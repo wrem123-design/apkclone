@@ -1,0 +1,34 @@
+{
+  "identifier": "048a4f8b-c404-4713-89be-2dca6c5d36f9",
+  "enumCaseName": "overlayNod",
+  "displayName": "Nod",
+  "loggingName": "video_cutout_nod",
+  "legacyId": 5067,
+  "subject": {
+    "overlay": true
+  },
+  "customization": {
+    "amount": {
+      "default": 0.5,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "speed": {
+      "default": 0.7,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "9d39be6a",
+      "handle": "AQACr0I7Ro1z",
+      "md5": "dfdf5d14f4feb54f2f174dd8b26b3aa7"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEf9UtVDU9"
+    }
+  }
+}

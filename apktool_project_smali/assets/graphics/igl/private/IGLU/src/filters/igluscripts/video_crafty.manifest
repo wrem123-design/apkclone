@@ -1,0 +1,12 @@
+{
+  "identifier": "fef2fa9d-f959-4b43-9757-d1be227fb761",
+  "enumCaseName": "videoCrafty",
+  "displayName": "Crafty",
+  "loggingName": "video_crafty",
+  "legacyId": 3030,
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAG_nNSaubQ"
+    }
+  }
+}

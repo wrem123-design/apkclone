@@ -1,0 +1,46 @@
+.class public final synthetic LX/PA8;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# instance fields
+.field public final synthetic A00:I
+
+.field public final synthetic A01:LX/772;
+
+
+# direct methods
+.method public synthetic constructor <init>(LX/772;I)V
+    .locals 0
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, LX/PA8;->A01:LX/772;
+
+    iput p2, p0, LX/PA8;->A00:I
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final run()V
+    .locals 4
+
+    iget v3, p0, LX/PA8;->A00:I
+
+    invoke-static {}, LX/3mt;->A00()LX/1tz;
+
+    move-result-object v2
+
+    const v1, 0x2550001
+
+    const/16 v0, 0x71
+
+    invoke-virtual {v2, v1, v3, v0}, LX/9e6;->markerEnd(IIS)V
+
+    return-void
+.end method

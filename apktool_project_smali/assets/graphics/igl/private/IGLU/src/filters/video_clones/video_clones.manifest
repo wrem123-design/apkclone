@@ -1,0 +1,24 @@
+{
+  "identifier": "3b5645c7-dc0c-48ea-bf93-f781efe6acaf",
+  "enumCaseName": "videoClones",
+  "displayName": "Clones",
+  "loggingName": "video_clones",
+  "legacyId": 2064,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 4000,
+    "curve": "circularIn"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "c5367e7e",
+      "handle": "AQAEYrKByc66",
+      "md5": "9e37786375f0e685e02a9595f787935d"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAJW6bKF4th"
+    }
+  }
+}

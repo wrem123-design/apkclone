@@ -1,0 +1,17 @@
+{
+  "identifier": "be3c9e59-0bcc-4766-9743-0c2990067056",
+  "enumCaseName": "videoVanish",
+  "displayName": "Vanish",
+  "loggingName": "video_vanish",
+  "legacyId": 3028,
+  "behavior": {
+    "type": "fixedOutro",
+    "durationMs": 750,
+    "curve": "linear"
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAG_nNSaubQ"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "identifier": "17bddbe0-3dce-4b48-a2ce-fc8775a4c957",
+  "displayName": "Sierra",
+  "loggingName": "sierra",
+  "assets": [
+    {
+      "name": "MapSierra",
+      "assetHash": "0e22297aa7640f2bedf64c689d2e1e5d6d3709e304057f9128cfb5d0b11d9749",
+      "effectId": "1621933505495523"
+    },
+    {
+      "name": "Overlay",
+      "assetHash": "84b56063e8efd2fa742bd5a62235c378606dc3406613606f99f3c4044b20e31a",
+      "effectId": "1236494364700999"
+    },
+    {
+      "name": "Smoke",
+      "assetHash": "103ed57ed09c1b164b5bb4fdde6a5d809223e86ae987095ec57dc424d5963a32",
+      "effectId": "1983279849258290"
+    },
+    {
+      "name": "SoftLight100",
+      "assetHash": "cd94f1f09b79889b9b92b3e05c7dd72947da9a15e73423984005c2cf1b3c5430",
+      "effectId": "953556680666601"
+    },
+    {
+      "name": "Vignette",
+      "assetHash": "e30fac30ea874049e85433282184ea6e59bdf23a80e43094039d907b964d8fe4",
+      "effectId": "1988284192108233"
+    }
+  ]
+}

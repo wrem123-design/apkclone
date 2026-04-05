@@ -1,0 +1,24 @@
+{
+  "identifier": "ab2651ca-c2fc-4732-8345-e2df5e336b0a",
+  "enumCaseName": "videoColorWipe",
+  "displayName": "Color wipe",
+  "loggingName": "video_color_wipe",
+  "legacyId": 2040,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 1500,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "6bb8bcf7",
+      "handle": "AQAGja2NsVCe",
+      "md5": "12243683e257d9926ca3b2880939aef0"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAFw72vYp1z"
+    }
+  }
+}

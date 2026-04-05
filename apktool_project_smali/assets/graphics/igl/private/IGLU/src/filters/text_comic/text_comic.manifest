@@ -1,0 +1,17 @@
+{
+  "identifier": "b9427117-df25-42a7-b9c4-38d87f759107",
+  "displayName": "Text Comic",
+  "loggingName": "text_comic",
+  "assets": [
+    {
+      "name": "ComicMatcap",
+      "assetHash": "29df94d6955e7736623e55bf451b1fc3546a13dd1341ea6bf606ef086832ea7e",
+      "effectId": "919899897298823"
+    },
+    {
+      "name": "ComicMatcapClear",
+      "assetHash": "bd8257aee43531e4ac5eeb9e315bdbc6fa0e2b883bb90379a52b3c754da3832d",
+      "effectId": "1570307820869685"
+    }
+  ]
+}

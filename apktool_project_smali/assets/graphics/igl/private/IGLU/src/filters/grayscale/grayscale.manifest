@@ -1,0 +1,12 @@
+{
+  "identifier": "97cb41bd-cf7c-4797-b56c-281a0717fc2f",
+  "displayName": "Grayscale",
+  "loggingName": "grayscale",
+  "assets": [
+    {
+      "name": "LutGrayscale",
+      "assetHash": "35211b9b1d3e7027b79519651bb46f13793fbc4b31ed630d4b6fdad1a0cfffca",
+      "effectId": "952270110601622"
+    }
+  ]
+}

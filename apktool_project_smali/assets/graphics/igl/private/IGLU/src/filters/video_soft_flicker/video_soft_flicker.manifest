@@ -1,0 +1,19 @@
+{
+  "identifier": "d0b6fa2c-6ba0-4784-aa3f-90dc239ca2dc",
+  "enumCaseName": "videoSoftFlicker",
+  "displayName": "Soft flicker",
+  "loggingName": "video_soft_flicker",
+  "legacyId": 2049,
+  "android": {
+    "previewAsset": {
+      "key": "c9da6cea",
+      "handle": "AQAjZdCQUSM0",
+      "md5": "8f63f64bb7179ade9070a0993f31b2f2"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAIXwAue7gh"
+    }
+  }
+}

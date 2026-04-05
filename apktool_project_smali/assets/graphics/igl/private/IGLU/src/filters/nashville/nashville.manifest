@@ -1,0 +1,12 @@
+{
+  "identifier": "6f0d6f76-9cfb-42f7-b3b7-46817316a904",
+  "displayName": "Nashville",
+  "loggingName": "nashville",
+  "assets": [
+    {
+      "name": "MapNashville",
+      "assetHash": "791777935eb197947e95ec89c12e8fd0bf7bcc33f65314d50e2d9a3a67e1b218",
+      "effectId": "1113114347567570"
+    }
+  ]
+}

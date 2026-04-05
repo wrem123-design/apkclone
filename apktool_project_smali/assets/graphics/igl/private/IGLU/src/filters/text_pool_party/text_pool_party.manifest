@@ -1,0 +1,12 @@
+{
+  "identifier": "06005e4c-c4f0-4e6a-a566-b354b727b734",
+  "displayName": "Text Pool Party",
+  "loggingName": "text_pool_party",
+  "assets": [
+    {
+      "name": "Sparkle",
+      "assetHash": "2415f14f09363bd40d92336804dd819927481d951d25d97cc6f8cfdbd9e83de8",
+      "effectId": "787086830563012"
+    }
+  ]
+}

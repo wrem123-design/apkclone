@@ -1,0 +1,19 @@
+{
+  "identifier": "625a7bee-07b7-4296-b9a7-25dc661cc143",
+  "enumCaseName": "videoLensFlare",
+  "displayName": "Flare",
+  "loggingName": "video_lense_flare",
+  "legacyId": 2050,
+  "android": {
+    "previewAsset": {
+      "key": "52e44e1",
+      "handle": "AQADhm6Lkoq5",
+      "md5": "b8d0bd37858d012ade66459079331dd1"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADErEHnv9L"
+    }
+  }
+}

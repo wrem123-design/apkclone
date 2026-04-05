@@ -1,0 +1,24 @@
+{
+  "identifier": "42ea4c04-142b-4a67-99c9-19c4c776e4f5",
+  "enumCaseName": "videoDriftUp",
+  "displayName": "Drift up",
+  "loggingName": "video_drift_up",
+  "legacyId": 2025,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 3000,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "93f12085",
+      "handle": "AQACMCIAD2_B",
+      "md5": "e45143a1ee30cbde47b4a92c80603d50"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAFWFximBUB"
+    }
+  }
+}

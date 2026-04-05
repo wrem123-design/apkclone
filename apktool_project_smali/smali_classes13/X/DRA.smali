@@ -1,0 +1,29 @@
+.class public abstract LX/DRA;
+.super Ljava/lang/Object;
+.source ""
+
+
+# static fields
+.field public static A00:Lkotlin/jvm/functions/Function3;
+
+
+# direct methods
+.method public static constructor <clinit>()V
+    .locals 2
+
+    const/16 v0, 0x13
+
+    new-instance v1, LX/gAS;
+
+    invoke-direct {v1, v0}, LX/gAS;-><init>(I)V
+
+    const v0, -0x7a751bcb
+
+    invoke-static {v1, v0}, LX/6Sm;->A02(Ljava/lang/Object;I)LX/6Sx;
+
+    move-result-object v0
+
+    sput-object v0, LX/DRA;->A00:Lkotlin/jvm/functions/Function3;
+
+    return-void
+.end method

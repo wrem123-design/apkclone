@@ -1,0 +1,22 @@
+{
+  "identifier": "27be7f3f-bd9b-4335-80a0-ed00a2b8e6b6",
+  "enumCaseName": "overlayPopIn",
+  "displayName": "Pop In",
+  "loggingName": "video_cutout_pop",
+  "legacyId": 5066,
+  "subject": {
+    "overlay": true
+  },
+  "android": {
+    "previewAsset": {
+      "key": "c8beaa5",
+      "handle": "AQAFlWGvyZaX",
+      "md5": "18ada9f4653d54fab8509634d1624901"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEXRWd9Rad"
+    }
+  }
+}

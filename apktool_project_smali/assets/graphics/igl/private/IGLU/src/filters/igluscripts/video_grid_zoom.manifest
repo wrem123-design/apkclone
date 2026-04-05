@@ -1,0 +1,24 @@
+{
+  "identifier": "b8bcb382-dfc1-4649-bb60-63f86319154e",
+  "enumCaseName": "videoGridZoom",
+  "displayName": "Grid zoom",
+  "loggingName": "video_grid_zoom",
+  "legacyId": 3002,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 750,
+    "curve": "exponentialInOut"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "52b57254",
+      "handle": "AQAClvyvQhDw",
+      "md5": "27201e3cc8ca76dfad7508be8aba1bf2"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQBcXmqESghL"
+    }
+  }
+}

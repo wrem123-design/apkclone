@@ -1,0 +1,143 @@
+.class public final LX/Oxb;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# instance fields
+.field public final synthetic A00:Landroid/content/Context;
+
+.field public final synthetic A01:Lcom/instagram/archive/fragment/InlineAddHighlightFragment;
+
+
+# direct methods
+.method public constructor <init>(Landroid/content/Context;Lcom/instagram/archive/fragment/InlineAddHighlightFragment;)V
+    .locals 0
+
+    iput-object p2, p0, LX/Oxb;->A01:Lcom/instagram/archive/fragment/InlineAddHighlightFragment;
+
+    iput-object p1, p0, LX/Oxb;->A00:Landroid/content/Context;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final run()V
+    .locals 5
+
+    iget-object v4, p0, LX/Oxb;->A01:Lcom/instagram/archive/fragment/InlineAddHighlightFragment;
+
+    iget-object v1, v4, Lcom/instagram/archive/fragment/InlineAddHighlightFragment;->A01:LX/Pxc;
+
+    if-eqz v1, :cond_4
+
+    iget-object v0, p0, LX/Oxb;->A00:Landroid/content/Context;
+
+    invoke-interface {v1, v0}, LX/Pxc;->BQW(Landroid/content/Context;)Lcom/instagram/common/typedurl/ImageUrl;
+
+    move-result-object v3
+
+    if-nez v3, :cond_0
+
+    iget-object v1, v4, Lcom/instagram/archive/fragment/InlineAddHighlightFragment;->A01:LX/Pxc;
+
+    if-eqz v1, :cond_4
+
+    invoke-virtual {v4}, Landroidx/fragment/app/Fragment;->requireContext()Landroid/content/Context;
+
+    move-result-object v0
+
+    invoke-interface {v1, v0}, LX/Pxc;->BQW(Landroid/content/Context;)Lcom/instagram/common/typedurl/ImageUrl;
+
+    move-result-object v3
+
+    :cond_0
+    iget-object v2, v4, Lcom/instagram/archive/fragment/InlineAddHighlightFragment;->createHighlightCoverImage:Lcom/instagram/common/ui/widget/imageview/CircularImageView;
+
+    if-eqz v2, :cond_3
+
+    invoke-virtual {v2, v3, v4}, Lcom/instagram/common/ui/widget/imageview/IgImageView;->setUrl(Lcom/instagram/common/typedurl/ImageUrl;LX/AHT;)V
+
+    iget-boolean v0, v4, Lcom/instagram/archive/fragment/InlineAddHighlightFragment;->A06:Z
+
+    if-nez v0, :cond_1
+
+    iget v0, v4, Lcom/instagram/archive/fragment/InlineAddHighlightFragment;->A00:I
+
+    int-to-float v1, v0
+
+    const v0, 0x33485e1c
+
+    invoke-static {v2, v1, v0}, LX/08R;->A0A(Landroid/view/View;FI)V
+
+    :cond_1
+    iget-boolean v0, v4, Lcom/instagram/archive/fragment/InlineAddHighlightFragment;->A05:Z
+
+    if-eqz v0, :cond_2
+
+    const/high16 v1, -0x40800000    # -1.0f
+
+    invoke-virtual {v2}, Landroid/view/View;->getScaleY()F
+
+    move-result v0
+
+    mul-float/2addr v1, v0
+
+    const v0, 0x6c10377
+
+    invoke-static {v2, v1, v0}, LX/08R;->A0E(Landroid/view/View;FI)V
+
+    :cond_2
+    return-void
+
+    :cond_3
+    sget-object v2, LX/2eh;->A01:LX/2eh;
+
+    const v1, 0x30c03da3
+
+    const-string v0, "InlineAddHighlightFragment createHighlightCoverImage is null"
+
+    invoke-virtual {v2, v0, v1}, LX/2eh;->AHP(Ljava/lang/String;I)LX/Ka6;
+
+    move-result-object v2
+
+    if-eqz v2, :cond_2
+
+    iget-object v0, v4, Lcom/instagram/archive/fragment/InlineAddHighlightFragment;->createHighlightView:Landroid/view/View;
+
+    invoke-static {v0}, LX/020;->A1a(Ljava/lang/Object;)Z
+
+    move-result v1
+
+    const-string v0, "createHighlightView is null"
+
+    invoke-interface {v2, v0, v1}, LX/Ka6;->ADf(Ljava/lang/String;Z)V
+
+    const-string v1, "imageUrl"
+
+    invoke-interface {v3}, Lcom/instagram/common/typedurl/ImageUrl;->getUrl()Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-interface {v2, v1, v0}, LX/Ka6;->ADe(Ljava/lang/String;Ljava/lang/String;)V
+
+    invoke-interface {v2}, LX/Ka6;->report()V
+
+    return-void
+
+    :cond_4
+    const-string v0, "delegate"
+
+    invoke-static {v0}, LX/659;->A13(Ljava/lang/String;)V
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+.end method

@@ -1,0 +1,19 @@
+{
+  "identifier": "19734f7e-03fc-4322-aba9-873873d01699",
+  "enumCaseName": "videoWavy",
+  "displayName": "Sway",
+  "loggingName": "video_wavy",
+  "legacyId": 2030,
+  "android": {
+    "previewAsset": {
+      "key": "e637b7b9",
+      "handle": "AQAEPe3pwa0r",
+      "md5": "49591729f0e3b07e49d59650ca54e970"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAGeKiUhUf8"
+    }
+  }
+}

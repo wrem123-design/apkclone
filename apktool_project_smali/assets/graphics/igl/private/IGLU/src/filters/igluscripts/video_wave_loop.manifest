@@ -1,0 +1,12 @@
+{
+  "identifier": "e8bc265d-4286-419c-9435-f750f787063e",
+  "enumCaseName": "videoWaveLoop",
+  "displayName": "Wave loop",
+  "loggingName": "video_wave_loop",
+  "legacyId": 3029,
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAG_nNSaubQ"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+/**
+ * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
+ */
+
+function(outerHeight) {
+  window.__outer_height_override__ = parseInt(outerHeight, 10);
+}

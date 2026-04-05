@@ -1,0 +1,19 @@
+{
+  "identifier": "286be28e-df66-400d-bd01-2a361aeff443",
+  "enumCaseName": "videoFilmGrain",
+  "displayName": "Film grain",
+  "loggingName": "video_film_grain",
+  "legacyId": 2027,
+  "android": {
+    "previewAsset": {
+      "key": "1096c87f",
+      "handle": "AQACgLv5o5Y9",
+      "md5": "95f984471bb82ea8d15a53183504b656"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEeOIS9SJf"
+    }
+  }
+}

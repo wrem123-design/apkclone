@@ -1,0 +1,102 @@
+[Filter VideoSoftMaskIn]
+[BehaviorType fixedIntro]
+[BehaviorDuration 1000]
+[AnimationCurve linear]
+# Soft Mask transition effect — horizontal soft wipe with bidirectional support.
+# Ported from GLSL text animation: "Soft Mask In" / "Soft Mask Out" (2025 H2 Text Animations)
+#
+# Single-pass pipeline:
+#   pass0: smoothstep-based horizontal soft mask, direction controlled by `outro`
+#
+# outro = 0 → "Soft Mask In" (content appears from left)
+# outro = 1 → "Soft Mask Out" (content disappears to right)
+
+[Init]
+fun init(Filter filter) {
+    filter.parameters = {
+        {outro = 0.0, min = 0.0, max = 1.0, description = "0 = appearing (in), 1 = disappearing (out)"},
+        {ramp = 0.3, min = 0.01, max = 1.0, description = "Soft edge width"},
+    };
+
+    filter.passes = {
+        {
+            name = 'pass0,
+            inputs = {'default},
+            uniforms = {
+                progress = 0.0,
+                ramp = 0.3,
+                outro = 0.0,
+            },
+            glslShader = glslSoftMask,
+            metalShader = metalSoftMask,
+        },
+    };
+}
+
+[PreRender]
+fun preRender(Filter filter) {
+    f32 progress = getParameterFloat('progress);
+    f32 outro = getParameterFloat('outro);
+    f32 ramp = getParameterFloat('ramp);
+
+    setShaderUniform('pass0, 'progress, progress);
+    setShaderUniform('pass0, 'ramp, ramp);
+    setShaderUniform('pass0, 'outro, outro);
+}
+
+
+# --- GLSL Shader ---
+
+string glslSoftMask = "
+    precision highp float;
+    varying vec2 sourceTextureCoordinate;
+    uniform float progress;
+    uniform float ramp;
+    uniform float outro;
+
+    void main() {
+        vec2 uv = sourceTextureCoordinate;
+        vec4 samp = sampleInput(uv);
+        float p = progress * (1.0 + ramp * 2.0);
+        p -= ramp;
+        float a_out = smoothstep(-ramp * 0.5, ramp * 0.5, uv.x - p);
+        float a_in = smoothstep(ramp * 0.5, -ramp * 0.5, uv.x - p);
+
+        float a = mix(a_in, a_out, step(0.5, outro));
+        samp *= a;
+        gl_FragColor = toOutputFormat(samp);
+    }
+";
+
+
+# --- Metal Shader ---
+
+string metalSoftMask = "
+    struct fragmentOut { float4 _gl_FragColor [[color(0)]]; };
+    struct fragmentIn { float2 sourceTextureCoordinate [[user(locn1)]]; };
+
+    typedef struct {
+        BaseUniformsMetal;
+        float progress;
+        float ramp;
+        float outro;
+    } Uniforms;
+
+    fragment fragmentOut fragmentShader(fragmentIn in [[stage_in]],
+                                        constant Uniforms & uniforms [[buffer(1)]],
+                                        DefaultInputs defaultInputs
+                                        ) {
+        float2 uv = in.sourceTextureCoordinate;
+        float4 samp = sampleInput(defaultInputs, uv);
+        float p = uniforms.progress * (1.0 + uniforms.ramp * 2.0);
+        p -= uniforms.ramp;
+        float a_out = smoothstep(-uniforms.ramp * 0.5, uniforms.ramp * 0.5, uv.x - p);
+        float a_in = smoothstep(uniforms.ramp * 0.5, -uniforms.ramp * 0.5, uv.x - p);
+
+        float a = mix(a_in, a_out, step(0.5, uniforms.outro));
+        samp.a *= a;
+        fragmentOut out = {};
+        out._gl_FragColor = toOutputFormat(samp);
+        return out;
+    }
+";

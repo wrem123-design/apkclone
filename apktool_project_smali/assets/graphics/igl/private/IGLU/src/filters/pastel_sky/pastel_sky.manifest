@@ -1,0 +1,12 @@
+{
+  "identifier": "0ffa9b11-c5a4-41ad-86a3-4baca8b1ffba",
+  "displayName": "Pastel Sky",
+  "loggingName": "pastel_sky",
+  "assets": [
+    {
+      "name": "ClutPastelSky",
+      "assetHash": "f8f3d2ccb90bdc1564d8529c20c33934e96aa44e2516ae695cfef4e9037ab3a1",
+      "effectId": "4346356562349082"
+    }
+  ]
+}

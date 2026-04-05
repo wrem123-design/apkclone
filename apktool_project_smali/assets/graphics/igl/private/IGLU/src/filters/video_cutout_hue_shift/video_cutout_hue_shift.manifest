@@ -1,0 +1,6 @@
+{
+  "identifier": "5d4c2824-fa44-48a5-b90b-237a7f5f14d8",
+  "enumCaseName": "subjectHueShift",
+  "displayName": "Hue shift",
+  "loggingName": "video_cutout_hue_shift"
+}

@@ -1,0 +1,12 @@
+{
+  "identifier": "797633fa-4dae-4c53-a209-1b0fad225710",
+  "displayName": "Whatsapp Pop Filter",
+  "loggingName": "whatsapp_pop_filter",
+  "assets": [
+    {
+      "name": "LutPop",
+      "assetHash": "1e7f196cd249f997fa2b35f12f8b5c29fae2f55527a0807fa38d79490da8c734",
+      "effectId": "1350104100483441"
+    }
+  ]
+}

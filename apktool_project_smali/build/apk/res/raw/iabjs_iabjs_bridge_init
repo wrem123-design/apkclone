@@ -1,0 +1,1 @@
+window.__iabjs_unified_bridge_nonce="%s",window.__call_iabjs_unified_bridge=function(i,e,n){if(window.iabjs_unified_bridge){let s=JSON.stringify({method:i,payload:n,nonce:e});window.iabjs_unified_bridge.postMessage(s)}else window.webkit&&window.webkit.messageHandlers&&window.webkit.messageHandlers[i]&&window.webkit.messageHandlers[i].postMessage(n)};

@@ -1,0 +1,19 @@
+{
+  "identifier": "6535d767-9b1e-423a-a72b-19c8af1784c3",
+  "enumCaseName": "videoFlashingLights",
+  "displayName": "Flashing lights",
+  "loggingName": "video_flashing_lights",
+  "legacyId": 2046,
+  "android": {
+    "previewAsset": {
+      "key": "47cba3cc",
+      "handle": "AQACVTPSIKDv",
+      "md5": "628e357f7504b046137308df8e9b18b9"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAM92bip2EO"
+    }
+  }
+}

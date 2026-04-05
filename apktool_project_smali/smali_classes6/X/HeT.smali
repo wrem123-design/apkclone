@@ -1,0 +1,58 @@
+.class public final LX/HeT;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements Lcom/facebook/cameracore/mediapipeline/dataproviders/facetracker/interfaces/FaceTrackerDataProviderConfiguration$FaceTrackerErrorHandler;
+
+
+# instance fields
+.field public final synthetic A00:LX/4I9;
+
+.field public final synthetic A01:LX/59L;
+
+
+# direct methods
+.method public constructor <init>(LX/4I9;LX/59L;)V
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x8010,
+            0x1010
+        }
+        names = {
+            null,
+            null
+        }
+    .end annotation
+
+    iput-object p1, p0, LX/HeT;->A00:LX/4I9;
+
+    iput-object p2, p0, LX/HeT;->A01:LX/59L;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final handleLoadError(Ljava/lang/String;)V
+    .locals 3
+
+    iget-object v0, p0, LX/HeT;->A00:LX/4I9;
+
+    iget-object v2, v0, LX/4I9;->A02:LX/4I8;
+
+    new-instance v1, Ljava/io/IOException;
+
+    invoke-direct {v1, p1}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
+
+    iget-object v0, p0, LX/HeT;->A01:LX/59L;
+
+    iget-object v0, v0, LX/59L;->A0J:Ljava/util/HashMap;
+
+    invoke-virtual {v2, v1, v0}, LX/4I8;->A01(Ljava/lang/Exception;Ljava/util/HashMap;)V
+
+    return-void
+.end method

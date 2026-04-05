@@ -1,0 +1,26 @@
+{
+  "identifier": "6861dba9-6981-40e4-8d9a-2b386ebf53eb",
+  "enumCaseName": "videoGlitch",
+  "displayName": "Glitch",
+  "loggingName": "video_glitch",
+  "legacyId": 2073,
+  "android": {
+    "previewAsset": {
+      "key": "e14f9ef7",
+      "handle": "AQADuZzt3fQk",
+      "md5": "05b8a20998ef08b2e003fb3a8294a29f"
+    }
+  },
+  "assets": [
+    {
+      "name": "PerlinNoise",
+      "assetHash": "42393e620664a372495800bfcf40ca960aa0ab3e2ddfe42fbfe2b86098d33000",
+      "effectId": "1259354255546062"
+    }
+  ],
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEYggNFdq4"
+    }
+  }
+}

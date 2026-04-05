@@ -1,0 +1,67 @@
+{
+  "identifier": "43dd641a-1b18-4e7a-a66e-b61788bfd75c",
+  "displayName": "Crema",
+  "loggingName": "crema",
+  "assets": [
+    {
+      "name": "AdenMap",
+      "assetHash": "9cfcf4cc9a449fd025ebb6afdd290de61957c5c9a92e94a9ca33cbe38a9c2d45",
+      "effectId": "1296409279208728"
+    },
+    {
+      "name": "BrightcontrastMap",
+      "assetHash": "b18fec46cb4a38bc79de5c5e148cdb9e6bd0d512cad518d6b85990e2bf604ebb",
+      "effectId": "1318937940070830"
+    },
+    {
+      "name": "CrazycolorMap",
+      "assetHash": "782d793cef7ad006d91e7a48fd282cd535b0fb38a1f9b4853dc21354d248c024",
+      "effectId": "1664326171413657"
+    },
+    {
+      "name": "CrazycolorOverlay",
+      "assetHash": "296338840b449677b6b81d360f097d3564e30644eb77289a3003ad5664786220",
+      "effectId": "1916268372326813"
+    },
+    {
+      "name": "JunoMap",
+      "assetHash": "3b471b51e3df1fc4ab5ec490299a0370b06030fe1baad3398a09a01f1d1840aa",
+      "effectId": "762924179853583"
+    },
+    {
+      "name": "LarkMap",
+      "assetHash": "474a77613cc8e7560bb518ffcfe9a14d446a5c5e1288e5cb270d58aa61bdda80",
+      "effectId": "4197259967188525"
+    },
+    {
+      "name": "Map",
+      "assetHash": "de4704ef5500738490e2d3feb888366985b6d020f8605232af2f42ff34ca5b66",
+      "effectId": "936372079073189"
+    },
+    {
+      "name": "PerpetuaMap",
+      "assetHash": "4434471d634523bd0f7193c88eae5ddc6274303c2d5848c1e8a4234a41b622e5",
+      "effectId": "3195768320604980"
+    },
+    {
+      "name": "PerpetuaOverlay",
+      "assetHash": "6e3ba5c1203e819929e228de8b7e79a77cd76cd45652fde4ca15b82e027d367a",
+      "effectId": "928093746617489"
+    },
+    {
+      "name": "ReyesMap",
+      "assetHash": "e945b1e1b6970e6db412a50bb079611151add0d4f5d8c49b17afd248f4e97526",
+      "effectId": "1967295693867624"
+    },
+    {
+      "name": "SlumberMap",
+      "assetHash": "7fc8ae00e91266768588414d1e19468380f235b57f4b2d7575ed00faf0ea3c0d",
+      "effectId": "2139573176816371"
+    },
+    {
+      "name": "SubtlecolorMap",
+      "assetHash": "ae683222cf3aeb4b5b6883ea493afcbdf4d8720fe79e4f82aaaee87e2cef71a9",
+      "effectId": "1640625533636395"
+    }
+  ]
+}

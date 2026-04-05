@@ -1,0 +1,24 @@
+{
+  "identifier": "70847717-4c92-458b-9dc3-d142208a9428",
+  "enumCaseName": "videoBlurOut",
+  "displayName": "Blur out",
+  "loggingName": "video_blur_out",
+  "legacyId": 2015,
+  "behavior": {
+    "type": "fixedOutro",
+    "durationMs": 2000,
+    "curve": "sinusoidalInOut"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "c0792c12",
+      "handle": "AQAF4dxmEwAd",
+      "md5": "e8a684cd38734911f65df8fbb73575a7"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQBdz8FQ0-A5"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "identifier": "7ba486ef-d253-484a-b8df-5821821de139",
+  "enumCaseName": "subjectTagged",
+  "displayName": "Tag",
+  "loggingName": "video_cutout_tagged",
+  "legacyId": 2103,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": false,
+    "allowsNames": true
+  },
+  "customization": {
+    "color": {
+      "default": "#000000",
+      "available": [
+        "#FFFFFF",
+        "#000000"
+      ]
+    },
+    "size": {
+      "default": 0.38,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "offsetX": {
+      "default": 0.0,
+      "min": -50.0,
+      "max": 50.0
+    },
+    "offsetY": {
+      "default": 0.0,
+      "min": -50.0,
+      "max": 50.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "f7e1e917",
+      "handle": "AQAEFNVSQF3M",
+      "md5": "5be2ab9c35b07214a94863d3c0d0a5d1"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAFEzdwfunr"
+    }
+  }
+}

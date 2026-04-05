@@ -1,0 +1,17 @@
+{
+  "identifier": "51712aff-8aa0-4602-8c9f-88719cce7843",
+  "displayName": "Color Lut",
+  "loggingName": "color_lut",
+  "assets": [
+    {
+      "name": "ClutEktachrome",
+      "assetHash": "de898c6d325e1bcd268a646b1ce57c46a458652c305d2c0e47d424e89ff62356",
+      "effectId": "1420238279645208"
+    },
+    {
+      "name": "ClutKodachrome",
+      "assetHash": "ee0e9ceb33117605765455f2af31a17421c650afc9b8267f6bed5988546e19d3",
+      "effectId": "787974297140944"
+    }
+  ]
+}

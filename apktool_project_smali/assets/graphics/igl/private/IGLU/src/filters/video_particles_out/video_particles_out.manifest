@@ -1,0 +1,18 @@
+{
+  "identifier": "b8c52d4f-937e-47d3-9786-d4b8efcdfb8c",
+  "enumCaseName": "videoParticlesOut",
+  "displayName": "Particles out",
+  "loggingName": "video_particles_out",
+  "behavior": {
+    "type": "fixedOutro",
+    "durationMs": 1000,
+    "curve": "linear"
+  },
+  "assets": [
+    {
+      "name": "RgbaNoise256",
+      "assetHash": "3415067e1e7cd2965854c813f34bdb028aed7f87695903797ff6ec62f156c506",
+      "effectId": "1274215854629798"
+    }
+  ]
+}

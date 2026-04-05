@@ -1,0 +1,19 @@
+.class public abstract LX/7OW;
+.super Ljava/lang/Object;
+.source ""
+
+
+# direct methods
+.method public static final A00(LX/7zH;Lkotlin/jvm/functions/Function1;)LX/7zH;
+    .locals 1
+
+    new-instance v0, LX/7OX;
+
+    invoke-direct {v0, p1}, LX/7OX;-><init>(Lkotlin/jvm/functions/Function1;)V
+
+    invoke-interface {p0, v0}, LX/7zH;->GXi(LX/7zH;)LX/7zH;
+
+    move-result-object v0
+
+    return-object v0
+.end method

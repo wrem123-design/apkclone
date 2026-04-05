@@ -1,0 +1,29 @@
+.class public final LX/Ysf;
+.super Ljava/lang/Object;
+.source ""
+
+
+# instance fields
+.field public A00:I
+
+
+# virtual methods
+.method public final toString()Ljava/lang/String;
+    .locals 2
+
+    invoke-static {}, LX/011;->A0S()Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v0, "messageId:"
+
+    invoke-static {v0, v1}, LX/Aug;->A0t(Ljava/lang/String;Ljava/lang/StringBuilder;)Ljava/lang/StringBuilder;
+
+    iget v0, p0, LX/Ysf;->A00:I
+
+    invoke-static {v1, v0}, LX/120;->A12(Ljava/lang/StringBuilder;I)Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+.end method

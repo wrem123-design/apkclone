@@ -1,0 +1,35 @@
+{
+  "identifier": "8f2682fd-440b-4da0-8c02-ae7961f20315",
+  "enumCaseName": "subjectExposurePulse",
+  "displayName": "Exposure Pulse",
+  "loggingName": "video_cutout_exposure_pulse",
+  "legacyId": 2086,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": true,
+    "typeSuggestions": [
+      "person",
+      "head",
+      "clothing"
+    ]
+  },
+  "customization": {
+    "speed": {
+      "default": 1.0,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "720d065f",
+      "handle": "AQAFraHZ9Ntf",
+      "md5": "c9e283ce0509501f79582f84950018bc"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAL-wUpDbfR"
+    }
+  }
+}

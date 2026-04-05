@@ -1,0 +1,54 @@
+{
+  "identifier": "3074346c-78f9-49b7-b861-546b4b120050",
+  "enumCaseName": "overlayColorWipe",
+  "displayName": "Color Wipe",
+  "loggingName": "video_cutout_color_wipe",
+  "legacyId": 5061,
+  "subject": {
+    "overlay": true
+  },
+  "customization": {
+    "speed": {
+      "default": 0.29,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "color": {
+      "default": "#FFFFFF",
+      "available": [
+        "#FFFFFF",
+        "#000000",
+        "#FFD600",
+        "#FF7A00",
+        "#FE1D37",
+        "#FF0169",
+        "#D300C5",
+        "#7638FA",
+        "#37038B",
+        "#1CD164",
+        "#0095F6",
+        "#AD88FC",
+        "#FDD5FD",
+        "#FFABE1",
+        "#FFC584",
+        "#FFF8C2",
+        "#09FF00",
+        "#FFFF00",
+        "#5AFAC7",
+        "#0000FF"
+      ]
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "4bf4bed5",
+      "handle": "AQAIg2h8zx-7",
+      "md5": "cc629eb8a7d94648ef8ba1f11ae3cabc"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEWdhRXjX7"
+    }
+  }
+}

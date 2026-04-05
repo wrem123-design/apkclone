@@ -1,0 +1,12 @@
+/**
+ * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
+ */
+
+function(cssSelector) {
+  try {
+    var element = document.querySelector(cssSelector);
+    return {success: element !== null};
+  } catch (error) {
+    return {success: false};
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "identifier": "e97a6ea2-a8db-45b7-8f9e-c56fdbeb5674",
+  "enumCaseName": "paris",
+  "displayName": "Paris",
+  "loggingName": "paris",
+  "assets": [
+    {
+      "name": "Lut",
+      "assetHash": "88d1e90c1c6d8b69ec56c302ad1f2fdc3e91d02b92bdb0f4b099dd6682795e55",
+      "effectId": "1365905411868465"
+    }
+  ]
+}

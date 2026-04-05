@@ -1,0 +1,45 @@
+{
+  "identifier": "cb1e02e6-ab70-4fc0-b386-97ba63399c13",
+  "enumCaseName": "subjectNod",
+  "displayName": "Nod",
+  "loggingName": "video_cutout_nod",
+  "legacyId": 2098,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": true,
+    "typeSuggestions": [
+      "head",
+      "person",
+      "clothing"
+    ]
+  },
+  "customization": {
+    "amount": {
+      "default": 0.5,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "speed": {
+      "default": 0.7,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "size": {
+      "default": 0.33,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "195f39af",
+      "handle": "AQADOMLrd1sy",
+      "md5": "40c21d3ac29a1af034344fd31c26ed06"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADQU_aJ99O"
+    }
+  }
+}

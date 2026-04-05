@@ -1,0 +1,228 @@
+[Filter VideoBulge2]
+# Pulsing radial bulge distortion driven by an animation texture.
+# Ported from GLSL text animation: "Bulge"
+# Uses system-provided time_sec base uniform for continuous animation.
+
+[Init]
+fun init(Filter filter) {
+    loadTexture('animation, 'texture://TextBulgeAssets/Bulge);
+
+    filter.parameters = {
+        {speed = 0.3934, min = 0.01, max = 5.0, description = "Animation speed"},
+        {loop = 1.0, min = 0.0, max = 1.0, description = "1 = loop, 0 = play once"},
+        {bulgeChannel = 0.5, min = 0.0, max = 1.0, description = "Animation texture channel (row)"},
+        {bulgeMin = -1.0, min = -2.0, max = 0.0, description = "Minimum bulge value"},
+        {bulgeMax = 0.1613, min = 0.0, max = 2.0, description = "Maximum bulge value"},
+        {bulgeRadius = 0.59, min = 0.01, max = 2.0, description = "Bulge effect radius"},
+        {bulgeCurvature = 0.45, min = 0.01, max = 4.0, description = "Bulge curve falloff"},
+        {bulgeIntensity = 0.7, min = 0.0, max = 2.0, description = "Overall effect intensity"},
+    };
+
+    filter.passes = {{
+        name = 'pass0,
+        inputs = {'default, 'animation},
+        uniforms = {
+            speed = 0.3934,
+            loop = 1.0,
+            bulgeChannel = 0.5,
+            bulgeMin = -1.0,
+            bulgeMax = 0.1613,
+            bulgeRadius = 0.59,
+            bulgeCurvature = 0.45,
+            bulgeIntensity = 0.7,
+        },
+        glslShader = glslPass0,
+        metalShader = metalPass0,
+    }};
+}
+
+[PreRender]
+fun preRender(Filter filter) {
+    setShaderUniform('pass0, 'speed, getParameterFloat('speed));
+    setShaderUniform('pass0, 'loop, getParameterFloat('loop));
+    setShaderUniform('pass0, 'bulgeChannel, getParameterFloat('bulgeChannel));
+    setShaderUniform('pass0, 'bulgeMin, getParameterFloat('bulgeMin));
+    setShaderUniform('pass0, 'bulgeMax, getParameterFloat('bulgeMax));
+    setShaderUniform('pass0, 'bulgeRadius, getParameterFloat('bulgeRadius));
+    setShaderUniform('pass0, 'bulgeCurvature, getParameterFloat('bulgeCurvature));
+    setShaderUniform('pass0, 'bulgeIntensity, getParameterFloat('bulgeIntensity));
+}
+
+
+# --- GLSL Shader ---
+
+string glslPass0 = "
+    precision highp float;
+    varying vec2 sourceTextureCoordinate;
+    BaseUniformsOpenGL;
+    uniform float time_sec;
+
+    uniform float speed;
+    uniform float loop;
+    uniform float bulgeChannel;
+    uniform float bulgeMin;
+    uniform float bulgeMax;
+    uniform float bulgeRadius;
+    uniform float bulgeCurvature;
+    uniform float bulgeIntensity;
+
+    uniform sampler2D auxSampler1;
+
+    float byteCombine(vec2 v) {
+        float highByte = v.r * 255.0;
+        float lowByte = v.g * 255.0;
+        float scaled = highByte * 256.0 + lowByte;
+        float normalized = scaled / 65535.0;
+        return normalized;
+    }
+
+    float mapRange(float x, float lowIn, float highIn, float lowOut, float highOut) {
+        if (highIn == lowIn)
+            return highIn;
+        float w = highIn - lowIn;
+        x = x - lowIn;
+        x /= w;
+        float ow = highOut - lowOut;
+        x *= ow;
+        x += lowOut;
+        return x;
+    }
+
+    float mapValue(float x, float lowOut, float highOut) {
+        return mapRange(x, 0.0, 1.0, lowOut, highOut);
+    }
+
+    vec4 sampleAnimation(sampler2D tex, float t, float channel) {
+        return texture2D(tex, vec2(t, channel));
+    }
+
+    vec2 bulge_uvs(vec2 uv, float radius, float bstrength, float power) {
+        float dist = length(uv);
+        float effect = max(0.0, 1.0 - (dist / radius));
+        float bulge = 1.0 + bstrength * pow(effect, power);
+        return uv * bulge;
+    }
+
+    float mirror(float x) {
+        return 1.0 - abs(mod(x, 2.0) - 1.0);
+    }
+
+    vec2 mirrorUV(vec2 uv) {
+        return vec2(mirror(uv.x), mirror(uv.y));
+    }
+
+    void main() {
+        float t = time_sec * speed;
+        float lt = fract(t);
+        t = mix(t, lt, loop);
+
+        vec4 bulge_sample = sampleAnimation(auxSampler1, t, bulgeChannel);
+        float bulge = byteCombine(bulge_sample.rg);
+        bulge = mapValue(bulge, bulgeMin, bulgeMax);
+
+        vec2 uv = sourceTextureCoordinate;
+        uv -= 0.5;
+        vec2 buvs = bulge_uvs(uv, bulgeRadius, bulge * bulgeIntensity, bulgeCurvature);
+        float mixer = smoothstep(0.4, bulgeRadius, length(uv));
+        uv = mix(buvs, uv, mixer);
+        uv += 0.5;
+
+        uv = mirrorUV(uv);
+        vec4 color = sampleInput(uv);
+        gl_FragColor = toOutputFormat(color);
+    }
+";
+
+
+# --- Metal Shader ---
+
+string metalPass0 = "
+    using namespace metal;
+
+    struct fragmentOut { float4 _gl_FragColor [[color(0)]]; };
+    struct fragmentIn { float2 sourceTextureCoordinate [[user(locn1)]]; };
+
+    typedef struct {
+        float4x4 content_transform;
+        float4x4 texture_transform;
+        float time_sec;
+        float speed;
+        float loop;
+        float bulgeChannel;
+        float bulgeMin;
+        float bulgeMax;
+        float bulgeRadius;
+        float bulgeCurvature;
+        float bulgeIntensity;
+    } Uniforms;
+
+    float byteCombine(float2 v) {
+        float highByte = v.r * 255.0;
+        float lowByte = v.g * 255.0;
+        float scaled = highByte * 256.0 + lowByte;
+        float normalized = scaled / 65535.0;
+        return normalized;
+    }
+
+    float mapRange(float x, float lowIn, float highIn, float lowOut, float highOut) {
+        if (highIn == lowIn)
+            return highIn;
+        float w = highIn - lowIn;
+        x = x - lowIn;
+        x /= w;
+        float ow = highOut - lowOut;
+        x *= ow;
+        x += lowOut;
+        return x;
+    }
+
+    float mapValue(float x, float lowOut, float highOut) {
+        return mapRange(x, 0.0, 1.0, lowOut, highOut);
+    }
+
+    float4 sampleAnimationTex(texture2d<float> tex, sampler texSmplr, float t, float channel) {
+        return tex.sample(texSmplr, float2(t, channel));
+    }
+
+    float2 bulge_uvs(float2 uv, float radius, float bstrength, float power) {
+        float dist = length(uv);
+        float effect = max(0.0f, 1.0f - (dist / radius));
+        float bulge = 1.0f + bstrength * pow(effect, power);
+        return uv * bulge;
+    }
+
+    float mirror(float x) {
+        return 1.0 - abs(fmod(x, 2.0) - 1.0);
+    }
+
+    float2 mirrorUV(float2 uv) {
+        return float2(mirror(uv.x), mirror(uv.y));
+    }
+
+    fragment fragmentOut fragmentShader(fragmentIn in [[stage_in]],
+                                        constant Uniforms & uniforms [[buffer(1)]],
+                                        DefaultInputs defaultInputs,
+                                        texture2d<float> tex1,
+                                        sampler tex1Smplr) {
+        float t = uniforms.time_sec * uniforms.speed;
+        float lt = fract(t);
+        t = mix(t, lt, uniforms.loop);
+
+        float4 bulge_sample = sampleAnimationTex(tex1, tex1Smplr, t, uniforms.bulgeChannel);
+        float bulge = byteCombine(bulge_sample.rg);
+        bulge = mapValue(bulge, uniforms.bulgeMin, uniforms.bulgeMax);
+
+        float2 uv = in.sourceTextureCoordinate;
+        uv -= 0.5;
+        float2 buvs = bulge_uvs(uv, uniforms.bulgeRadius, bulge * uniforms.bulgeIntensity, uniforms.bulgeCurvature);
+        float mixer = smoothstep(0.4f, uniforms.bulgeRadius, length(uv));
+        uv = mix(buvs, uv, mixer);
+        uv += 0.5;
+
+        uv = mirrorUV(uv);
+        float4 color = sampleInput(defaultInputs, uv);
+        fragmentOut out = {};
+        out._gl_FragColor = toOutputFormat(color);
+        return out;
+    }
+";

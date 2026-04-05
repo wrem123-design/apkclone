@@ -1,0 +1,17 @@
+{
+  "identifier": "2b8f2f99-138a-4bdd-99fb-e43d4fa601d0",
+  "displayName": "Retouching",
+  "loggingName": "retouching",
+  "assets": [
+    {
+      "name": "CanonicalMask",
+      "assetHash": "dd768a6f390e7e3d466cb6d88f64a040363732e0b750624fcd92a2aee45eb5a8",
+      "effectId": "1565765408013731"
+    },
+    {
+      "name": "ErikaMask",
+      "assetHash": "f89823632a1b8d2d10e72c5a3940de1acc4335a0d1c1829409fd1674a1013837",
+      "effectId": "26168714706078867"
+    }
+  ]
+}

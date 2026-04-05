@@ -1,0 +1,284 @@
+.class public final LX/IP0;
+.super Ljava/lang/Object;
+.source ""
+
+
+# static fields
+.field public static final A01:LX/IP0;
+
+.field public static final A02:LX/IP0;
+
+
+# instance fields
+.field public final A00:Ljava/util/List;
+
+
+# direct methods
+.method public static constructor <clinit>()V
+    .locals 12
+
+    const-string v0, "January"
+
+    const-string v1, "February"
+
+    const-string v2, "March"
+
+    const-string v3, "April"
+
+    const-string v4, "May"
+
+    const-string v5, "June"
+
+    const-string v6, "July"
+
+    const-string v7, "August"
+
+    const-string v8, "September"
+
+    const-string v9, "October"
+
+    const-string v10, "November"
+
+    const-string v11, "December"
+
+    filled-new-array/range {v0 .. v11}, [Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-static {v0}, LX/AuH;->A1g([Ljava/lang/Object;)Ljava/util/List;
+
+    move-result-object v1
+
+    new-instance v0, LX/IP0;
+
+    invoke-direct {v0, v1}, LX/IP0;-><init>(Ljava/util/List;)V
+
+    sput-object v0, LX/IP0;->A02:LX/IP0;
+
+    const-string v0, "Jan"
+
+    const-string v1, "Feb"
+
+    const-string v2, "Mar"
+
+    const-string v3, "Apr"
+
+    const-string v5, "Jun"
+
+    const-string v6, "Jul"
+
+    const-string v7, "Aug"
+
+    const-string v8, "Sep"
+
+    const-string v9, "Oct"
+
+    const-string v10, "Nov"
+
+    const-string v11, "Dec"
+
+    filled-new-array/range {v0 .. v11}, [Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-static {v0}, LX/AuH;->A1g([Ljava/lang/Object;)Ljava/util/List;
+
+    move-result-object v1
+
+    new-instance v0, LX/IP0;
+
+    invoke-direct {v0, v1}, LX/IP0;-><init>(Ljava/util/List;)V
+
+    sput-object v0, LX/IP0;->A01:LX/IP0;
+
+    return-void
+.end method
+
+.method public constructor <init>(Ljava/util/List;)V
+    .locals 5
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, LX/IP0;->A00:Ljava/util/List;
+
+    invoke-interface {p1}, Ljava/util/List;->size()I
+
+    move-result v1
+
+    const/16 v0, 0xc
+
+    if-ne v1, v0, :cond_4
+
+    invoke-static {p1}, LX/AuH;->A1j(Ljava/util/Collection;)LX/2ar;
+
+    move-result-object v0
+
+    invoke-interface {v0}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
+
+    move-result-object v4
+
+    :cond_0
+    invoke-interface {v4}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_3
+
+    move-object v0, v4
+
+    check-cast v0, LX/1ru;
+
+    invoke-virtual {v0}, LX/1ru;->A00()I
+
+    move-result v3
+
+    iget-object v0, p0, LX/IP0;->A00:Ljava/util/List;
+
+    invoke-interface {v0, v3}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Ljava/lang/CharSequence;
+
+    invoke-interface {v0}, Ljava/lang/CharSequence;->length()I
+
+    move-result v0
+
+    if-lez v0, :cond_2
+
+    const/4 v2, 0x0
+
+    :goto_0
+    if-ge v2, v3, :cond_0
+
+    iget-object v0, p0, LX/IP0;->A00:Ljava/util/List;
+
+    invoke-interface {v0, v3}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object v1
+
+    iget-object v0, p0, LX/IP0;->A00:Ljava/util/List;
+
+    invoke-interface {v0, v2}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object v0
+
+    invoke-static {v1, v0}, LX/659;->areEqual(Ljava/lang/Object;Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-nez v0, :cond_1
+
+    add-int/lit8 v2, v2, 0x1
+
+    goto :goto_0
+
+    :cond_1
+    invoke-static {}, LX/011;->A0S()Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v0, "Month names must be unique, but \'"
+
+    invoke-static {v0, v1}, LX/Aug;->A0t(Ljava/lang/String;Ljava/lang/StringBuilder;)Ljava/lang/StringBuilder;
+
+    iget-object v0, p0, LX/IP0;->A00:Ljava/util/List;
+
+    invoke-static {v0, v3}, LX/020;->A0w(Ljava/util/List;I)Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-static {v0, v1}, LX/Aug;->A0t(Ljava/lang/String;Ljava/lang/StringBuilder;)Ljava/lang/StringBuilder;
+
+    const-string v0, "\' was repeated"
+
+    invoke-static {v0, v1}, LX/121;->A0k(Ljava/lang/String;Ljava/lang/StringBuilder;)Ljava/lang/IllegalArgumentException;
+
+    move-result-object v0
+
+    throw v0
+
+    :cond_2
+    const-string v0, "A month name can not be empty"
+
+    invoke-static {v0}, LX/020;->A0e(Ljava/lang/String;)Ljava/lang/IllegalArgumentException;
+
+    move-result-object v0
+
+    throw v0
+
+    :cond_3
+    return-void
+
+    :cond_4
+    const-string v0, "Month names must contain exactly 12 elements"
+
+    invoke-static {v0}, LX/020;->A0e(Ljava/lang/String;)Ljava/lang/IllegalArgumentException;
+
+    move-result-object v0
+
+    throw v0
+.end method
+
+
+# virtual methods
+.method public final equals(Ljava/lang/Object;)Z
+    .locals 2
+
+    instance-of v0, p1, LX/IP0;
+
+    if-eqz v0, :cond_0
+
+    iget-object v1, p0, LX/IP0;->A00:Ljava/util/List;
+
+    check-cast p1, LX/IP0;
+
+    iget-object v0, p1, LX/IP0;->A00:Ljava/util/List;
+
+    invoke-static {v1, v0}, LX/659;->areEqual(Ljava/lang/Object;Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    const/4 v0, 0x1
+
+    return v0
+
+    :cond_0
+    const/4 v0, 0x0
+
+    return v0
+.end method
+
+.method public final hashCode()I
+    .locals 1
+
+    iget-object v0, p0, LX/IP0;->A00:Ljava/util/List;
+
+    invoke-virtual {v0}, Ljava/lang/Object;->hashCode()I
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public final toString()Ljava/lang/String;
+    .locals 5
+
+    iget-object v4, p0, LX/IP0;->A00:Ljava/util/List;
+
+    const-string v3, ", "
+
+    const-string v2, "MonthNames("
+
+    const-string v1, ")"
+
+    sget-object v0, LX/Muf;->A00:LX/Muf;
+
+    invoke-static {v3, v2, v1, v4, v0}, LX/Atf;->A0s(Ljava/lang/CharSequence;Ljava/lang/CharSequence;Ljava/lang/CharSequence;Ljava/lang/Iterable;Lkotlin/jvm/functions/Function1;)Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+.end method

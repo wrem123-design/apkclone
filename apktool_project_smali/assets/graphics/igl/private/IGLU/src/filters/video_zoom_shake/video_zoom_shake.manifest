@@ -1,0 +1,31 @@
+{
+  "identifier": "baa049cb-c9df-40ba-8824-20966c4fabea",
+  "enumCaseName": "videoZoomShake",
+  "displayName": "Zoom shake",
+  "loggingName": "video_zoom_shake",
+  "legacyId": 2045,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 4000,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "65f59d3c",
+      "handle": "AQAjGi9nZPbL",
+      "md5": "2e8087d47c045ac81df4ee9458b093c9"
+    }
+  },
+  "assets": [
+    {
+      "name": "PerlinNoise",
+      "assetHash": "42393e620664a372495800bfcf40ca960aa0ab3e2ddfe42fbfe2b86098d33000",
+      "effectId": "1259354255546062"
+    }
+  ],
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADRd1xDaZ2"
+    }
+  }
+}

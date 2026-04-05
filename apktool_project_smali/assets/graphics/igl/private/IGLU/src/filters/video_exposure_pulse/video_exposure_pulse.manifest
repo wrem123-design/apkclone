@@ -1,0 +1,19 @@
+{
+  "identifier": "a337e5f4-0aea-4025-8d56-4826837297a0",
+  "enumCaseName": "videoExposurePulse",
+  "displayName": "Exposure pulse",
+  "loggingName": "video_exposure_pulse",
+  "legacyId": 2009,
+  "android": {
+    "previewAsset": {
+      "key": "1c91673d",
+      "handle": "AQAEs3eG4VLW",
+      "md5": "b7c01802226e94111fcc8676d22ec2af"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQBbhRkoEgMb"
+    }
+  }
+}

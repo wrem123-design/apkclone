@@ -1,0 +1,19 @@
+{
+  "identifier": "4a11438c-6dfc-456f-bb1d-98115c4f751e",
+  "enumCaseName": "videoFlicker",
+  "displayName": "Flicker",
+  "loggingName": "video_flicker",
+  "legacyId": 2008,
+  "android": {
+    "previewAsset": {
+      "key": "89ed3346",
+      "handle": "AQAB50yfSLiG",
+      "md5": "d5a85295c6903be16a0b1ae670ad0289"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEtOnDC8-L"
+    }
+  }
+}

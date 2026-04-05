@@ -1,0 +1,56 @@
+.class public final LX/UD1;
+.super LX/C2F;
+.source ""
+
+
+# instance fields
+.field public A00:LX/XNS;
+
+.field public A01:LX/nrw;
+
+.field public A02:Lcom/instagram/api/schemas/NonDiscInfoIntf;
+
+.field public A03:LX/nsb;
+
+.field public A04:Lcom/instagram/api/schemas/PaymentInfoIntf;
+
+.field public A05:LX/nsc;
+
+.field public A06:LX/nsd;
+
+.field public A07:LX/nse;
+
+.field public A08:LX/nsi;
+
+.field public A09:Ljava/lang/String;
+
+
+# direct methods
+.method public constructor <init>()V
+    .locals 0
+
+    invoke-direct {p0}, LX/9p8;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final bridge synthetic GYN()Ljava/lang/Object;
+    .locals 1
+
+    iget-object v0, p0, LX/UD1;->A07:LX/nse;
+
+    if-nez v0, :cond_0
+
+    invoke-static {}, LX/120;->A1B()V
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+
+    :cond_0
+    return-object v0
+.end method

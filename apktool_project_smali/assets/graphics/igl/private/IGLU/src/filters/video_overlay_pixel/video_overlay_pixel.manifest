@@ -1,0 +1,30 @@
+{
+  "identifier": "7523cbf8-6e6c-4279-a742-9b01ca0a5c40",
+  "enumCaseName": "overlayPixel",
+  "displayName": "Pixel",
+  "loggingName": "video_cutout_pixel",
+  "legacyId": 5052,
+  "subject": {
+    "overlay": true
+  },
+  "customization": {
+    "amount": {
+      "default": 0.13,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "c494978a",
+      "handle": "AQACzvvjxgbB",
+      "md5": "84d365f1fd6604cd80b69a62a770e811"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "isImageFormat": true,
+      "handle": "AQADYmSuGAHo"
+    }
+  }
+}

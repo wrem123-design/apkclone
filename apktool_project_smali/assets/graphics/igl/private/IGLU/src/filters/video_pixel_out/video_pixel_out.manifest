@@ -1,0 +1,24 @@
+{
+  "identifier": "237ba70e-1bb2-4bfa-bde5-8e906456a63a",
+  "enumCaseName": "videoPixelOut",
+  "displayName": "Pixel out",
+  "loggingName": "video_pixel_out",
+  "legacyId": 2021,
+  "behavior": {
+    "type": "fixedOutro",
+    "durationMs": 1000,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "25dba0cc",
+      "handle": "AQAD-eMgM-s-",
+      "md5": "833dfc70f5a84beb9effe415bc66dcee"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEXHLnqdtR"
+    }
+  }
+}

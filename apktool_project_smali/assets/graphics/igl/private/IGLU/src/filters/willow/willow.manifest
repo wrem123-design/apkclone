@@ -1,0 +1,32 @@
+{
+  "identifier": "b608556f-ead2-40cd-b16e-1a994047c708",
+  "displayName": "Willow",
+  "loggingName": "willow",
+  "assets": [
+    {
+      "name": "GlowFieldWillow",
+      "assetHash": "0ac21a15a99b0c9315d2ef17701dd7249b2cf8267a3bff01c2a2e70b3dcb557b",
+      "effectId": "907236872047774"
+    },
+    {
+      "name": "MapWillow",
+      "assetHash": "baf39dfa25fbf4ddd02e98d08443c20e191107553b72bbd940ac2c52e312674e",
+      "effectId": "1025485747311928"
+    },
+    {
+      "name": "OverlayMap81",
+      "assetHash": "e4173627ee4a73e2f774fa0118ddf6211035dccc1cb2ce2ab6b9c1daa4925479",
+      "effectId": "1434638978208304"
+    },
+    {
+      "name": "SoftLight100Willow",
+      "assetHash": "792d2b5e05074e1d4c12bda810829e37ad99063bb6c17aa87b839be44f4a9134",
+      "effectId": "1556041099034370"
+    },
+    {
+      "name": "VignetteWillow",
+      "assetHash": "65ba17968b7aaed97d7b2f556161fa48a5fcf601a143f2eb53d9259d3a6fb05c",
+      "effectId": "918596747780253"
+    }
+  ]
+}

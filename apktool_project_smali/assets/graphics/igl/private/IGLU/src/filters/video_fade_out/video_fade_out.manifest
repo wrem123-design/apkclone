@@ -1,0 +1,24 @@
+{
+  "identifier": "632c8fcd-3d86-4500-8ca0-e607cd1bbb57",
+  "enumCaseName": "videoFadeOut",
+  "displayName": "Fade out",
+  "loggingName": "video_fade_out",
+  "legacyId": 2018,
+  "behavior": {
+    "type": "fixedOutro",
+    "durationMs": 2000,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "8269f04",
+      "handle": "AQAE9O-QqZ1x",
+      "md5": "e632446fbf9b4bb955ce89e5534768dd"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAE9C4IwQ-5"
+    }
+  }
+}

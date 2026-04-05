@@ -1,0 +1,9 @@
+.class public final LX/OSM;
+.super LX/TwO;
+.source ""
+
+
+# instance fields
+.field public A00:LX/5wv;
+
+.field public A01:Z

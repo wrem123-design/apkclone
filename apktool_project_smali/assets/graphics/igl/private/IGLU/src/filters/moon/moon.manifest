@@ -1,0 +1,17 @@
+{
+  "identifier": "c8598932-ff68-495d-8846-bec2f8c9f2d1",
+  "displayName": "Moon",
+  "loggingName": "moon",
+  "assets": [
+    {
+      "name": "Curves1",
+      "assetHash": "6e503dedc5346b6210d95bf57e1761ec393a2fac4753a4cbdc98dfe5a7a06c6f",
+      "effectId": "1167671971928718"
+    },
+    {
+      "name": "Curves2",
+      "assetHash": "89ede519b5b8c8247bd7fb33ed3c357a724d7564b40039a546852daebd1a38f9",
+      "effectId": "1647944373238141"
+    }
+  ]
+}

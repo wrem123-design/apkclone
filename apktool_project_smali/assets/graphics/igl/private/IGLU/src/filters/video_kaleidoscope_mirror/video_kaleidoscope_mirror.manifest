@@ -1,0 +1,15 @@
+{
+  "identifier": "8900805b-6c08-4492-8087-66e11a84e404",
+  "enumCaseName": "videoKaleidoscopeMirror",
+  "displayName": "Kaleidoscope",
+  "loggingName": "video_kaleidoscope",
+  "legacyId": 2033,
+
+  "android": {
+    "previewAsset": {
+      "key": "626638cb",
+      "handle": "AQACgeO60qn1",
+      "md5": "88d7722cce5ae2c72405e0f71d7a46f7"
+    }
+  }
+}

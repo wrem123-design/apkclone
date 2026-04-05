@@ -1,0 +1,62 @@
+{
+  "identifier": "0ed362f1-db96-4750-9640-59025c5344fd",
+  "displayName": "Igluscript Graph",
+  "loggingName": "igluscript_graph",
+  "assets": [
+    {
+      "name": "Bulge",
+      "assetHash": "66f2ba5c28527e8220ff67c0f64914252d82c641748ef76e767277738eae87ab",
+      "effectId": "3641797072626941"
+    },
+    {
+      "name": "DisplaceIn",
+      "assetHash": "b857707b9642cbf8c0a0a318af39116cff592a1e10c0d64c1a5946145501a2d5",
+      "effectId": "1234560632154926"
+    },
+    {
+      "name": "GradientBlue",
+      "assetHash": "a7a61fa29c43bf1bccb75e7a68d4444e90ab427e469e52b958df7aa5232de962",
+      "effectId": "25941471735480653"
+    },
+    {
+      "name": "GradientOrange",
+      "assetHash": "32edfea62f355125f02c7bdb00eca706f06850c52d7f9fdfe38f8dbed4b1622b",
+      "effectId": "919213973916839"
+    },
+    {
+      "name": "GradientPink",
+      "assetHash": "fb892dba754f50e08e6fbbe20ac51a0cf5231be919c5530030e423707600e5de",
+      "effectId": "4293575507556975"
+    },
+    {
+      "name": "GradientPurple",
+      "assetHash": "cd63f4779b83d1655deeddede6b99421cd93852afd8384ad715b1f216e649510",
+      "effectId": "1591050322203793"
+    },
+    {
+      "name": "GradientRainbow",
+      "assetHash": "8cda6c8ab612a3a1d1852698fa38570d28e9374a4ddf11fd011619d42e2b5150",
+      "effectId": "1628252791691606"
+    },
+    {
+      "name": "PerlinNoise",
+      "assetHash": "42393e620664a372495800bfcf40ca960aa0ab3e2ddfe42fbfe2b86098d33000",
+      "effectId": "1259354255546062"
+    },
+    {
+      "name": "RgbaNoise256",
+      "assetHash": "3415067e1e7cd2965854c813f34bdb028aed7f87695903797ff6ec62f156c506",
+      "effectId": "1274215854629798"
+    },
+    {
+      "name": "SlideRight",
+      "assetHash": "52e2dbdb59490bccaab861be24f90f5c92346bc647711c6ef676ebe5fda3e438",
+      "effectId": "26372106545782120"
+    },
+    {
+      "name": "Stretch",
+      "assetHash": "5143ee1fb6e226055af915ca371b734ad70b330f58d93ef3c403503e33129a99",
+      "effectId": "1889347115032280"
+    }
+  ]
+}

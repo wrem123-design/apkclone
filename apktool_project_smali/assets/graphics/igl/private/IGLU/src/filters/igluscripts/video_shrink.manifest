@@ -1,0 +1,17 @@
+{
+  "identifier": "31453d8c-f502-4bc6-b27a-59d64ff8e862",
+  "enumCaseName": "videoShrink",
+  "displayName": "Shrink",
+  "loggingName": "video_shrink",
+  "legacyId": 3024,
+  "behavior": {
+    "type": "fixedOutro",
+    "durationMs": 1000,
+    "curve": "linear"
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAG_nNSaubQ"
+    }
+  }
+}

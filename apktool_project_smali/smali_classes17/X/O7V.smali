@@ -1,0 +1,42 @@
+.class public abstract LX/O7V;
+.super LX/H9F;
+.source ""
+
+# interfaces
+.implements LX/lQZ;
+
+
+# virtual methods
+.method public final Bog()V
+    .locals 1
+
+    invoke-virtual {p0}, LX/H9F;->A00()LX/lQb;
+
+    move-result-object v0
+
+    check-cast v0, LX/lQZ;
+
+    invoke-interface {v0}, LX/lQZ;->Bog()V
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+.end method
+
+.method public final computeReflected()LX/lQn;
+    .locals 0
+
+    return-object p0
+.end method
+
+.method public final invoke(Ljava/lang/Object;)Ljava/lang/Object;
+    .locals 1
+
+    invoke-interface {p0, p1}, LX/lQZ;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    return-object v0
+.end method

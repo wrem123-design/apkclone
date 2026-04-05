@@ -1,0 +1,32 @@
+.class public final LX/TC7;
+.super LX/VJc;
+.source ""
+
+# interfaces
+.implements LX/ld6;
+
+
+# static fields
+.field public static final A00:LX/TC7;
+
+
+# direct methods
+.method public static constructor <clinit>()V
+    .locals 1
+
+    new-instance v0, LX/TC7;
+
+    invoke-direct {v0}, Ljava/lang/Object;-><init>()V
+
+    sput-object v0, LX/TC7;->A00:LX/TC7;
+
+    return-void
+.end method
+
+.method public constructor <init>()V
+    .locals 0
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method

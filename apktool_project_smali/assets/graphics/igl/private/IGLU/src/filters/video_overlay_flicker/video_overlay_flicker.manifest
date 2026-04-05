@@ -1,0 +1,29 @@
+{
+  "identifier": "0d04e404-5624-414f-9e8a-9849b25dfe96",
+  "enumCaseName": "overlayFlicker",
+  "displayName": "Flicker",
+  "loggingName": "video_cutout_flicker",
+  "legacyId": 5064,
+  "subject": {
+    "overlay": true
+  },
+  "customization": {
+    "speed": {
+      "default": 0.7,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "6f33b89f",
+      "handle": "AQADS9mvaoDd",
+      "md5": "7342ebc0f7b0800e9df935a195a44149"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAHhd-j9VqX"
+    }
+  }
+}

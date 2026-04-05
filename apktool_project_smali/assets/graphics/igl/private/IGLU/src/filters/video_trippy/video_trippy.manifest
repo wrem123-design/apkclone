@@ -1,0 +1,19 @@
+{
+  "identifier": "0148bd0f-81f0-427d-8cc2-b49a087ab215",
+  "enumCaseName": "videoTrippy",
+  "displayName": "Rainbow",
+  "loggingName": "video_trippy",
+  "legacyId": 2023,
+  "android": {
+    "previewAsset": {
+      "key": "f5cad4f1",
+      "handle": "AQAB5cPz3Lyw",
+      "md5": "103947b3a43099940ba45f06d2ad811b"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAG9ketJWua"
+    }
+  }
+}

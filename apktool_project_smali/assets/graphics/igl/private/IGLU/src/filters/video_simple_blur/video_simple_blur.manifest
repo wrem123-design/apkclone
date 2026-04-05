@@ -1,0 +1,19 @@
+{
+  "identifier": "13d4ef77-7bd9-4ee2-9fac-f1b32d818499",
+  "enumCaseName": "videoSimpleBlur",
+  "displayName": "Blur",
+  "loggingName": "video_simple_blur",
+  "legacyId": 2028,
+  "android": {
+    "previewAsset": {
+      "key": "450706c7",
+      "handle": "AQAE0PDxrk-z",
+      "md5": "f3282a7ed81450c5dff5c876150529e6"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAG2byYbvIk"
+    }
+  }
+}

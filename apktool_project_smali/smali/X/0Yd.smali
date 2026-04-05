@@ -1,0 +1,56 @@
+.class public final synthetic LX/0Yd;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements LX/1dl;
+
+
+# instance fields
+.field public final synthetic A00:Lcom/facebook/errorreporting/field/ReportFieldBase;
+
+.field public final synthetic A01:LX/03w;
+
+.field public final synthetic A02:Ljava/lang/String;
+
+
+# direct methods
+.method public synthetic constructor <init>(Lcom/facebook/errorreporting/field/ReportFieldBase;LX/03w;Ljava/lang/String;)V
+    .locals 0
+
+    .line 0
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 3
+    iput-object p1, p0, LX/0Yd;->A00:Lcom/facebook/errorreporting/field/ReportFieldBase;
+
+    .line 5
+    iput-object p3, p0, LX/0Yd;->A02:Ljava/lang/String;
+
+    .line 7
+    iput-object p2, p0, LX/0Yd;->A01:LX/03w;
+
+    .line 9
+    return-void
+.end method
+
+
+# virtual methods
+.method public final FHC(LX/1hu;)V
+    .locals 3
+
+    .line 0
+    iget-object v2, p0, LX/0Yd;->A00:Lcom/facebook/errorreporting/field/ReportFieldBase;
+
+    .line 2
+    iget-object v1, p0, LX/0Yd;->A02:Ljava/lang/String;
+
+    .line 4
+    iget-object v0, p0, LX/0Yd;->A01:LX/03w;
+
+    .line 6
+    invoke-virtual {p1, v2, v0, v1}, LX/1hu;->A02(Lcom/facebook/errorreporting/field/ReportFieldBase;LX/03w;Ljava/lang/String;)V
+
+    .line 9
+    return-void
+.end method

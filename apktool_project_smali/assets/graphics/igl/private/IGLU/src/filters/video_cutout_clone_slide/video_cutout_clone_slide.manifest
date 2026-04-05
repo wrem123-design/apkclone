@@ -1,0 +1,35 @@
+{
+  "identifier": "e08152c8-d9d8-4193-9e5b-667cd23cb3c6",
+  "enumCaseName": "subjectCloneSlide",
+  "displayName": "Clone Slide",
+  "loggingName": "video_cutout_clone_slide",
+  "legacyId": 2094,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": false,
+    "typeSuggestions": [
+      "head",
+      "person",
+      "clothing"
+    ]
+  },
+  "customization": {
+    "speed": {
+      "default": 0.55,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "1127c57d",
+      "handle": "AQACpBsOWkkn",
+      "md5": "286490f477e419585791f2f674611f3e"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQBe4YG03fRg"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "identifier": "39a062a6-6886-413b-b302-c92bd7cc5b8b",
+  "enumCaseName": "videoStackCollapse",
+  "displayName": "Stack collapse",
+  "loggingName": "video_stack_collapse",
+  "legacyId": 2057,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 1000,
+    "curve": "exponentialInOut"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "17967e8a",
+      "handle": "AQAEQIRaTgS7",
+      "md5": "70e777910e106c3eafb97c7d16f0ade5"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAC-xe38C1u"
+    }
+  }
+}

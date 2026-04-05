@@ -1,0 +1,89 @@
+.class public final Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController$handleResponse$3;
+.super LX/194;
+.source ""
+
+# interfaces
+.implements LX/LEL;
+
+
+# instance fields
+.field public final synthetic $response:LX/QVg;
+
+.field public final synthetic this$0:Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController;
+
+
+# direct methods
+.method public static synthetic $r8$lambda$EuW3IcoqvL70UaolBuSgzA1R6ic(Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController;LX/QVg;)V
+    .locals 0
+
+    invoke-static {p0, p1}, Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController$handleResponse$3;->invoke$lambda$0(Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController;LX/QVg;)V
+
+    return-void
+.end method
+
+.method public constructor <init>(Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController;LX/QVg;)V
+    .locals 1
+
+    iput-object p1, p0, Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController$handleResponse$3;->this$0:Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController;
+
+    iput-object p2, p0, Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController$handleResponse$3;->$response:LX/QVg;
+
+    const/4 v0, 0x0
+
+    invoke-direct {p0, v0}, LX/194;-><init>(I)V
+
+    return-void
+.end method
+
+.method public static final invoke$lambda$0(Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController;LX/QVg;)V
+    .locals 0
+
+    invoke-static {p0}, LX/659;->A0u(Ljava/lang/Object;)V
+
+    invoke-static {p1}, LX/659;->A0v(Ljava/lang/Object;)V
+
+    invoke-virtual {p0}, Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController;->getCallback()LX/mnv;
+
+    move-result-object p0
+
+    invoke-interface {p0, p1}, LX/mnv;->onResult(Ljava/lang/Object;)V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public bridge synthetic invoke()Ljava/lang/Object;
+    .locals 1
+
+    .line 268435456
+    invoke-virtual {p0}, Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController$handleResponse$3;->invoke()V
+
+    .line 268435459
+    sget-object v0, LX/H99;->A00:LX/H99;
+
+    .line 268435461
+    return-object v0
+.end method
+
+.method public final invoke()V
+    .locals 4
+
+    iget-object v0, p0, Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController$handleResponse$3;->this$0:Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController;
+
+    invoke-virtual {v0}, Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController;->getExecutor()Ljava/util/concurrent/Executor;
+
+    move-result-object v3
+
+    iget-object v2, p0, Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController$handleResponse$3;->this$0:Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController;
+
+    iget-object v1, p0, Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController$handleResponse$3;->$response:LX/QVg;
+
+    new-instance v0, Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController$handleResponse$3$$ExternalSyntheticLambda0;
+
+    invoke-direct {v0, v2, v1}, Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController$handleResponse$3$$ExternalSyntheticLambda0;-><init>(Landroidx/credentials/playservices/controllers/BeginSignIn/CredentialProviderBeginSignInController;LX/QVg;)V
+
+    invoke-interface {v3, v0}, Ljava/util/concurrent/Executor;->execute(Ljava/lang/Runnable;)V
+
+    return-void
+.end method

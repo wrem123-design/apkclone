@@ -1,0 +1,17 @@
+{
+  "identifier": "383991f0-4cc3-4fa1-87dd-9d254ca5b8cb",
+  "enumCaseName": "videoFade",
+  "displayName": "Fade",
+  "loggingName": "video_fade",
+  "legacyId": 3023,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 500,
+    "curve": "linear"
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAG_nNSaubQ"
+    }
+  }
+}

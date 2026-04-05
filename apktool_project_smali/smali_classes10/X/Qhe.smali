@@ -1,0 +1,34 @@
+.class public final LX/Qhe;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements LX/mnV;
+
+
+# instance fields
+.field public final synthetic A00:Landroidx/fragment/app/FragmentActivity;
+
+
+# direct methods
+.method public constructor <init>(Landroidx/fragment/app/FragmentActivity;)V
+    .locals 0
+
+    iput-object p1, p0, LX/Qhe;->A00:Landroidx/fragment/app/FragmentActivity;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final EW3()V
+    .locals 1
+
+    iget-object v0, p0, LX/Qhe;->A00:Landroidx/fragment/app/FragmentActivity;
+
+    invoke-virtual {v0}, Landroid/app/Activity;->finish()V
+
+    return-void
+.end method

@@ -1,0 +1,37 @@
+{
+  "identifier": "5343feb5-c476-4939-92ba-6b1420d1e8ff",
+  "enumCaseName": "oscars2026Pan",
+  "displayName": "Oscars 2026 Pan",
+  "loggingName": "oscars_2026_pan",
+  "attribution": "@ethanbarber.co",
+  "legacyId": 2303,
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAF3VraHONL"
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "33becbe9",
+      "handle": "AQADPtbfw_Eu",
+      "md5": "d00a627a04db37b5b36f8926fd56f660"
+    }
+  },
+  "customization": {
+    "lutStrength": {
+      "default": 0.5,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "grainStrength": {
+      "default": 0.5,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "duration": {
+      "default": 2.0,
+      "min": 0.1,
+      "max": 4.0
+    }
+  }
+}

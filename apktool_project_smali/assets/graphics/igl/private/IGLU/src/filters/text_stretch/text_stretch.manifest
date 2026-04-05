@@ -1,0 +1,12 @@
+{
+  "identifier": "b37ad4bb-fb5d-49df-9431-d28366fe7d50",
+  "displayName": "Text Stretch",
+  "loggingName": "text_stretch",
+  "assets": [
+    {
+      "name": "Stretch",
+      "assetHash": "5143ee1fb6e226055af915ca371b734ad70b330f58d93ef3c403503e33129a99",
+      "effectId": "1889347115032280"
+    }
+  ]
+}

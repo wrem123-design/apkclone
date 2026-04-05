@@ -1,0 +1,22 @@
+{
+  "identifier": "fa003da3-e612-48f4-8491-0dd8cafeb0f9",
+  "displayName": "Amaro",
+  "loggingName": "amaro",
+  "assets": [
+    {
+      "name": "Blackboard",
+      "assetHash": "6ee32275f0b08fb4bee58193a4d8a16d3d24f2db94f58192df6bdc11d5ad7081",
+      "effectId": "894545610234702"
+    },
+    {
+      "name": "MapAmaro",
+      "assetHash": "8ee73af6abf24f1d061567dbf43970bb0c3a491006f22abb729b856435fcfb8e",
+      "effectId": "949684377483341"
+    },
+    {
+      "name": "Overlay",
+      "assetHash": "84b56063e8efd2fa742bd5a62235c378606dc3406613606f99f3c4044b20e31a",
+      "effectId": "1236494364700999"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+/**
+ * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
+ */
+
+function(elementSelectorType, elementSelectorString, highlightElement, viewportLandingOffsetPx, viewportLandingZone, jsExecutionDelayInMs, jsRetryDelayInMs) {
+  window._META.IabBookmarkHookup(elementSelectorType, elementSelectorString, highlightElement, viewportLandingOffsetPx, viewportLandingZone, jsExecutionDelayInMs, jsRetryDelayInMs);
+}

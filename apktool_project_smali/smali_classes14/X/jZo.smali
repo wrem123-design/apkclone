@@ -1,0 +1,12 @@
+.class public final LX/jZo;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements LX/mjF;
+
+
+# instance fields
+.field public A00:Ljava/util/List;
+
+.field public A01:Lkotlin/jvm/functions/Function1;

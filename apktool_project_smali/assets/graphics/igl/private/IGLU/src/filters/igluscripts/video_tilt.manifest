@@ -1,0 +1,24 @@
+{
+  "identifier": "b636839c-34bc-4261-8313-229f5a0cc389",
+  "enumCaseName": "videoTilt",
+  "displayName": "Tilt",
+  "loggingName": "video_tilt",
+  "legacyId": 3011,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 600,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "665ddd3e",
+      "handle": "AQAF92dM0mjA",
+      "md5": "80d672e21cc036d15888c3f8a23f5e02"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAC34DxmUNo"
+    }
+  }
+}

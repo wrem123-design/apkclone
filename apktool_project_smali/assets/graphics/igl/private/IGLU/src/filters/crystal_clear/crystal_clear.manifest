@@ -1,0 +1,12 @@
+{
+  "identifier": "1a446a9d-dd05-4230-bed9-57654b8f0c74",
+  "displayName": "Crystal Clear",
+  "loggingName": "crystal_clear",
+  "assets": [
+    {
+      "name": "ClutClear",
+      "assetHash": "78573057336c1170fe6ca4b1dead406fabd8704b3590e213328902e85eaff6f3",
+      "effectId": "1393471762102661"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "identifier": "6ee1eec5-456c-4e92-9c72-ccea7edbd34d",
+  "enumCaseName": "videoSteadyOut",
+  "displayName": "Steady out",
+  "loggingName": "video_steady_out",
+  "legacyId": 2003,
+  "behavior": {
+    "type": "fixedOutro",
+    "durationMs": 3000,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "5eef75a1",
+      "handle": "AQAFm_d7viPy",
+      "md5": "e4c383065f4d0a0bb912411b9c0c8c91"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAIWPt6fxAF"
+    }
+  }
+}

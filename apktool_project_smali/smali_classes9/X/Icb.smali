@@ -1,0 +1,15 @@
+.class public final LX/Icb;
+.super Ljava/lang/Object;
+.source ""
+
+
+# instance fields
+.field public A00:J
+
+.field public A01:J
+
+.field public A02:J
+
+.field public A03:LX/1tz;
+
+.field public A04:Lcom/instagram/common/session/UserSession;

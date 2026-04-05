@@ -1,0 +1,18 @@
+.class public abstract LX/1ll;
+.super Ljava/lang/Object;
+.source ""
+
+
+# direct methods
+.method public static A00(Ljava/io/InputStream;)Ljava/io/InputStream;
+    .locals 1
+
+    .line 0
+    new-instance v0, Lcom/facebook/xzdecoder/XzInputStream;
+
+    .line 2
+    invoke-direct {v0, p0}, Lcom/facebook/xzdecoder/XzInputStream;-><init>(Ljava/io/InputStream;)V
+
+    .line 5
+    return-object v0
+.end method

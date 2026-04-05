@@ -1,0 +1,11 @@
+{
+  "identifier": "a8d7b6c5-e4f3-4a1b-9c8d-7e6f5a4b3c2d",
+  "displayName": "Glitch out",
+  "loggingName": "video_glitch_2_out",
+  "legacyId": 3039,
+  "behavior": {
+    "type": "fixedOutro",
+    "durationMs": 1000,
+    "curve": "linear"
+  }
+}

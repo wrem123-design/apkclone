@@ -1,0 +1,25 @@
+.class public final LX/Bit;
+.super LX/BjJ;
+.source ""
+
+
+# instance fields
+.field public A00:Ljava/nio/IntBuffer;
+
+
+# virtual methods
+.method public final A00(Z)V
+    .locals 2
+
+    iget-object v1, p0, LX/Bit;->A00:Ljava/nio/IntBuffer;
+
+    const/4 v0, 0x0
+
+    invoke-virtual {v1, v0, p1}, Ljava/nio/IntBuffer;->put(II)Ljava/nio/IntBuffer;
+
+    const/4 v0, 0x1
+
+    iput-boolean v0, p0, LX/BjJ;->A00:Z
+
+    return-void
+.end method

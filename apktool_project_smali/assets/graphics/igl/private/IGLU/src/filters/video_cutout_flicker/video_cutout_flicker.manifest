@@ -1,0 +1,35 @@
+{
+  "identifier": "b14a614a-111e-4584-8b25-47c1817f9c42",
+  "enumCaseName": "subjectFlicker",
+  "displayName": "Flicker",
+  "loggingName": "video_cutout_flicker",
+  "legacyId": 2084,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": true,
+    "typeSuggestions": [
+      "person",
+      "head",
+      "clothing"
+    ]
+  },
+  "customization": {
+    "speed": {
+      "default": 0.7,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "13a820b6",
+      "handle": "AQAEU08f9MWK",
+      "md5": "4f1ed7e6052c979fa427f8701c76d2d8"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEkbNsXPQZ"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "identifier": "6a9c300e-b676-4787-b380-95ed7bd971e9",
+  "enumCaseName": "subjectPulse",
+  "displayName": "Pulse",
+  "loggingName": "video_cutout_pulse",
+  "legacyId": 2101,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": true,
+    "typeSuggestions": [
+      "head",
+      "person",
+      "clothing"
+    ]
+  },
+  "customization": {
+    "speed": {
+      "default": 0.52,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "size": {
+      "default": 0.5,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "bdf4bd1f",
+      "handle": "AQAPCUHarmnw",
+      "md5": "69cccf977e6e1e8c1f6f5b911cc2cc11"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAPIbPR2yut"
+    }
+  }
+}

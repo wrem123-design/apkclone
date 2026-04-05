@@ -1,0 +1,17 @@
+{
+  "identifier": "edc5878b-6a9d-49a8-a980-76c844225b5f",
+  "enumCaseName": "videoJump",
+  "displayName": "Jump",
+  "loggingName": "video_jump",
+  "legacyId": 3020,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 833,
+    "curve": "linear"
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAG_nNSaubQ"
+    }
+  }
+}

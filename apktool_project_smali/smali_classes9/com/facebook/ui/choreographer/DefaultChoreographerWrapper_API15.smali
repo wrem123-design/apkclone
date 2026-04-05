@@ -1,0 +1,26 @@
+.class public Lcom/facebook/ui/choreographer/DefaultChoreographerWrapper_API15;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements LX/Plm;
+
+
+# instance fields
+.field public final A00:Landroid/os/Handler;
+
+
+# direct methods
+.method public constructor <init>()V
+    .locals 1
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    invoke-static {}, LX/020;->A0D()Landroid/os/Handler;
+
+    move-result-object v0
+
+    iput-object v0, p0, Lcom/facebook/ui/choreographer/DefaultChoreographerWrapper_API15;->A00:Landroid/os/Handler;
+
+    return-void
+.end method

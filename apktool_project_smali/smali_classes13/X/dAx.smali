@@ -1,0 +1,148 @@
+.class public final LX/dAx;
+.super LX/194;
+.source ""
+
+# interfaces
+.implements LX/LEN;
+
+
+# instance fields
+.field public final synthetic A00:F
+
+.field public final synthetic A01:I
+
+.field public final synthetic A02:I
+
+.field public final synthetic A03:I
+
+.field public final synthetic A04:J
+
+.field public final synthetic A05:Landroidx/compose/ui/Alignment;
+
+.field public final synthetic A06:LX/7zH;
+
+.field public final synthetic A07:LX/5R9;
+
+.field public final synthetic A08:LX/Kae;
+
+.field public final synthetic A09:Lcom/instagram/common/typedurl/ImageUrl;
+
+.field public final synthetic A0A:Ljava/lang/String;
+
+.field public final synthetic A0B:Ljava/lang/String;
+
+.field public final synthetic A0C:LX/LEL;
+
+.field public final synthetic A0D:LX/LEL;
+
+.field public final synthetic A0E:LX/LEL;
+
+
+# direct methods
+.method public constructor <init>(Landroidx/compose/ui/Alignment;LX/7zH;LX/5R9;LX/Kae;Lcom/instagram/common/typedurl/ImageUrl;Ljava/lang/String;Ljava/lang/String;LX/LEL;LX/LEL;LX/LEL;FIIIJ)V
+    .locals 2
+
+    iput-object p5, p0, LX/dAx;->A09:Lcom/instagram/common/typedurl/ImageUrl;
+
+    iput-object p6, p0, LX/dAx;->A0A:Ljava/lang/String;
+
+    iput-object p2, p0, LX/dAx;->A06:LX/7zH;
+
+    iput-object p7, p0, LX/dAx;->A0B:Ljava/lang/String;
+
+    iput-object p8, p0, LX/dAx;->A0D:LX/LEL;
+
+    iput-object p9, p0, LX/dAx;->A0E:LX/LEL;
+
+    iput-object p10, p0, LX/dAx;->A0C:LX/LEL;
+
+    iput-object p1, p0, LX/dAx;->A05:Landroidx/compose/ui/Alignment;
+
+    iput-object p4, p0, LX/dAx;->A08:LX/Kae;
+
+    iput p11, p0, LX/dAx;->A00:F
+
+    iput-object p3, p0, LX/dAx;->A07:LX/5R9;
+
+    move-wide/from16 v0, p15
+
+    iput-wide v0, p0, LX/dAx;->A04:J
+
+    iput p12, p0, LX/dAx;->A01:I
+
+    iput p13, p0, LX/dAx;->A02:I
+
+    move/from16 v0, p14
+
+    iput v0, p0, LX/dAx;->A03:I
+
+    const/4 v0, 0x2
+
+    invoke-direct {p0, v0}, LX/194;-><init>(I)V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final bridge synthetic invoke(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+    .locals 21
+
+    move-object/from16 v1, p1
+
+    move-object/from16 v0, p2
+
+    invoke-static {v1, v0}, LX/751;->A0X(Ljava/lang/Object;Ljava/lang/Object;)LX/jaI;
+
+    move-result-object v4
+
+    move-object/from16 v1, p0
+
+    iget-object v9, v1, LX/dAx;->A09:Lcom/instagram/common/typedurl/ImageUrl;
+
+    iget-object v10, v1, LX/dAx;->A0A:Ljava/lang/String;
+
+    iget-object v6, v1, LX/dAx;->A06:LX/7zH;
+
+    iget-object v11, v1, LX/dAx;->A0B:Ljava/lang/String;
+
+    iget-object v12, v1, LX/dAx;->A0D:LX/LEL;
+
+    iget-object v13, v1, LX/dAx;->A0E:LX/LEL;
+
+    iget-object v14, v1, LX/dAx;->A0C:LX/LEL;
+
+    iget-object v5, v1, LX/dAx;->A05:Landroidx/compose/ui/Alignment;
+
+    iget-object v8, v1, LX/dAx;->A08:LX/Kae;
+
+    iget v15, v1, LX/dAx;->A00:F
+
+    iget-object v7, v1, LX/dAx;->A07:LX/5R9;
+
+    iget-wide v2, v1, LX/dAx;->A04:J
+
+    iget v0, v1, LX/dAx;->A01:I
+
+    invoke-static {v0}, LX/8Kn;->A00(I)I
+
+    move-result v16
+
+    iget v0, v1, LX/dAx;->A02:I
+
+    invoke-static {v0}, LX/8Kn;->A01(I)I
+
+    move-result v17
+
+    iget v0, v1, LX/dAx;->A03:I
+
+    move-wide/from16 v19, v2
+
+    move/from16 v18, v0
+
+    invoke-static/range {v4 .. v20}, LX/VxP;->A00(LX/jaI;Landroidx/compose/ui/Alignment;LX/7zH;LX/5R9;LX/Kae;Lcom/instagram/common/typedurl/ImageUrl;Ljava/lang/String;Ljava/lang/String;LX/LEL;LX/LEL;LX/LEL;FIIIJ)V
+
+    sget-object v0, LX/H99;->A00:LX/H99;
+
+    return-object v0
+.end method

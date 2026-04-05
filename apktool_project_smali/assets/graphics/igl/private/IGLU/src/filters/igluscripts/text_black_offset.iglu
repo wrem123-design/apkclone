@@ -1,0 +1,301 @@
+[Filter IgluscriptTextBlackOffsetFilter]
+
+# Two-pass filter matching original flig-text "Black Offset"
+# Pass 1: Dilate the input shape
+# Pass 2: Compose - takes default + dilate, creates extrusion + blends original on top
+
+# ============================================================================
+# Font scaling constants and helper functions
+# ============================================================================
+
+f32 BASE_FONT_SIZE = 64.0;
+f32 BASE_FONT_WEIGHT = 0.5;
+
+fun lerp(f32 a, f32 b, f32 t) f32 {
+  return a + (b - a) * t;
+}
+
+# Scale factor for font size: fontSize / BASE_FONT_SIZE (64pt = 1.0)
+fun getFontSizeScale(f32 fontSize) f32 {
+  return fontSize / BASE_FONT_SIZE;
+}
+
+# Scale factor for font weight with configurable scale amount
+fun getFontWeightScale(f32 fontWeight, f32 fontWeightScale) f32 {
+  return lerp(1.0, fontWeight / BASE_FONT_WEIGHT, fontWeightScale);
+}
+
+# Apply scaling to a uniform value based on font size and weight
+fun applyFontScaling(f32 value, f32 fontSize, f32 fontWeight, boolean scalesWithFontSize, f32 fontWeightScale) f32 {
+  f32 result = value;
+  if (scalesWithFontSize) {
+    result = result * getFontSizeScale(fontSize);
+  }
+  if (fontWeightScale > 0.0) {
+    result = result * getFontWeightScale(fontWeight, fontWeightScale);
+  }
+  return result;
+}
+
+[Init]
+fun init(Filter filter) {
+  filter.parameters = {
+    {fontSize = 64.0, min = 8.0, max = 200.0, description = "Font size in points"},
+    {fontWeight = 0.5, min = 0.1, max = 1.5, description = "Font weight (normalized)"},
+    {radius = 1.75, min = 0.0, max = 10.0, description = "Dilation radius"}, # scalesWithFontSize = true, fontWeightScale = 0.5,
+    {direction = {0.4, -0.6}, min = {-1.0, -1.0}, max = {1.0, 1.0}, description = "Offset direction"},
+    {depth = 2.0, min = 1.0, max = 20.0, description = "Depth (extrusion layers)"},
+    {depthStart = 5.0, min = 0.0, max = 10.0, description = "Start offset"},
+    {depthDist = 5.0, min = 0.0, max = 50.0, description = "Distance per layer"}, # scalesWithFontSize = true, fontWeightScale = 0.5,
+    {textColor = {1.0, 1.0, 1.0, 1.0}, description = "Text color"}
+  };
+
+  filter.passes = {{
+      name = 'dilate, inputs = {'default},
+      uniforms = {
+        outputSize = {1024.0, 1024.0},
+        radius = 1.75
+      },
+      glslShader = dilateGlsl, metalShader = dilateMetal
+    },{
+      name = 'compose, inputs = {'default, 'dilate},
+      uniforms = {
+        outputSize = {1024.0, 1024.0},
+        direction = {0.4, -0.6},
+        depth = 2.0,
+        depthStart = 0.0,
+        depthDist = 10.0,
+        textColor = {1.0, 1.0, 1.0, 1.0}
+      },
+      glslShader = composeGlsl, metalShader = composeMetal
+    }};
+}
+
+[PreRender]
+fun preRender(Filter filter) {
+  vec2 inputSize = getTextureSize('default);
+  setShaderUniform('dilate, 'outputSize, inputSize);
+  setShaderUniform('compose, 'outputSize, inputSize);
+
+  # Get font scaling parameters (passed from host application)
+  f32 fontSize = getParameterFloat('fontSize);
+  f32 fontWeight = getParameterFloat('fontWeight);
+
+  # Get base parameter values and apply font scaling
+  # radius: scalesWithFontSize=true, fontWeightScale=0.5
+  f32 radiusBase = getParameterFloat('radius);
+  f32 radius = applyFontScaling(radiusBase, fontSize, fontWeight, true, 0.5);
+  setShaderUniform('dilate, 'radius, radius);
+
+  # depthDist: scalesWithFontSize=true, fontWeightScale=0.5
+  f32 depthDistBase = getParameterFloat('depthDist);
+  f32 depthDist = applyFontScaling(depthDistBase, fontSize, fontWeight, true, 0.5);
+  setShaderUniform('compose, 'depthDist, depthDist);
+
+  # Non-scaled parameters
+  vec2 direction = getParameterVec2('direction);
+  setShaderUniform('compose, 'direction, direction);
+
+  f32 depth = getParameterFloat('depth);
+  setShaderUniform('compose, 'depth, depth);
+
+  f32 depthStart = getParameterFloat('depthStart);
+  setShaderUniform('compose, 'depthStart, depthStart);
+
+  vec4 textColor = getParameterVec4('textColor);
+  setShaderUniform('compose, 'textColor, textColor);
+}
+
+# ============================================================================
+# Dilate Pass - expands the shape by sampling max in a radius
+# ============================================================================
+
+string dilateGlsl = "
+  varying vec2 sourceTextureCoordinate;
+
+  uniform vec2 outputSize;
+  uniform float radius;
+
+  #define MAX_RADIUS 4
+
+  vec4 dilate(vec2 uv, vec2 pixel) {
+    vec4 c = vec4(0.0);
+    for (int x = -MAX_RADIUS; x <= MAX_RADIUS; ++x) {
+      for (int y = -MAX_RADIUS; y <= MAX_RADIUS; ++y) {
+        vec4 v = sampleInput(uv + pixel * vec2(float(x), float(y)));
+        c = max(c, v);
+      }
+    }
+    return c;
+  }
+
+  void main() {
+    vec2 uv = sourceTextureCoordinate;
+    vec2 duv = 1.0 / outputSize;
+    vec4 color = dilate(uv, radius * duv / float(MAX_RADIUS));
+    gl_FragColor = toOutputFormat(color);
+  }
+";
+
+string dilateMetal = "
+  typedef struct { float2 sourceTextureCoordinate [[user(locn1)]]; } RasterizerData;
+
+  typedef struct {
+    BaseUniformsMetal;
+    float2 outputSize;
+    float radius;
+  } Uniforms;
+
+  #define MAX_RADIUS 4
+
+  float4 dilate(DefaultInputs defaultInputs, float2 uv, float2 pixel) {
+    float4 c = float4(0.0);
+    for (int x = -MAX_RADIUS; x <= MAX_RADIUS; ++x) {
+      for (int y = -MAX_RADIUS; y <= MAX_RADIUS; ++y) {
+        float4 v = sampleInput(defaultInputs, uv + pixel * float2(float(x), float(y)));
+        c = max(c, v);
+      }
+    }
+    return c;
+  }
+
+  fragment float4 fragmentShader(RasterizerData fragmentIn [[stage_in]],
+                                 constant Uniforms & uniforms [[buffer(1)]],
+                                 DefaultInputs defaultInputs) {
+    float2 uv = fragmentIn.sourceTextureCoordinate;
+    float2 duv = 1.0 / uniforms.outputSize;
+    float4 color = dilate(defaultInputs, uv, uniforms.radius * duv / float(MAX_RADIUS));
+    return toOutputFormat(color);
+  }
+";
+
+# ============================================================================
+# Compose Pass - extrusion effect
+# Multi-input: s_texture = default (original), s_texture1 = dilate
+# ============================================================================
+
+string composeGlsl = "
+  precision highp float;
+  varying vec2 sourceTextureCoordinate;
+
+  uniform sampler2D s_texture1;  // dilated shape - tex1
+
+  uniform vec2 outputSize;
+  uniform vec2 direction;
+  uniform float depth;
+  uniform float depthStart;
+  uniform float depthDist;
+  uniform vec4 textColor;
+
+  vec4 blendAlpha(vec4 base, vec4 blend) {
+    return vec4(mix(base.rgb, blend.rgb, blend.a), mix(base.a, 1.0, blend.a));
+  }
+
+  vec4 blendAlphaPremult(vec4 base, vec4 blend) {
+    return blend + base * (1.0 - blend.a);
+  }
+
+  float luma(vec3 color) {
+    return dot(color, vec3(0.299, 0.587, 0.114));
+  }
+
+  void main() {
+    vec2 uv = sourceTextureCoordinate;
+    vec4 base = sampleInput(uv);
+
+    vec2 dir = normalize(direction);
+    //dir.y = -dir.y; // opengl flip
+
+    vec2 duv = depthDist / outputSize;
+    vec4 color = vec4(0.0);
+
+    float lum = luma(textColor.rgb);
+
+    // Black extrusion (or near-white if text is very dark)
+    vec3 extrusionColor = vec3(lum > 0.1 ? 0.0 : 0.95);
+
+    // Extrude silhouette, back to front
+    const int maxLayers = 50;
+    int numLayers = int(depth);
+
+    for(int i = 0; i < maxLayers; i++) {
+      if (i >= numLayers) break;
+
+      float l = float(numLayers - i - 1);
+      vec2 offset = (l + depthStart) * dir * duv;
+      vec2 st = uv + offset;
+      vec4 offsetShape = texture2D(s_texture1, st);
+
+      color = blendAlpha(color, vec4(extrusionColor, offsetShape.a));
+    }
+
+    // Blend base text on top
+    color = blendAlphaPremult(color, base);
+
+    gl_FragColor = color;
+  }
+";
+
+string composeMetal = "
+  typedef struct { float2 sourceTextureCoordinate [[user(locn1)]]; } RasterizerData;
+
+  typedef struct {
+    BaseUniformsMetal;
+    float2 outputSize;
+    float2 direction;
+    float depth;
+    float depthStart;
+    float depthDist;
+    float4 textColor;
+  } Uniforms;
+
+  float4 blendAlpha(float4 base, float4 blend) {
+    return float4(mix(base.rgb, blend.rgb, blend.a), mix(base.a, 1.0, blend.a));
+  }
+
+  float4 blendAlphaPremult(float4 base, float4 blend) {
+    return blend + base * (1.0 - blend.a);
+  }
+
+  float luma(float3 color) {
+    return dot(color, float3(0.299, 0.587, 0.114));
+  }
+
+  fragment float4 fragmentShader(RasterizerData fragmentIn [[stage_in]],
+                                 constant Uniforms & uniforms [[buffer(1)]],
+                                 DefaultInputs defaultInputs,
+                                 texture2d<float> dilateTexture [[texture(1)]],
+                                 sampler dilateTextureSampler [[sampler(1)]]) {
+    float2 uv = fragmentIn.sourceTextureCoordinate;
+    float4 base = sampleInput(defaultInputs, uv);
+
+    float2 dir = normalize(uniforms.direction);
+    float2 duv = uniforms.depthDist / uniforms.outputSize;
+    float4 color = float4(0.0);
+
+    float lum = luma(uniforms.textColor.rgb);
+
+    // Black extrusion (or near-white if text is very dark)
+    float3 extrusionColor = float3(lum > 0.1 ? 0.0 : 0.95);
+
+    // Extrude silhouette, back to front
+    const int maxLayers = 50;
+    int numLayers = int(uniforms.depth);
+
+    for(int i = 0; i < maxLayers; i++) {
+      if (i >= numLayers) break;
+
+      float l = float(numLayers - i - 1);
+      float2 offset = (l + uniforms.depthStart) * dir * duv;
+      float2 st = uv + offset;
+      float4 offsetShape = dilateTexture.sample(dilateTextureSampler, st);
+
+      color = blendAlpha(color, float4(extrusionColor, offsetShape.a));
+    }
+
+    // Blend base text on top
+    color = blendAlphaPremult(color, base);
+
+    return color;
+  }
+";

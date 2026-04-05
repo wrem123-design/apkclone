@@ -1,0 +1,19 @@
+{
+  "identifier": "bc9e1769-83f3-4641-b3c2-d36bd899401a",
+  "enumCaseName": "videoLightRay",
+  "displayName": "Light ray",
+  "loggingName": "video_light_ray",
+  "legacyId": 2042,
+  "android": {
+    "previewAsset": {
+      "key": "193d71cd",
+      "handle": "AQAOQUcG8j_Z",
+      "md5": "d853ee5fd38562035a41de190ab1445a"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEbTg2hBo1"
+    }
+  }
+}

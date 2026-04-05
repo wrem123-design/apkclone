@@ -1,0 +1,44 @@
+[Filter DemoMultiCPP]
+# Demonstrates chaining multiple C++ filters via igid in an igluscript.
+
+[Init]
+fun init(Filter filter) {
+    filter.passes = {{
+        name = 'pixelate,
+        igid = 'video_pixelate,
+        inputs = {'default},
+        uniforms = { pixelScale = 0.005 }
+    },{
+        name = 'trippy,
+        igid = 'video_trippy,
+        inputs = {'pixelate},
+        uniforms = { shift_speed = 0.3 }
+    },{
+        name = 'adjust,
+        igid = 'basic_adjust,
+        inputs = {'trippy},
+        uniforms = { brightness = 0.0, contrast = 0.0, saturation = 0.0 }
+    }};
+
+    filter.parameters = {
+        {pixelScale = 0.005, min = 0.001, max = 0.1, description = "Pixel block size"},
+        {shift_speed = 0.3, min = 0.0, max = 2.0, description = "Color shift speed"},
+        {brightness = 1.25, min = -2.0, max = 2.0, description = "Brightness"},
+        {contrast = 0.0, min = -2.0, max = 2.0, description = "Contrast"},
+        {saturation = -0.7, min = -1.0, max = 1.0, description = "Saturation"}
+    };
+}
+
+[PreRender]
+fun preRender(Filter filter) {
+    f32 ps = getParameterFloat('pixelScale);
+    f32 ss = getParameterFloat('shift_speed);
+    f32 br = getParameterFloat('brightness);
+    f32 ct = getParameterFloat('contrast);
+    f32 sa = getParameterFloat('saturation);
+    setShaderUniform('pixelate, 'pixelScale, ps);
+    setShaderUniform('trippy, 'shift_speed, ss);
+    setShaderUniform('adjust, 'brightness, br);
+    setShaderUniform('adjust, 'contrast, ct);
+    setShaderUniform('adjust, 'saturation, sa);
+}

@@ -1,0 +1,68 @@
+.class public final LX/IfR;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements LX/mCA;
+
+
+# instance fields
+.field public final A00:Landroidx/fragment/app/FragmentActivity;
+
+.field public final synthetic A01:LX/EjV;
+
+
+# direct methods
+.method public constructor <init>(Landroidx/fragment/app/FragmentActivity;LX/EjV;)V
+    .locals 0
+
+    invoke-static {p1}, LX/659;->A0v(Ljava/lang/Object;)V
+
+    iput-object p2, p0, LX/IfR;->A01:LX/EjV;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, LX/IfR;->A00:Landroidx/fragment/app/FragmentActivity;
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final Ea8(ZLjava/lang/String;)V
+    .locals 0
+
+    return-void
+.end method
+
+.method public final FA3(Ljava/lang/String;)V
+    .locals 0
+
+    return-void
+.end method
+
+.method public final FA4()V
+    .locals 1
+
+    iget-object v0, p0, LX/IfR;->A00:Landroidx/fragment/app/FragmentActivity;
+
+    invoke-virtual {v0}, Landroid/app/Activity;->finish()V
+
+    return-void
+.end method
+
+.method public final FGW()V
+    .locals 1
+
+    iget-object v0, p0, LX/IfR;->A00:Landroidx/fragment/app/FragmentActivity;
+
+    invoke-virtual {v0}, Landroid/app/Activity;->finish()V
+
+    return-void
+.end method
+
+.method public final Fnw(Ljava/lang/String;)V
+    .locals 0
+
+    return-void
+.end method

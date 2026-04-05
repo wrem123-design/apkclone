@@ -1,0 +1,34 @@
+{
+  "identifier": "b67fa17a-c244-434a-b394-3c2daeb9839a",
+  "enumCaseName": "overlayExplode",
+  "displayName": "Explode",
+  "loggingName": "video_cutout_explode",
+  "legacyId": 5059,
+  "subject": {
+    "overlay": true
+  },
+  "customization": {
+    "speed": {
+      "default": 0.14,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "amount": {
+      "default": 0.56,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "3e6e8fb8",
+      "handle": "AQAC2iKB27_F",
+      "md5": "8d869d44032abc3de76b4f985730596e"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADPEBb9e27"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "identifier": "a627c9d1-3e84-4f12-b853-9c4d2a8f5e71",
+  "enumCaseName": "videoBlurFadeOut",
+  "displayName": "Blur fade out",
+  "loggingName": "video_blur_fade_out",
+  "behavior": {
+    "type": "fixedOutro",
+    "durationMs": 1000,
+    "curve": "linear"
+  }
+}

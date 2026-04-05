@@ -1,0 +1,12 @@
+{
+  "identifier": "338878a2-cee8-4980-8126-2a2c32645742",
+  "displayName": "Super Resolution",
+  "loggingName": "super_resolution",
+  "assets": [
+    {
+      "name": "Filterdata",
+      "assetHash": "6161ff90b10b1e747f88502a1e8ab7f93187b04b8c7747aaa23b9fcd88b31ea4",
+      "effectId": "4451418055080229"
+    }
+  ]
+}

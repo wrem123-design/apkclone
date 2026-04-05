@@ -1,0 +1,12 @@
+{
+  "identifier": "09e3d92b-54c2-454b-aaaf-f94aa5ccd643",
+  "displayName": "Text Flutter",
+  "loggingName": "text_flutter",
+  "assets": [
+    {
+      "name": "Sparkle",
+      "assetHash": "2415f14f09363bd40d92336804dd819927481d951d25d97cc6f8cfdbd9e83de8",
+      "effectId": "787086830563012"
+    }
+  ]
+}

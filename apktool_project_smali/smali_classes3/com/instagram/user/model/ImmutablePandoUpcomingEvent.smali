@@ -1,0 +1,901 @@
+.class public final Lcom/instagram/user/model/ImmutablePandoUpcomingEvent;
+.super LX/I9I;
+.source ""
+
+# interfaces
+.implements Lcom/instagram/user/model/UpcomingEvent;
+
+
+# static fields
+.field public static final CREATOR:LX/eCD;
+
+
+# instance fields
+.field public A00:Lcom/instagram/user/model/User;
+
+.field public A01:Lcom/instagram/user/model/UpcomingEventLiveMetadata;
+
+
+# direct methods
+.method public static constructor <clinit>()V
+    .locals 2
+
+    const/16 v1, 0xa
+
+    new-instance v0, LX/HcK;
+
+    invoke-direct {v0, v1}, LX/HcK;-><init>(I)V
+
+    sput-object v0, Lcom/instagram/user/model/ImmutablePandoUpcomingEvent;->CREATOR:LX/eCD;
+
+    return-void
+.end method
+
+.method public constructor <init>()V
+    .locals 0
+
+    invoke-direct {p0}, LX/I9I;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final A28(LX/5aO;)V
+    .locals 2
+    .annotation build Ldalvik/annotation/optimization/NeverInline;
+    .end annotation
+
+    invoke-static {p1}, LX/659;->A0u(Ljava/lang/Object;)V
+
+    invoke-virtual {p0}, Lcom/instagram/user/model/ImmutablePandoUpcomingEvent;->C6x()Lcom/instagram/user/model/UpcomingEventLiveMetadata;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_1
+
+    invoke-interface {v0, p1}, LX/NSJ;->FkC(LX/5aO;)V
+
+    :goto_0
+    iput-object v0, p0, Lcom/instagram/user/model/ImmutablePandoUpcomingEvent;->A01:Lcom/instagram/user/model/UpcomingEventLiveMetadata;
+
+    const v1, 0x653f2b3
+
+    const-class v0, LX/1mN;
+
+    invoke-virtual {p0, v1, v0}, LX/I9I;->A1b(ILjava/lang/Class;)Lcom/facebook/pando/TreeJNI;
+
+    move-result-object v0
+
+    check-cast v0, LX/1mN;
+
+    if-eqz v0, :cond_0
+
+    invoke-static {p1, v0}, LX/2bp;->A02(LX/5aO;LX/1mN;)Lcom/instagram/user/model/User;
+
+    move-result-object v0
+
+    :goto_1
+    iput-object v0, p0, Lcom/instagram/user/model/ImmutablePandoUpcomingEvent;->A00:Lcom/instagram/user/model/User;
+
+    return-void
+
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_1
+
+    :cond_1
+    const/4 v0, 0x0
+
+    goto :goto_0
+.end method
+
+.method public final synthetic AEo(Ljava/lang/String;I)LX/27n;
+    .locals 3
+
+    const/4 v2, 0x0
+
+    const/4 v1, 0x3
+
+    new-instance v0, LX/2eo;
+
+    invoke-direct {v0, v2, v2, v2, v1}, LX/2eo;-><init>(Ljava/lang/String;Ljava/util/Set;Lkotlin/jvm/internal/DefaultConstructorMarker;I)V
+
+    invoke-virtual {p0, v0}, Lcom/instagram/user/model/ImmutablePandoUpcomingEvent;->GYa(LX/2eo;)Lcom/facebook/pando/TreeUpdaterJNI;
+
+    move-result-object v1
+
+    const-class v0, Lcom/facebook/pando/TreeWithGraphQL;
+
+    invoke-virtual {v1, v0}, Lcom/facebook/pando/TreeUpdaterJNI;->treeFromUpdater(Ljava/lang/Class;)Lcom/facebook/pando/TreeJNI;
+
+    move-result-object v0
+
+    check-cast v0, LX/27n;
+
+    return-object v0
+.end method
+
+.method public final AO3(Ljava/lang/Enum;Ljava/lang/Enum;)Ljava/lang/Enum;
+    .locals 1
+
+    invoke-static {p1}, LX/659;->A0v(Ljava/lang/Object;)V
+
+    invoke-static {p2}, LX/659;->A0m(Ljava/lang/Object;)V
+
+    invoke-static {p1, p2}, LX/2cd;->A00(Ljava/lang/Enum;Ljava/lang/Enum;)Ljava/lang/Enum;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final synthetic Agh()LX/JSJ;
+    .locals 1
+
+    new-instance v0, LX/JSJ;
+
+    invoke-direct {v0, p0}, LX/JSJ;-><init>(Lcom/instagram/user/model/UpcomingEvent;)V
+
+    return-object v0
+.end method
+
+.method public final BLc(I)Z
+    .locals 1
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+.end method
+
+.method public final BLd(I)Lcom/google/common/collect/ImmutableList;
+    .locals 1
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+.end method
+
+.method public final BLe(I)D
+    .locals 1
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+.end method
+
+.method public final BLf(I)I
+    .locals 1
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+.end method
+
+.method public final BLg(I)J
+    .locals 1
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+.end method
+
+.method public final Bdz()Ljava/lang/Long;
+    .locals 1
+
+    const v0, 0x66d9d3b1
+
+    invoke-virtual {p0, v0}, LX/I9I;->A1g(I)Ljava/lang/Long;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final synthetic BjY(I)Ljava/lang/Object;
+    .locals 1
+
+    invoke-static {p0, p1}, LX/My7;->A02(Lcom/instagram/user/model/UpcomingEvent;I)Ljava/lang/Object;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final Bx4()Lcom/instagram/api/schemas/IGLocalEventDict;
+    .locals 2
+
+    const v1, -0xcd67370
+
+    const-class v0, Lcom/instagram/api/schemas/ImmutablePandoIGLocalEventDict;
+
+    invoke-virtual {p0, v1, v0}, LX/I9I;->A1b(ILjava/lang/Class;)Lcom/facebook/pando/TreeJNI;
+
+    move-result-object v0
+
+    check-cast v0, Lcom/instagram/api/schemas/IGLocalEventDict;
+
+    return-object v0
+.end method
+
+.method public final C44()Ljava/lang/Long;
+    .locals 1
+
+    const v0, 0x59b8a038
+
+    invoke-virtual {p0, v0}, LX/I9I;->A1g(I)Ljava/lang/Long;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final C6x()Lcom/instagram/user/model/UpcomingEventLiveMetadata;
+    .locals 2
+
+    iget-object v0, p0, Lcom/instagram/user/model/ImmutablePandoUpcomingEvent;->A01:Lcom/instagram/user/model/UpcomingEventLiveMetadata;
+
+    if-nez v0, :cond_0
+
+    const v1, -0x4be5bade
+
+    const-class v0, Lcom/instagram/user/model/ImmutablePandoUpcomingEventLiveMetadata;
+
+    invoke-virtual {p0, v1, v0}, LX/I9I;->A1b(ILjava/lang/Class;)Lcom/facebook/pando/TreeJNI;
+
+    move-result-object v0
+
+    check-cast v0, Lcom/instagram/user/model/UpcomingEventLiveMetadata;
+
+    :cond_0
+    return-object v0
+.end method
+
+.method public final CAB()Lcom/instagram/model/upcomingeventsmetadata/UpcomingEventMedia;
+    .locals 2
+
+    const v1, 0x62f6fe4
+
+    const-class v0, Lcom/instagram/model/upcomingeventsmetadata/ImmutablePandoUpcomingEventMedia;
+
+    invoke-virtual {p0, v1, v0}, LX/I9I;->A1b(ILjava/lang/Class;)Lcom/facebook/pando/TreeJNI;
+
+    move-result-object v0
+
+    check-cast v0, Lcom/instagram/model/upcomingeventsmetadata/UpcomingEventMedia;
+
+    return-object v0
+.end method
+
+.method public final CMN(I)Ljava/lang/Boolean;
+    .locals 1
+
+    invoke-interface {p0, p1}, Lcom/facebook/graphql/modelutil/TypeModelData;->BjY(I)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Ljava/lang/Boolean;
+
+    return-object v0
+.end method
+
+.method public final CMO(I)Lcom/google/common/collect/ImmutableList;
+    .locals 1
+
+    invoke-static {p0, p1}, LX/2cc;->A07(Lcom/facebook/graphql/modelutil/TypeModelData;I)Lcom/google/common/collect/ImmutableList;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final CMP(Ljava/lang/Enum;I)Lcom/google/common/collect/ImmutableList;
+    .locals 1
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+.end method
+
+.method public final CMQ(I)Lcom/google/common/collect/ImmutableList;
+    .locals 1
+
+    invoke-static {p0, p1}, LX/2cc;->A08(Lcom/facebook/graphql/modelutil/TypeModelData;I)Lcom/google/common/collect/ImmutableList;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final CMR(I)Lcom/google/common/collect/ImmutableList;
+    .locals 1
+
+    invoke-static {p0, p1}, LX/2cc;->A09(Lcom/facebook/graphql/modelutil/TypeModelData;I)Lcom/google/common/collect/ImmutableList;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final CMS(I)Lcom/google/common/collect/ImmutableList;
+    .locals 1
+
+    invoke-static {p0, p1}, LX/2cc;->A0A(Lcom/facebook/graphql/modelutil/TypeModelData;I)Lcom/google/common/collect/ImmutableList;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final CMT(I)Ljava/lang/Double;
+    .locals 1
+
+    invoke-static {p0, p1}, LX/2cc;->A0E(Lcom/facebook/graphql/modelutil/TypeModelData;I)Ljava/lang/Double;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final CMU(Ljava/lang/Enum;I)Ljava/lang/Enum;
+    .locals 1
+
+    invoke-static {p1}, LX/659;->A0m(Ljava/lang/Object;)V
+
+    invoke-static {p0, p1, p2}, LX/2cc;->A0F(Lcom/facebook/graphql/modelutil/TypeModelData;Ljava/lang/Enum;I)Ljava/lang/Enum;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final CMW(I)Ljava/lang/Integer;
+    .locals 1
+
+    invoke-static {p0, p1}, LX/2cc;->A0H(Lcom/facebook/graphql/modelutil/TypeModelData;I)Ljava/lang/Integer;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final CMX(I)Ljava/lang/String;
+    .locals 1
+
+    invoke-interface {p0, p1}, Lcom/facebook/graphql/modelutil/TypeModelData;->BjY(I)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Ljava/lang/String;
+
+    return-object v0
+.end method
+
+.method public final CMY(I)Ljava/lang/Long;
+    .locals 1
+
+    invoke-interface {p0, p1}, Lcom/facebook/graphql/modelutil/TypeModelData;->BjY(I)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Ljava/lang/Long;
+
+    return-object v0
+.end method
+
+.method public final bridge synthetic CMa(I)LX/mQj;
+    .locals 1
+
+    invoke-interface {p0, p1}, Lcom/facebook/graphql/modelutil/TypeModelData;->BjY(I)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Lcom/facebook/graphql/modelutil/TypeModelData;
+
+    return-object v0
+.end method
+
+.method public final COO()Lcom/instagram/user/model/User;
+    .locals 1
+
+    iget-object v0, p0, Lcom/instagram/user/model/ImmutablePandoUpcomingEvent;->A00:Lcom/instagram/user/model/User;
+
+    return-object v0
+.end method
+
+.method public final Cdt()Z
+    .locals 1
+
+    const v0, -0xe909f8c
+
+    invoke-virtual {p0, v0}, Lcom/facebook/pando/TreeJNI;->getBooleanValueByHashCode(I)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public final CfW(I)Z
+    .locals 1
+
+    invoke-static {p0, p1}, LX/2cc;->A0O(Lcom/facebook/graphql/modelutil/TypeModelData;I)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public final CfX(I)Lcom/google/common/collect/ImmutableList;
+    .locals 1
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+.end method
+
+.method public final CfY(I)Lcom/google/common/collect/ImmutableList;
+    .locals 1
+
+    invoke-static {p0, p1}, LX/2cc;->A0B(Lcom/facebook/graphql/modelutil/TypeModelData;I)Lcom/google/common/collect/ImmutableList;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final CfZ(Ljava/lang/Enum;I)Lcom/google/common/collect/ImmutableList;
+    .locals 1
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+.end method
+
+.method public final Cfa(I)Lcom/google/common/collect/ImmutableList;
+    .locals 1
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+.end method
+
+.method public final Cfc(I)Lcom/google/common/collect/ImmutableList;
+    .locals 1
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+.end method
+
+.method public final Cfd(I)Lcom/google/common/collect/ImmutableList;
+    .locals 1
+
+    invoke-static {p0, p1}, LX/2cc;->A0C(Lcom/facebook/graphql/modelutil/TypeModelData;I)Lcom/google/common/collect/ImmutableList;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final Cfe(I)D
+    .locals 2
+
+    invoke-static {p0, p1}, LX/2cc;->A00(Lcom/facebook/graphql/modelutil/TypeModelData;I)D
+
+    move-result-wide v0
+
+    return-wide v0
+.end method
+
+.method public final Cff(Ljava/lang/Enum;I)Ljava/lang/Enum;
+    .locals 1
+
+    invoke-static {p1}, LX/659;->A0m(Ljava/lang/Object;)V
+
+    invoke-static {p0, p1, p2}, LX/2cc;->A0G(Lcom/facebook/graphql/modelutil/TypeModelData;Ljava/lang/Enum;I)Ljava/lang/Enum;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final Cfg(I)I
+    .locals 1
+
+    invoke-static {p0, p1}, LX/2cc;->A01(Lcom/facebook/graphql/modelutil/TypeModelData;I)I
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public final Cfi(I)Ljava/lang/String;
+    .locals 1
+
+    invoke-static {p0, p1}, LX/2cc;->A0N(Lcom/facebook/graphql/modelutil/TypeModelData;I)Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final Cfj(I)J
+    .locals 2
+
+    invoke-static {p0, p1}, LX/2cc;->A02(Lcom/facebook/graphql/modelutil/TypeModelData;I)J
+
+    move-result-wide v0
+
+    return-wide v0
+.end method
+
+.method public final bridge synthetic Cfl(I)LX/mQj;
+    .locals 1
+
+    invoke-static {p0, p1}, LX/2cc;->A06(Lcom/facebook/graphql/modelutil/TypeModelData;I)Lcom/facebook/graphql/modelutil/TypeModelData;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final Cve()J
+    .locals 2
+
+    const v0, -0x5dc44b76
+
+    invoke-virtual {p0, v0}, LX/I9I;->A1Y(I)J
+
+    move-result-wide v0
+
+    return-wide v0
+.end method
+
+.method public final D00()Ljava/lang/String;
+    .locals 1
+
+    const v0, 0x153c06e3
+
+    invoke-virtual {p0, v0}, LX/I9I;->A23(I)Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final DDB()LX/GtA;
+    .locals 2
+
+    const/16 v0, 0x15
+
+    new-instance v1, LX/43S;
+
+    invoke-direct {v1, v0}, LX/43S;-><init>(I)V
+
+    const v0, -0x1b00b2aa
+
+    invoke-virtual {p0, v0}, LX/I9I;->A23(I)Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-interface {v1, v0}, Lkotlin/jvm/functions/Function1;->invoke(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, LX/GtA;
+
+    return-object v0
+.end method
+
+.method public final DS4(I)Z
+    .locals 1
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+.end method
+
+.method public final Dbu(LX/mQj;)Z
+    .locals 1
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+.end method
+
+.method public final Dh8()Ljava/lang/Boolean;
+    .locals 1
+
+    const v0, -0x5fa4f126
+
+    invoke-virtual {p0, v0}, Lcom/facebook/pando/TreeJNI;->getOptionalBooleanValueByHashCode(I)Ljava/lang/Boolean;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final bridge synthetic FkC(LX/5aO;)V
+    .locals 0
+
+    invoke-virtual {p0, p1}, Lcom/instagram/user/model/ImmutablePandoUpcomingEvent;->A28(LX/5aO;)V
+
+    return-void
+.end method
+
+.method public final bridge synthetic FmJ(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;I)LX/mQj;
+    .locals 0
+
+    return-object p0
+.end method
+
+.method public final bridge synthetic FmN(I)LX/mQj;
+    .locals 0
+
+    return-object p0
+.end method
+
+.method public final bridge synthetic FmP(I)LX/mQj;
+    .locals 0
+
+    return-object p0
+.end method
+
+.method public final synthetic GY3(LX/2eo;)Ljava/util/Map;
+    .locals 1
+
+    invoke-static {p1, p0}, LX/My7;->A03(LX/2eo;Lcom/instagram/user/model/UpcomingEvent;)Ljava/util/Map;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final bridge synthetic GYK(LX/5aO;)Ljava/lang/Object;
+    .locals 1
+
+    invoke-static {}, LX/002;->createAndThrow()LX/002;
+
+    move-result-object v0
+
+    throw v0
+.end method
+
+.method public final bridge synthetic GYM(LX/KRt;)Ljava/lang/Object;
+    .locals 17
+
+    move-object/from16 v1, p1
+
+    invoke-static {v1}, LX/659;->A0u(Ljava/lang/Object;)V
+
+    new-instance v0, Ljava/util/LinkedHashSet;
+
+    invoke-direct {v0}, Ljava/util/LinkedHashSet;-><init>()V
+
+    new-instance v3, LX/5aO;
+
+    invoke-direct {v3, v1, v0}, LX/5aO;-><init>(LX/KRt;Ljava/util/Set;)V
+
+    const v0, 0x66d9d3b1
+
+    move-object/from16 v1, p0
+
+    invoke-virtual {v1, v0}, LX/I9I;->A1g(I)Ljava/lang/Long;
+
+    move-result-object v9
+
+    invoke-virtual {v1}, LX/I9I;->A20()Ljava/lang/String;
+
+    move-result-object v11
+
+    invoke-virtual {v1}, Lcom/instagram/user/model/ImmutablePandoUpcomingEvent;->Bx4()Lcom/instagram/api/schemas/IGLocalEventDict;
+
+    move-result-object v0
+
+    const/4 v5, 0x0
+
+    if-eqz v0, :cond_4
+
+    invoke-interface {v0}, LX/NSI;->GYJ()Ljava/lang/Object;
+
+    move-result-object v4
+
+    check-cast v4, Lcom/instagram/api/schemas/IGLocalEventDictImpl;
+
+    :goto_0
+    const v0, -0x5fa4f126
+
+    invoke-virtual {v1, v0}, Lcom/facebook/pando/TreeJNI;->getOptionalBooleanValueByHashCode(I)Ljava/lang/Boolean;
+
+    move-result-object v8
+
+    const v0, 0x59b8a038
+
+    invoke-virtual {v1, v0}, LX/I9I;->A1g(I)Ljava/lang/Long;
+
+    move-result-object v10
+
+    invoke-virtual {v1}, Lcom/instagram/user/model/ImmutablePandoUpcomingEvent;->C6x()Lcom/instagram/user/model/UpcomingEventLiveMetadata;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_3
+
+    invoke-interface {v0, v3}, LX/NSJ;->GYK(LX/5aO;)Ljava/lang/Object;
+
+    move-result-object v6
+
+    check-cast v6, Lcom/instagram/user/model/UpcomingEventLiveMetadataImpl;
+
+    :goto_1
+    invoke-virtual {v1}, Lcom/instagram/user/model/ImmutablePandoUpcomingEvent;->CAB()Lcom/instagram/model/upcomingeventsmetadata/UpcomingEventMedia;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_0
+
+    invoke-interface {v0}, LX/NSI;->GYJ()Ljava/lang/Object;
+
+    move-result-object v5
+
+    check-cast v5, Lcom/instagram/model/upcomingeventsmetadata/UpcomingEventMediaImpl;
+
+    :cond_0
+    iget-object v7, v1, Lcom/instagram/user/model/ImmutablePandoUpcomingEvent;->A00:Lcom/instagram/user/model/User;
+
+    if-nez v7, :cond_1
+
+    const v2, 0x653f2b3
+
+    const-class v0, LX/1mN;
+
+    invoke-virtual {v1, v2, v0}, LX/I9I;->A1b(ILjava/lang/Class;)Lcom/facebook/pando/TreeJNI;
+
+    move-result-object v0
+
+    check-cast v0, LX/1mN;
+
+    if-eqz v0, :cond_2
+
+    invoke-static {v3, v0}, LX/2bp;->A02(LX/5aO;LX/1mN;)Lcom/instagram/user/model/User;
+
+    move-result-object v7
+
+    :cond_1
+    :goto_2
+    const v0, -0xe909f8c
+
+    invoke-virtual {v1, v0}, Lcom/facebook/pando/TreeJNI;->getBooleanValueByHashCode(I)Z
+
+    move-result v16
+
+    const v0, -0x5dc44b76
+
+    invoke-virtual {v1, v0}, LX/I9I;->A1Y(I)J
+
+    move-result-wide v14
+
+    const v0, 0x153c06e3
+
+    invoke-virtual {v1, v0}, LX/I9I;->A23(I)Ljava/lang/String;
+
+    move-result-object v12
+
+    invoke-virtual {v1}, LX/I9I;->A1m()Ljava/lang/String;
+
+    move-result-object v13
+
+    invoke-virtual {v1}, Lcom/instagram/user/model/ImmutablePandoUpcomingEvent;->DDB()LX/GtA;
+
+    move-result-object v3
+
+    new-instance v2, Lcom/instagram/user/model/UpcomingEventImpl;
+
+    invoke-direct/range {v2 .. v16}, Lcom/instagram/user/model/UpcomingEventImpl;-><init>(LX/GtA;Lcom/instagram/api/schemas/IGLocalEventDict;Lcom/instagram/model/upcomingeventsmetadata/UpcomingEventMedia;Lcom/instagram/user/model/UpcomingEventLiveMetadata;Lcom/instagram/user/model/User;Ljava/lang/Boolean;Ljava/lang/Long;Ljava/lang/Long;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;JZ)V
+
+    return-object v2
+
+    :cond_2
+    const/4 v7, 0x0
+
+    goto :goto_2
+
+    :cond_3
+    move-object v6, v5
+
+    goto :goto_1
+
+    :cond_4
+    move-object v4, v5
+
+    goto :goto_0
+.end method
+
+.method public final GYa(LX/2eo;)Lcom/facebook/pando/TreeUpdaterJNI;
+    .locals 2
+
+    invoke-static {p1}, LX/659;->A0u(Ljava/lang/Object;)V
+
+    sget-object v0, Lcom/facebook/pando/TreeUpdaterJNI;->Companion:LX/2ep;
+
+    invoke-static {p1, p0}, LX/My7;->A03(LX/2eo;Lcom/instagram/user/model/UpcomingEvent;)Ljava/util/Map;
+
+    move-result-object v1
+
+    new-instance v0, Lcom/facebook/pando/TreeUpdaterJNI;
+
+    invoke-direct {v0, v1, p0}, Lcom/facebook/pando/TreeUpdaterJNI;-><init>(Ljava/util/Map;Lcom/facebook/pando/TreeJNI;)V
+
+    return-object v0
+.end method
+
+.method public final synthetic describeContents()I
+    .locals 1
+
+    const/4 v0, 0x0
+
+    return v0
+.end method
+
+.method public final getId()Ljava/lang/String;
+    .locals 1
+
+    invoke-virtual {p0}, LX/I9I;->A20()Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final getTitle()Ljava/lang/String;
+    .locals 1
+
+    invoke-virtual {p0}, LX/I9I;->A1m()Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public final getTypeName()Ljava/lang/String;
+    .locals 1
+
+    const-string v0, "XDTUpcomingEventDict"
+
+    return-object v0
+.end method
+
+.method public final writeToParcel(Landroid/os/Parcel;I)V
+    .locals 0
+
+    invoke-static {p1}, LX/659;->A0u(Ljava/lang/Object;)V
+
+    invoke-static {p1, p0}, LX/ZSy;->A00(Landroid/os/Parcel;Lcom/facebook/pando/TreeJNI;)V
+
+    return-void
+.end method

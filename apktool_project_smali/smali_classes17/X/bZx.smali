@@ -1,0 +1,86 @@
+.class public abstract synthetic LX/bZx;
+.super Ljava/lang/Object;
+.source ""
+
+
+# direct methods
+.method public static A00(LX/lJa;I)Ljava/lang/Boolean;
+    .locals 1
+
+    const v0, -0x21a17612
+
+    if-eq p1, v0, :cond_0
+
+    const v0, 0x80b27b1
+
+    if-eq p1, v0, :cond_1
+
+    invoke-static {p1}, LX/011;->A0E(I)Ljava/lang/IllegalArgumentException;
+
+    move-result-object v0
+
+    throw v0
+
+    :cond_0
+    invoke-interface {p0}, LX/lJa;->DZZ()Z
+
+    move-result v0
+
+    goto :goto_0
+
+    :cond_1
+    invoke-interface {p0}, LX/lJa;->BZp()Z
+
+    move-result v0
+
+    :goto_0
+    invoke-static {v0}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public static A01(LX/lJa;)Ljava/util/Map;
+    .locals 3
+
+    invoke-static {}, LX/020;->A15()Ljava/util/LinkedHashMap;
+
+    move-result-object v2
+
+    invoke-interface {p0}, LX/lJa;->BZp()Z
+
+    move-result v0
+
+    invoke-static {v0}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+
+    move-result-object v1
+
+    const/16 v0, 0x446
+
+    invoke-static {v0}, LX/024;->A00(I)Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-interface {v2, v0, v1}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    invoke-interface {p0}, LX/lJa;->DZZ()Z
+
+    move-result v0
+
+    invoke-static {v0}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+
+    move-result-object v1
+
+    const/16 v0, 0x4c2
+
+    invoke-static {v0}, LX/024;->A00(I)Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-static {v0, v1, v2}, LX/120;->A19(Ljava/lang/Object;Ljava/lang/Object;Ljava/util/Map;)Ljava/util/Map;
+
+    move-result-object v0
+
+    return-object v0
+.end method

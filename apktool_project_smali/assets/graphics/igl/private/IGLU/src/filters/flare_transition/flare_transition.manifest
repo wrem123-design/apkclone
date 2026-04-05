@@ -1,0 +1,12 @@
+{
+  "identifier": "45782001-d0ee-4754-b182-4ab556f4a10e",
+  "displayName": "Flare Transition",
+  "loggingName": "flare_transition",
+  "assets": [
+    {
+      "name": "Blackboard",
+      "assetHash": "6ee32275f0b08fb4bee58193a4d8a16d3d24f2db94f58192df6bdc11d5ad7081",
+      "effectId": "894545610234702"
+    }
+  ]
+}

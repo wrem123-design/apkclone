@@ -1,0 +1,17 @@
+{
+  "identifier": "5ec6fbff-547d-4e87-af3d-13b85bdb9a8c",
+  "displayName": "Gingham",
+  "loggingName": "gingham",
+  "assets": [
+    {
+      "name": "CurvesGingham",
+      "assetHash": "1a572993c58b8b6f5531e5d656da7c9496a7917d808e63628369dcbaacc7a7a1",
+      "effectId": "1564979271471824"
+    },
+    {
+      "name": "LggCurves",
+      "assetHash": "ae20208f158d226a281b9ad227186cb33c91b5a29ad86918d3ebda3e5bde3b44",
+      "effectId": "1463572955302201"
+    }
+  ]
+}

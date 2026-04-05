@@ -1,0 +1,14 @@
+/**
+ * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
+ */
+
+function(sdkURL) {
+  var js, fjs = document.getElementsByTagName('script')[0];
+  if (document.getElementById('instagram-autofill-sdk')) {
+    return;
+  }
+  js = document.createElement('script');
+  js.id = 'instagram-autofill-sdk';
+  js.src = sdkURL;
+  fjs.parentNode.insertBefore(js, fjs);
+}

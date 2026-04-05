@@ -1,0 +1,26 @@
+{
+  "identifier": "c96c0e1e-4663-4c3e-b6e1-ae188299a9f6",
+  "enumCaseName": "videoChromaBlur",
+  "displayName": "Chroma blur",
+  "loggingName": "video_chroma_blur",
+  "legacyId": 2075,
+  "android": {
+    "previewAsset": {
+      "key": "b9f40626",
+      "handle": "AQACn4MFT53C",
+      "md5": "0057a728240883aae02d494a5a3b9fa7"
+    }
+  },
+  "assets": [
+    {
+      "name": "PerlinNoise",
+      "assetHash": "42393e620664a372495800bfcf40ca960aa0ab3e2ddfe42fbfe2b86098d33000",
+      "effectId": "1259354255546062"
+    }
+  ],
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAFg2NAnIDG"
+    }
+  }
+}

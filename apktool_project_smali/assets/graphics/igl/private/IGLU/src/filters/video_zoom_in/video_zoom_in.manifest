@@ -1,0 +1,24 @@
+{
+  "identifier": "c230e4fe-7aed-46fa-8a17-d72c4529c597",
+  "enumCaseName": "videoZoomIn",
+  "displayName": "Zoom",
+  "loggingName": "video_zoom_in",
+  "legacyId": 2013,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 3000,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "c2607a7d",
+      "handle": "AQACh2fWxxLk",
+      "md5": "e114222e044bde0b16f766ea9f815999"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEYIKWahdc"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "identifier": "7aaf49d3-42ee-4438-b8b4-3ca741144b4f",
+  "enumCaseName": "videoCutoutSlowShutter",
+  "displayName": "Cutout Slow Shutter",
+  "loggingName": "video_cutout_slow_shutter"
+}

@@ -1,0 +1,10 @@
+v2,515864b3efd2232c19ebe3a1b74be91f,1
+*android_fare_2026h1,-1,1b132
+skip_redundant_waking_executor_alarms,
+disable_background_media_gallery_view_creation,6
+disable_default_pool_preallocation,
+disable_eager_layout_preparer_inflate,
+disable_feedback_fragment_async_create_view,
+disable_layout_warmer_async_inflate,
+disable_layout_warmer_sync_inflate,
+END

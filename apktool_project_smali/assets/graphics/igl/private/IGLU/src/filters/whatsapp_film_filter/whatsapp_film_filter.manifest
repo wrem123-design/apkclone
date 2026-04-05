@@ -1,0 +1,12 @@
+{
+  "identifier": "1b6f345d-22f8-46b4-b555-1d8d2711d9a0",
+  "displayName": "Whatsapp Film Filter",
+  "loggingName": "whatsapp_film_filter",
+  "assets": [
+    {
+      "name": "LutFilm",
+      "assetHash": "9c8592200dda206fca2c2e4168e3992e13690aa9ca71eeecc34cb102f412b0e4",
+      "effectId": "847260878339458"
+    }
+  ]
+}

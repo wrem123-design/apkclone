@@ -1,0 +1,12 @@
+/**
+ * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
+ */
+
+function(sdkURL) {
+  var d = document, s = 'script', id = 'promo-autofill-sdk';
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) { return; }
+  js = d.createElement(s); js.id = id;
+  js.src = sdkURL;
+  fjs.parentNode.insertBefore(js, fjs);
+}

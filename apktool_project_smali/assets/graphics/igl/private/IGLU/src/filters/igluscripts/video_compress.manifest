@@ -1,0 +1,19 @@
+{
+  "identifier": "02f2c90a-edbd-43e4-8a1d-51bf6fa62507",
+  "enumCaseName": "videoCompress",
+  "displayName": "Compress",
+  "loggingName": "video_compress",
+  "legacyId": 3034,
+  "assets": [
+    {
+      "name": "Stretch",
+      "assetHash": "5143ee1fb6e226055af915ca371b734ad70b330f58d93ef3c403503e33129a99",
+      "effectId": "1889347115032280"
+    }
+  ],
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAG_nNSaubQ"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "identifier": "286b22ef-9de0-4ee5-8cf4-aece80ea45fb",
+  "enumCaseName": "videoBounceOut",
+  "displayName": "Bounce out",
+  "loggingName": "video_bounce_out",
+  "legacyId": 3025,
+  "behavior": {
+    "type": "fixedOutro",
+    "durationMs": 1000,
+    "curve": "linear"
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAG_nNSaubQ"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "identifier": "f0e9dd2f-fbc3-4a9a-a826-083f9db1bc3e",
+  "enumCaseName": "videoBlurPulse",
+  "displayName": "Blur pulse",
+  "loggingName": "video_blur_pulse",
+  "legacyId": 2036,
+  "android": {
+    "previewAsset": {
+      "key": "e6659083",
+      "handle": "AQADhNuSctIc",
+      "md5": "5077a15decd5fd319af3cc61697d760a"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAFG-7rJjpA"
+    }
+  }
+}

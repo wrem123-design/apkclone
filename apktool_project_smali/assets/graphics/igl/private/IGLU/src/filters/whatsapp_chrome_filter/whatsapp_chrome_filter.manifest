@@ -1,0 +1,12 @@
+{
+  "identifier": "844bf95b-a29f-42f9-85e6-5a6c861e724e",
+  "displayName": "Whatsapp Chrome Filter",
+  "loggingName": "whatsapp_chrome_filter",
+  "assets": [
+    {
+      "name": "LutChrome",
+      "assetHash": "dc218c4c129bdec060294b2e5d440443fe2e4aff4426ab891358a1f35bc41961",
+      "effectId": "1419533819129073"
+    }
+  ]
+}

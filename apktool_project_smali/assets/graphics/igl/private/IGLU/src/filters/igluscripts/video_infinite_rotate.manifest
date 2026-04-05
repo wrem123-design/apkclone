@@ -1,0 +1,19 @@
+{
+  "identifier": "2089d751-b927-4146-8d7d-318c41072530",
+  "enumCaseName": "videoInfiniteRotate",
+  "displayName": "Infinite rotate",
+  "loggingName": "video_infinite_rotate",
+  "legacyId": 3014,
+  "android": {
+    "previewAsset": {
+      "key": "faa72c81",
+      "handle": "AQAD5BbmMINv",
+      "md5": "e59ab90d5123a43eecdbcde84cf6a992"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAL-1ah6NoB"
+    }
+  }
+}

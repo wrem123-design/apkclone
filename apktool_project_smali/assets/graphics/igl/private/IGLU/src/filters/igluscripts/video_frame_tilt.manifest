@@ -1,0 +1,24 @@
+{
+  "identifier": "e8544f03-3730-48a8-bc7f-f9f47cdef19a",
+  "enumCaseName": "videoFrameTilt",
+  "displayName": "Frame tilt",
+  "loggingName": "video_frame_tilt",
+  "legacyId": 3007,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 2000,
+    "curve": "quinticOut"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "4424edc3",
+      "handle": "AQACU3TffYe3",
+      "md5": "a7bd5b7aab83ec3cf68b8bfa35e7027c"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAFjN5Pg8oj"
+    }
+  }
+}

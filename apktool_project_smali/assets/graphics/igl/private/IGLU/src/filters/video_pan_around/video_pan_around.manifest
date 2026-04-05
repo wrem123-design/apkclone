@@ -1,0 +1,19 @@
+{
+  "identifier": "30a91fe0-66a4-4e98-b2a8-3522880a20bd",
+  "enumCaseName": "videoPanAround",
+  "displayName": "Pan around",
+  "loggingName": "video_pan_around",
+  "legacyId": 2069,
+  "android": {
+    "previewAsset": {
+      "key": "fbc02124",
+      "handle": "AQAHouJ4IuVI",
+      "md5": "d97e66ef861cb4aea9567170b6232b62"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAHOvUZ_Kp3"
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "identifier": "810a6517-ecde-4b8c-b766-e4c6ff679a8a",
+  "enumCaseName": "overlayOuterGlow",
+  "displayName": "Outer Glow",
+  "loggingName": "video_cutout_outer_glow",
+  "legacyId": 5054,
+  "subject": {
+    "overlay": true
+  },
+  "customization": {
+    "color": {
+      "default": "#FFFFFF",
+      "available": [
+        "#FFFFFF",
+        "#000000",
+        "#FFD600",
+        "#FF7A00",
+        "#FE1D37",
+        "#FF0169",
+        "#D300C5",
+        "#7638FA",
+        "#37038B",
+        "#1CD164",
+        "#0095F6",
+        "#AD88FC",
+        "#FDD5FD",
+        "#FFABE1",
+        "#FFC584",
+        "#FFF8C2",
+        "#09FF00",
+        "#FFFF00",
+        "#5AFAC7",
+        "#0000FF"
+      ]
+    },
+    "opacity": {
+      "default": 0.75,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "size": {
+      "default": 0.8,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "3c4a2f20",
+      "handle": "AQAESKCJ3D1l",
+      "md5": "bd8f0829921c01bda422668bb122cb34"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "isImageFormat": true,
+      "handle": "AQAFTQBPeqRv"
+    }
+  }
+}

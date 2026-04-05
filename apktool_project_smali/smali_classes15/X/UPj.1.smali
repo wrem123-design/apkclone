@@ -1,0 +1,406 @@
+.class public final LX/UPj;
+.super LX/QRs;
+.source ""
+
+
+# static fields
+.field public static final __redex_internal_original_name:Ljava/lang/String; = "ReelMentionReshareCameraFragment"
+
+
+# instance fields
+.field public A00:LX/6cs;
+
+.field public A01:Lcom/instagram/feed/media/Media;
+
+.field public A02:Ljava/io/File;
+
+.field public A03:Ljava/io/File;
+
+.field public A04:Ljava/lang/String;
+
+.field public A05:[I
+
+
+# direct methods
+.method public constructor <init>()V
+    .locals 1
+
+    invoke-direct {p0}, LX/QRs;-><init>()V
+
+    sget-object v0, LX/6cs;->A6Z:LX/6cs;
+
+    iput-object v0, p0, LX/UPj;->A00:LX/6cs;
+
+    return-void
+.end method
+
+.method public static final A03(LX/UPj;Ljava/lang/String;[I)LX/2O5;
+    .locals 6
+
+    invoke-virtual {p0}, Landroidx/fragment/app/Fragment;->getContext()Landroid/content/Context;
+
+    move-result-object v5
+
+    const/4 v3, 0x0
+
+    if-nez v5, :cond_0
+
+    return-object v3
+
+    :cond_0
+    invoke-virtual {p0}, LX/QRs;->A1Q()Lcom/instagram/common/session/UserSession;
+
+    move-result-object v0
+
+    invoke-static {v0}, LX/2ef;->A02(LX/1G1;)LX/0AA;
+
+    move-result-object v2
+
+    const-wide v0, 0x8113b3000069d5L
+
+    invoke-static {v2, v0, v1}, LX/011;->A0l(Ljava/lang/Object;J)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_4
+
+    if-eqz p1, :cond_1
+
+    invoke-static {v5, p1}, LX/2O5;->A04(Landroid/content/Context;Ljava/lang/String;)Ljava/util/ArrayList;
+
+    move-result-object v3
+
+    :cond_1
+    invoke-static {p2}, LX/2O5;->A05([I)Ljava/util/ArrayList;
+
+    move-result-object v1
+
+    invoke-static {v5}, LX/2O5;->A00(Landroid/content/Context;)Ljava/util/ArrayList;
+
+    move-result-object v0
+
+    invoke-static {}, LX/011;->A0V()Ljava/util/ArrayList;
+
+    move-result-object v4
+
+    if-eqz v3, :cond_2
+
+    invoke-virtual {v4, v3}, Ljava/util/AbstractCollection;->addAll(Ljava/util/Collection;)Z
+
+    :cond_2
+    invoke-virtual {v4, v1}, Ljava/util/AbstractCollection;->addAll(Ljava/util/Collection;)Z
+
+    invoke-virtual {v4, v0}, Ljava/util/AbstractCollection;->addAll(Ljava/util/Collection;)Z
+
+    :goto_0
+    new-instance v3, LX/GDz;
+
+    invoke-direct {v3, v5}, LX/GDz;-><init>(Landroid/content/Context;)V
+
+    const/4 v2, 0x0
+
+    const/4 v1, 0x1
+
+    invoke-static {p1}, LX/011;->A0j(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    iput-boolean v0, v3, LX/GDz;->A0B:Z
+
+    if-eqz p1, :cond_3
+
+    const/4 v2, 0x1
+
+    :cond_3
+    iput-boolean v2, v3, LX/GDz;->A0D:Z
+
+    invoke-virtual {v3}, LX/GDz;->A00()LX/2O5;
+
+    move-result-object v0
+
+    iput-boolean v1, v0, LX/2O5;->A0E:Z
+
+    iput-object v4, v0, LX/2O5;->A0A:Ljava/util/List;
+
+    return-object v0
+
+    :cond_4
+    if-eqz p1, :cond_5
+
+    invoke-static {v5, p1}, LX/2O5;->A04(Landroid/content/Context;Ljava/lang/String;)Ljava/util/ArrayList;
+
+    move-result-object v1
+
+    invoke-static {v5}, LX/2O5;->A00(Landroid/content/Context;)Ljava/util/ArrayList;
+
+    move-result-object v0
+
+    invoke-static {v0, v1}, LX/Atf;->A0w(Ljava/lang/Iterable;Ljava/util/Collection;)Ljava/util/ArrayList;
+
+    move-result-object v4
+
+    goto :goto_0
+
+    :cond_5
+    invoke-static {v5}, LX/2O5;->A03(Landroid/content/Context;)Ljava/util/ArrayList;
+
+    move-result-object v4
+
+    goto :goto_0
+.end method
+
+
+# virtual methods
+.method public final getModuleName()Ljava/lang/String;
+    .locals 1
+
+    const-string v0, "reel_mention_reshare_camera_fragment"
+
+    return-object v0
+.end method
+
+.method public final onCreate(Landroid/os/Bundle;)V
+    .locals 6
+
+    const v0, -0x6c7db2ab
+
+    invoke-static {v0}, LX/3ZB;->A02(I)I
+
+    move-result v3
+
+    invoke-super {p0, p1}, LX/QRs;->onCreate(Landroid/os/Bundle;)V
+
+    invoke-virtual {p0}, Landroidx/fragment/app/Fragment;->requireArguments()Landroid/os/Bundle;
+
+    move-result-object v5
+
+    const/16 v0, 0x1eb
+
+    invoke-static {v0}, LX/21R;->A00(I)Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-virtual {v5, v0}, Landroid/os/BaseBundle;->get(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v1
+
+    instance-of v0, v1, LX/6cs;
+
+    const/4 v2, 0x0
+
+    if-eqz v0, :cond_0
+
+    check-cast v1, LX/6cs;
+
+    if-nez v1, :cond_1
+
+    :cond_0
+    sget-object v1, LX/6cs;->A6Z:LX/6cs;
+
+    :cond_1
+    iput-object v1, p0, LX/UPj;->A00:LX/6cs;
+
+    const/16 v0, 0x1ed
+
+    invoke-static {v0}, LX/21R;->A00(I)Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-virtual {v5, v0}, Landroid/os/BaseBundle;->getString(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v4
+
+    const/16 v0, 0x1ec
+
+    invoke-static {v0}, LX/21R;->A00(I)Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-virtual {v5, v0}, Landroid/os/BaseBundle;->getString(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v1
+
+    const-string v0, "ReelMentionReshareCameraFragment.ARGUMENTS_KEY_BACKGROUND_MEDIUM_FILE_PATH"
+
+    invoke-virtual {v5, v0}, Landroid/os/BaseBundle;->getString(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v0
+
+    iput-object v0, p0, LX/UPj;->A04:Ljava/lang/String;
+
+    const-string v0, "ReelMentionReshareCameraFragment.ARGUMENTS_KEY_GRADIENT_COLORS"
+
+    invoke-virtual {v5, v0}, Landroid/os/BaseBundle;->getIntArray(Ljava/lang/String;)[I
+
+    move-result-object v0
+
+    iput-object v0, p0, LX/UPj;->A05:[I
+
+    invoke-virtual {p0}, LX/QRs;->A1Q()Lcom/instagram/common/session/UserSession;
+
+    move-result-object v0
+
+    invoke-static {v0, v4}, LX/031;->A0Q(Lcom/instagram/common/session/UserSession;Ljava/lang/String;)Lcom/instagram/feed/media/Media;
+
+    move-result-object v0
+
+    iput-object v0, p0, LX/UPj;->A01:Lcom/instagram/feed/media/Media;
+
+    if-eqz v1, :cond_7
+
+    invoke-static {v1}, LX/120;->A0l(Ljava/lang/String;)Ljava/io/File;
+
+    move-result-object v0
+
+    :goto_0
+    iput-object v0, p0, LX/UPj;->A03:Ljava/io/File;
+
+    iget-object v0, p0, LX/UPj;->A04:Ljava/lang/String;
+
+    if-eqz v0, :cond_6
+
+    invoke-static {v0}, LX/120;->A0l(Ljava/lang/String;)Ljava/io/File;
+
+    move-result-object v0
+
+    :goto_1
+    iput-object v0, p0, LX/UPj;->A02:Ljava/io/File;
+
+    invoke-virtual {p0}, LX/QRs;->A1Q()Lcom/instagram/common/session/UserSession;
+
+    move-result-object v0
+
+    invoke-static {v0, v2}, LX/GBE;->A00(Lcom/instagram/common/session/UserSession;LX/KUj;)LX/GBF;
+
+    move-result-object v5
+
+    iget-object v0, p0, LX/UPj;->A01:Lcom/instagram/feed/media/Media;
+
+    if-eqz v0, :cond_2
+
+    iget-object v0, p0, LX/UPj;->A03:Ljava/io/File;
+
+    if-eqz v0, :cond_2
+
+    invoke-virtual {v0}, Ljava/io/File;->exists()Z
+
+    move-result v1
+
+    const/4 v0, 0x1
+
+    if-ne v1, v0, :cond_2
+
+    iget-object v4, v5, LX/GBF;->A03:LX/6fz;
+
+    iget-wide v1, v5, LX/GBF;->A02:J
+
+    const v0, 0x10835b0
+
+    invoke-static {v4, v0, v1, v2}, LX/AuE;->A0E(LX/6fz;IJ)J
+
+    move-result-wide v0
+
+    iput-wide v0, v5, LX/GBF;->A02:J
+
+    :goto_2
+    const v0, -0xa7cbd62
+
+    invoke-static {v0, v3}, LX/3ZB;->A09(II)V
+
+    return-void
+
+    :cond_2
+    invoke-static {}, LX/011;->A0S()Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v0, "open_reshare_fragment-"
+
+    invoke-static {v0, v1}, LX/Aug;->A0t(Ljava/lang/String;Ljava/lang/StringBuilder;)Ljava/lang/StringBuilder;
+
+    iget-object v0, p0, LX/UPj;->A01:Lcom/instagram/feed/media/Media;
+
+    if-nez v0, :cond_3
+
+    const-string v0, "missing_media"
+
+    :goto_3
+    invoke-static {v0, v1}, LX/011;->A0P(Ljava/lang/String;Ljava/lang/StringBuilder;)Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-virtual {v5, v0}, LX/GBF;->A02(Ljava/lang/String;)V
+
+    goto :goto_2
+
+    :cond_3
+    iget-object v0, p0, LX/UPj;->A03:Ljava/io/File;
+
+    if-nez v0, :cond_4
+
+    const-string v0, "missing_media_file"
+
+    goto :goto_3
+
+    :cond_4
+    invoke-virtual {v0}, Ljava/io/File;->exists()Z
+
+    move-result v0
+
+    if-nez v0, :cond_5
+
+    const-string v0, "medial_file_does_not_exist"
+
+    goto :goto_3
+
+    :cond_5
+    const-string v0, "fail"
+
+    goto :goto_3
+
+    :cond_6
+    move-object v0, v2
+
+    goto :goto_1
+
+    :cond_7
+    move-object v0, v2
+
+    goto :goto_0
+.end method
+
+.method public final onResume()V
+    .locals 3
+
+    const v0, -0x16fe38b2
+
+    invoke-static {v0}, LX/3ZB;->A02(I)I
+
+    move-result v2
+
+    invoke-super {p0}, LX/QRs;->onResume()V
+
+    iget-object v1, p0, LX/UPj;->A03:Ljava/io/File;
+
+    iget-object v0, p0, LX/UPj;->A01:Lcom/instagram/feed/media/Media;
+
+    if-eqz v0, :cond_0
+
+    if-eqz v1, :cond_0
+
+    invoke-virtual {v1}, Ljava/io/File;->exists()Z
+
+    move-result v0
+
+    if-nez v0, :cond_1
+
+    :cond_0
+    invoke-static {p0}, LX/Xd5;->A00(Landroidx/fragment/app/Fragment;)V
+
+    :cond_1
+    const v0, 0x514e99d3    # 5.5459E10f
+
+    invoke-static {v0, v2}, LX/3ZB;->A09(II)V
+
+    return-void
+.end method

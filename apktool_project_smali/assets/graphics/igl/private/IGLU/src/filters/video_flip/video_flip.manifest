@@ -1,0 +1,19 @@
+{
+  "identifier": "505eaef6-1dad-47c0-8ce2-33fea1b7a4e3",
+  "enumCaseName": "videoFlip",
+  "displayName": "Flip",
+  "loggingName": "video_flip",
+  "legacyId": 2061,
+  "android": {
+    "previewAsset": {
+      "key": "6522d41c",
+      "handle": "AQBVTUuBwfaW",
+      "md5": "2c313223a0c754d66de425d896c4cde4"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADLfirWjO0"
+    }
+  }
+}

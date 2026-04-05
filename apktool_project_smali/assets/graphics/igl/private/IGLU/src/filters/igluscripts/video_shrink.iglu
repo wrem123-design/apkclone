@@ -1,0 +1,114 @@
+[Filter IgluscriptVideoShrinkFilter]
+[BehaviorType fixedOutro]
+[BehaviorDuration 1000]
+[AnimationCurve linear]
+
+fun mix(f32 a, f32 b, f32 t) f32 {
+  return a * (1.0 - t) + b * t;
+}
+
+fun cubicBezier(f32 t, f32 p0, f32 p1, f32 p2, f32 p3) f32 {
+  f32 u = 1.0 - t;
+  f32 tt = t * t;
+  f32 uu = u * u;
+  f32 uuu = uu * u;
+  f32 ttt = tt * t;
+  return uuu * p0 + 3.0 * uu * t * p1 + 3.0 * u * tt * p2 + ttt * p3;
+}
+
+[Init]
+fun init(Filter filter) {
+  filter.passes = {{
+      name = 'shrink, inputs = {'default},
+      uniforms = {
+        progress = 0.0,
+        scale = 1.0,
+        opacity = 1.0,
+      },
+      glslShader = glsl, metalShader = metal
+    }};
+}
+
+[PreRender]
+fun preRender(Filter filter) {
+  f32 p = getParameterFloat('progress);
+
+  # Shrink from 1.0 to 0.0 with cubic bezier easing
+  f32 t = cubicBezier(p, 0.0, 0.333, 0.833, 0.833);
+  f32 scale = mix(1.0, 0.0, t);
+  f32 opacity = mix(1.0, 0.0, t);
+
+  setShaderUniform('shrink, 'progress, p);
+  setShaderUniform('shrink, 'scale, scale);
+  setShaderUniform('shrink, 'opacity, opacity);
+}
+
+string glsl = "varying vec2 sourceTextureCoordinate;
+
+BaseUniformsOpenGL;
+
+uniform float progress;
+uniform float scale;
+uniform float opacity;
+
+vec2 mirrorUv(vec2 v) {
+  v = fract(v * 0.5) * 2.0;
+  return 1.0 - abs(1.0 - v);
+}
+
+void main() {
+  vec2 uv = sourceTextureCoordinate;
+  vec2 center = vec2(0.5);
+
+  // Apply scale from center
+  uv = center + (uv - center) / max(scale, 0.001);
+
+  // Mirror UVs at boundaries
+  uv = mirrorUv(uv);
+
+  vec4 color = sampleInput(uv);
+  color.a = color.a * opacity;
+  gl_FragColor = toOutputFormat(color);
+}
+";
+
+string metal = "
+using namespace metal;
+struct fragmentIn { float2 textureCoordinate [[user(locn0)]]; float2 sourceTextureCoordinate [[user(locn1)]]; };
+struct fragmentOut { float4 _gl_FragColor [[color(0)]]; };
+typedef struct {
+  float4x4 content_transform;
+  float4x4 texture_transform;
+  float progress;
+  float scale;
+  float opacity;
+ } Uniforms;
+
+    float mod(float x, float y) { return x - y * floor(x / y); }
+    float2 mod(float2 x, float2 y) { return x - y * floor(x / y); }
+    float3 mod(float3 x, float3 y) { return x - y * floor(x / y); }
+    float4 mod(float4 x, float4 y) { return x - y * floor(x / y); }
+
+float2 mirrorUv(float2 v) {
+  v = fract(v * 0.5) * 2.0;
+  return 1.0 - abs(1.0 - v);
+}
+
+fragment fragmentOut fragmentShader(fragmentIn in [[stage_in]],
+ constant Uniforms & uniforms [[buffer(1)]],
+ DefaultInputs defaultInputs) {
+
+  float2 uv = in.sourceTextureCoordinate;
+  float2 center = float2(0.5);
+
+  // Apply scale from center
+  uv = center + (uv - center) / max(uniforms.scale, 0.001);
+
+  // Mirror UVs at boundaries
+  uv = mirrorUv(uv);
+
+  float4 color = sampleInput(defaultInputs, uv);
+  color.a = color.a * uniforms.opacity;
+  return {toOutputFormat(color)};
+}
+";

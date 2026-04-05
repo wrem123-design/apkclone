@@ -1,0 +1,51 @@
+{
+  "identifier": "47acde71-20db-43ce-ad00-1aa786fa3aab",
+  "enumCaseName": "subjectShake",
+  "displayName": "Shake",
+  "loggingName": "video_cutout_shake",
+  "legacyId": 2107,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": true,
+    "typeSuggestions": [
+      "person",
+      "head"
+    ]
+  },
+  "customization": {
+    "amount": {
+      "default": 0.5,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "speed": {
+      "default": 0.5,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "size": {
+      "default": 0.33,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "c4786442",
+      "handle": "AQAEXEUPUHGt",
+      "md5": "9fc5f9102474fecaaaa150b8ade8d2e5"
+    }
+  },
+  "assets": [
+    {
+      "name": "PerlinNoise",
+      "assetHash": "42393e620664a372495800bfcf40ca960aa0ab3e2ddfe42fbfe2b86098d33000",
+      "effectId": "1259354255546062"
+    }
+  ],
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADGswAlp9m"
+    }
+  }
+}

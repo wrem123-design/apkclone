@@ -1,0 +1,60 @@
+{
+  "identifier": "56936423-7716-44f1-b000-c15f9b3a9b04",
+  "enumCaseName": "overlayInnerGlow",
+  "displayName": "Inner Glow",
+  "loggingName": "video_cutout_inner_glow",
+  "legacyId": 5057,
+  "subject": {
+    "overlay": true
+  },
+  "customization": {
+    "color": {
+      "default": "#0000FF",
+      "available": [
+        "#FFFFFF",
+        "#000000",
+        "#FFD600",
+        "#FF7A00",
+        "#FE1D37",
+        "#FF0169",
+        "#D300C5",
+        "#7638FA",
+        "#37038B",
+        "#1CD164",
+        "#0095F6",
+        "#AD88FC",
+        "#FDD5FD",
+        "#FFABE1",
+        "#FFC584",
+        "#FFF8C2",
+        "#09FF00",
+        "#FFFF00",
+        "#5AFAC7",
+        "#0000FF"
+      ]
+    },
+    "opacity": {
+      "default": 1.0,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "size": {
+      "default": 1.0,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "71697872",
+      "handle": "AQAFqw6nGyll",
+      "md5": "8b8e3cc3e14d63c9c8b5112e6d3a3284"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "isImageFormat": true,
+      "handle": "AQAEmHl0eFrx"
+    }
+  }
+}

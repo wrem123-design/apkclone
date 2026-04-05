@@ -1,0 +1,17 @@
+{
+  "identifier": "eae44612-6aa5-4f4b-af32-628e5a142596",
+  "enumCaseName": "subjectFade",
+  "displayName": "Fade",
+  "loggingName": "video_cutout_fade",
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": false
+  },
+  "customization": {
+    "speed": {
+      "default": 0.27,
+      "min": 0.0,
+      "max": 1.0
+    }
+  }
+}

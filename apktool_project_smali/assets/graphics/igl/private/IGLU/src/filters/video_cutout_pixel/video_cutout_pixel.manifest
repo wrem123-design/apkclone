@@ -1,0 +1,36 @@
+{
+  "identifier": "f4acb0fd-5939-4709-8092-8ac63f4b5ce5",
+  "enumCaseName": "subjectPixel",
+  "displayName": "Pixel",
+  "loggingName": "video_cutout_pixel",
+  "legacyId": 2089,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": true,
+    "typeSuggestions": [
+      "head",
+      "person",
+      "clothing"
+    ]
+  },
+  "customization": {
+    "amount": {
+      "default": 0.7,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "2cf0cb97",
+      "handle": "AQAEmFLQeZNT",
+      "md5": "dbb9bf2e398ff0e923e171bf96114ef4"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "isImageFormat": true,
+      "handle": "AQACfaVYzVcA"
+    }
+  }
+}

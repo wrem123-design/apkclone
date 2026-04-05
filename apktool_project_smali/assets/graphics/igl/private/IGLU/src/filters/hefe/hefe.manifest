@@ -1,0 +1,32 @@
+{
+  "identifier": "8a006ef7-f730-460a-807d-5eceba6be06b",
+  "displayName": "Hefe",
+  "loggingName": "hefe",
+  "assets": [
+    {
+      "name": "EdgeBurn",
+      "assetHash": "dbffb9ecc88126f1adb73499b31fbfb74eff9c85f38a0cff7f722075162ecbfe",
+      "effectId": "1623430319005326"
+    },
+    {
+      "name": "GradientMap",
+      "assetHash": "d2004557c8065f28e464839bc0f7978f8fa351548f436a0b4b2450ccfded317e",
+      "effectId": "1607455830398107"
+    },
+    {
+      "name": "MapHefe",
+      "assetHash": "6a6037b1740083ce4b98fc4120153700e99f51cfaf6e19826c8bc516a4ca86cd",
+      "effectId": "2127036894781421"
+    },
+    {
+      "name": "Metal",
+      "assetHash": "13b727e1ea6c8b8c189e1f99e4958cab1b93f5dd0967ed0b9f0c5acf92c0cf42",
+      "effectId": "26564652646473468"
+    },
+    {
+      "name": "SoftLight",
+      "assetHash": "9d84300cf9f2d065ad4bbcefa26499a740bb89dd9e4e56a0e2f966a6008b9aef",
+      "effectId": "1730954247870868"
+    }
+  ]
+}

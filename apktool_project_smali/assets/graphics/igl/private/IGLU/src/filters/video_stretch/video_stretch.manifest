@@ -1,0 +1,19 @@
+{
+  "identifier": "80102826-86d9-4acb-bd57-7ae1a0fcdee6",
+  "enumCaseName": "videoStretch",
+  "displayName": "Stretch",
+  "loggingName": "video_stretch",
+  "legacyId": 2039,
+  "android": {
+    "previewAsset": {
+      "key": "1ba07bdc",
+      "handle": "AQAE6_9G5U1B",
+      "md5": "7fd28aeef58b78c71a62d1694e9594b0"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAKlAgYt6vD"
+    }
+  }
+}

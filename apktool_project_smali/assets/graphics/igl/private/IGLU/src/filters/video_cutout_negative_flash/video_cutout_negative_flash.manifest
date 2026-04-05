@@ -1,0 +1,35 @@
+{
+  "identifier": "d0134100-6329-4c13-9277-254f2cdfb81a",
+  "enumCaseName": "subjectNegativeFlash",
+  "displayName": "Negative Flash",
+  "loggingName": "video_cutout_negative_flash",
+  "legacyId": 2095,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": true,
+    "typeSuggestions": [
+      "person",
+      "head",
+      "clothing"
+    ]
+  },
+  "customization": {
+    "speed": {
+      "default": 0.41,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "39a61cd4",
+      "handle": "AQAHdMJY5qSi",
+      "md5": "e4bdffcee0f269c408cbb89c6384f934"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQBdmGAcngzG"
+    }
+  }
+}

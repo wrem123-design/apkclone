@@ -1,0 +1,27 @@
+.class public abstract LX/2dl;
+.super Ljava/lang/Object;
+.source ""
+
+
+# direct methods
+.method public static final A00(Lcom/instagram/common/session/UserSession;)LX/2dn;
+    .locals 1
+
+    .line 0
+    const/4 v0, 0x0
+
+    .line 1
+    invoke-static {p0, v0}, LX/659;->A0y(Ljava/lang/Object;I)V
+
+    .line 4
+    invoke-static {p0}, LX/2dm;->A00(Lcom/instagram/common/session/UserSession;)LX/2dn;
+
+    .line 7
+    move-result-object v0
+
+    .line 8
+    invoke-static {v0}, LX/659;->A0g(Ljava/lang/Object;)V
+
+    .line 11
+    return-object v0
+.end method

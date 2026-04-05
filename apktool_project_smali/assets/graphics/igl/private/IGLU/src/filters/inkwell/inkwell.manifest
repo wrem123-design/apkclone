@@ -1,0 +1,12 @@
+{
+  "identifier": "fdd39a38-2dc1-43cf-a752-9a478b7e5456",
+  "displayName": "Inkwell",
+  "loggingName": "inkwell",
+  "assets": [
+    {
+      "name": "MapInkwell",
+      "assetHash": "55f4c45a5d505f13aab140c0714eb515ba573db02a77eabf913a7aee4e17626d",
+      "effectId": "1458145019136553"
+    }
+  ]
+}

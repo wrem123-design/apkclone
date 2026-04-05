@@ -1,0 +1,24 @@
+{
+  "identifier": "74a9d65e-48ca-4a58-b893-c9b21d732a3c",
+  "enumCaseName": "videoBWFade",
+  "displayName": "B&W fade",
+  "loggingName": "video_bw_fade_out",
+  "legacyId": 2022,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 2000,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "10211417",
+      "handle": "AQAGRNPOjeqF",
+      "md5": "8bdb78e6c28529eb75bf6c2f309cd84b"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADPKG_YsvU"
+    }
+  }
+}

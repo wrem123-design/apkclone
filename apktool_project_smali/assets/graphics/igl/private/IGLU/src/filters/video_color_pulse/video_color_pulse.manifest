@@ -1,0 +1,19 @@
+{
+  "identifier": "bd03d6db-90e3-489d-b315-af9b65d4ca6e",
+  "enumCaseName": "videoColorPulse",
+  "displayName": "Color pulse",
+  "loggingName": "video_color_pulse",
+  "legacyId": 2081,
+  "android": {
+    "previewAsset": {
+      "key": "1fb47585",
+      "handle": "AQAD6Ip6htoT",
+      "md5": "c24160ea25d0464ca56c77546d1744a1"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEkjYL99yo"
+    }
+  }
+}

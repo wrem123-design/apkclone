@@ -1,0 +1,128 @@
+.class public final LX/Lab;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# instance fields
+.field public final synthetic A00:I
+
+.field public final synthetic A01:I
+
+.field public final synthetic A02:Lcom/instagram/common/session/UserSession;
+
+.field public final synthetic A03:Lcom/instagram/common/ui/base/IgTextView;
+
+.field public final synthetic A04:Lcom/instagram/direct/inbox/notes/ui/NoteBubbleView;
+
+.field public final synthetic A05:Ljava/lang/String;
+
+
+# direct methods
+.method public constructor <init>(Lcom/instagram/common/session/UserSession;Lcom/instagram/common/ui/base/IgTextView;Lcom/instagram/direct/inbox/notes/ui/NoteBubbleView;Ljava/lang/String;II)V
+    .locals 0
+
+    iput-object p4, p0, LX/Lab;->A05:Ljava/lang/String;
+
+    iput-object p2, p0, LX/Lab;->A03:Lcom/instagram/common/ui/base/IgTextView;
+
+    iput p5, p0, LX/Lab;->A01:I
+
+    iput p6, p0, LX/Lab;->A00:I
+
+    iput-object p3, p0, LX/Lab;->A04:Lcom/instagram/direct/inbox/notes/ui/NoteBubbleView;
+
+    iput-object p1, p0, LX/Lab;->A02:Lcom/instagram/common/session/UserSession;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final run()V
+    .locals 7
+
+    iget-object v4, p0, LX/Lab;->A05:Ljava/lang/String;
+
+    invoke-static {v4}, LX/1os;->A0A(Ljava/lang/CharSequence;)Ljava/lang/CharSequence;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/Object;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    const-string v1, "\\s+"
+
+    new-instance v0, LX/1oq;
+
+    invoke-direct {v0, v1}, LX/1oq;-><init>(Ljava/lang/String;)V
+
+    const/4 v1, 0x0
+
+    invoke-virtual {v0, v2, v1}, LX/1oq;->A03(Ljava/lang/CharSequence;I)Ljava/util/List;
+
+    move-result-object v0
+
+    invoke-interface {v0, v1}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object v1
+
+    check-cast v1, Ljava/lang/String;
+
+    iget-object v2, p0, LX/Lab;->A03:Lcom/instagram/common/ui/base/IgTextView;
+
+    invoke-virtual {v2}, Landroid/widget/TextView;->getPaint()Landroid/text/TextPaint;
+
+    move-result-object v0
+
+    invoke-virtual {v0, v1}, Landroid/graphics/Paint;->measureText(Ljava/lang/String;)F
+
+    move-result v5
+
+    iget v0, p0, LX/Lab;->A01:I
+
+    int-to-float v0, v0
+
+    add-float/2addr v5, v0
+
+    iget v0, p0, LX/Lab;->A00:I
+
+    int-to-float v0, v0
+
+    add-float/2addr v5, v0
+
+    invoke-virtual {v2}, Landroid/widget/TextView;->getLayout()Landroid/text/Layout;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_0
+
+    invoke-virtual {v0}, Landroid/text/Layout;->getWidth()I
+
+    move-result v0
+
+    int-to-float v6, v0
+
+    :goto_0
+    iget-object v3, p0, LX/Lab;->A04:Lcom/instagram/direct/inbox/notes/ui/NoteBubbleView;
+
+    iget-object v1, p0, LX/Lab;->A02:Lcom/instagram/common/session/UserSession;
+
+    new-instance v0, LX/khL;
+
+    invoke-direct/range {v0 .. v6}, LX/khL;-><init>(Lcom/instagram/common/session/UserSession;Lcom/instagram/common/ui/base/IgTextView;Lcom/instagram/direct/inbox/notes/ui/NoteBubbleView;Ljava/lang/String;FF)V
+
+    invoke-virtual {v2, v0}, Landroid/view/View;->post(Ljava/lang/Runnable;)Z
+
+    return-void
+
+    :cond_0
+    move v6, v5
+
+    goto :goto_0
+.end method

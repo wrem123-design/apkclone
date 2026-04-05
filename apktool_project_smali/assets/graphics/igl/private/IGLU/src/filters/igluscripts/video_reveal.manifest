@@ -1,0 +1,17 @@
+{
+  "identifier": "f6daaf69-310b-42b3-b81a-719e82d4b5c1",
+  "enumCaseName": "videoReveal",
+  "displayName": "Reveal",
+  "loggingName": "video_reveal",
+  "legacyId": 3027,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 750,
+    "curve": "linear"
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAG_nNSaubQ"
+    }
+  }
+}

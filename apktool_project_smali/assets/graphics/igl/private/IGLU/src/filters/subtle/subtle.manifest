@@ -1,0 +1,22 @@
+{
+  "identifier": "d2b38a05-1f48-4743-b431-cd7c6dd4b7b7",
+  "displayName": "Subtle",
+  "loggingName": "subtle",
+  "assets": [
+    {
+      "name": "LutSubtle",
+      "assetHash": "3823e78549cc4f325ff9bfaed89d466e973cfd77230901273491988b518810cf",
+      "effectId": "886122900917775"
+    },
+    {
+      "name": "LutSubtleCool",
+      "assetHash": "017bb3f3bac1af220830c010e02bdc1aea76713df836f9d3a5902066fb0b7b38",
+      "effectId": "1406340590539363"
+    },
+    {
+      "name": "LutSubtleWarm",
+      "assetHash": "7ced57278b477d7dce0eca990e9b128f694e84476303f383b8eadba5e8aef8f3",
+      "effectId": "914552587963455"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "identifier": "e36454a6-b890-4f17-ba4c-3e3e333f8c5a",
+  "enumCaseName": "videoSpinIn",
+  "displayName": "Spin in",
+  "loggingName": "video_spin_in",
+  "legacyId": 2079,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 1250,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "921de0f4",
+      "handle": "AQAEMQHcQO7O",
+      "md5": "e9e70058e32265faa54bbe978deccb03"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAF01s3Vkjh"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "identifier": "efc8b483-0c33-4872-ad7f-df57416be836",
+  "enumCaseName": "videoSoftMask",
+  "displayName": "Soft mask in",
+  "loggingName": "video_soft_mask_in",
+  "legacyId": 3031,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 1000,
+    "curve": "linear"
+  }
+}

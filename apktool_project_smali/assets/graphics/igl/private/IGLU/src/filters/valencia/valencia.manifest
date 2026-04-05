@@ -1,0 +1,17 @@
+{
+  "identifier": "e986ef9c-b2fc-48b6-8ce3-02aa359f0fc4",
+  "displayName": "Valencia",
+  "loggingName": "valencia",
+  "assets": [
+    {
+      "name": "GradientMapValencia",
+      "assetHash": "73c429a6eb6b64a4f6583fac9eafe30414f23d43bfc3b9347ca72ee63a0f8f27",
+      "effectId": "1387008269895665"
+    },
+    {
+      "name": "MapValencia",
+      "assetHash": "d4d437aaa24370b20be42c95a37599a54464ff0ca2a0449be5186619929e5846",
+      "effectId": "1847615055957431"
+    }
+  ]
+}

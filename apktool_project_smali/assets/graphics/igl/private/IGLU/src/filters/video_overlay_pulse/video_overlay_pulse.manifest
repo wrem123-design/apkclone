@@ -1,0 +1,34 @@
+{
+  "identifier": "c2f14578-ba7e-4112-8a04-a7ce588bc587",
+  "enumCaseName": "overlayPulse",
+  "displayName": "Pulse",
+  "loggingName": "video_cutout_pulse",
+  "legacyId": 5056,
+  "subject": {
+    "overlay": true
+  },
+  "customization": {
+    "speed": {
+      "default": 0.52,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "size": {
+      "default": 0.39,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "6952b35e",
+      "handle": "AQAFhBWZKkcZ",
+      "md5": "3fa33e39b16529a7e995393d69b58ff5"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADU5Dxhu3c"
+    }
+  }
+}

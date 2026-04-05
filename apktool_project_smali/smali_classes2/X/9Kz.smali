@@ -1,0 +1,47 @@
+.class public final LX/9Kz;
+.super Ljava/lang/Object;
+.source ""
+
+
+# instance fields
+.field public final A00:I
+
+.field public final A01:I
+
+.field public final A02:Lcom/instagram/common/session/UserSession;
+
+.field public final A03:LX/8fl;
+
+.field public final A04:Ljava/lang/String;
+
+.field public final A05:Z
+
+.field public final A06:Z
+
+.field public final A07:Z
+
+
+# direct methods
+.method public constructor <init>(Lcom/instagram/common/session/UserSession;LX/8fl;Ljava/lang/String;IIZZZ)V
+    .locals 0
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, LX/9Kz;->A02:Lcom/instagram/common/session/UserSession;
+
+    iput-object p2, p0, LX/9Kz;->A03:LX/8fl;
+
+    iput-object p3, p0, LX/9Kz;->A04:Ljava/lang/String;
+
+    iput p4, p0, LX/9Kz;->A00:I
+
+    iput p5, p0, LX/9Kz;->A01:I
+
+    iput-boolean p6, p0, LX/9Kz;->A06:Z
+
+    iput-boolean p7, p0, LX/9Kz;->A05:Z
+
+    iput-boolean p8, p0, LX/9Kz;->A07:Z
+
+    return-void
+.end method

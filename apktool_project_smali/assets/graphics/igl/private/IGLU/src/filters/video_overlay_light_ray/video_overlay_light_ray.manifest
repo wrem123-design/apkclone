@@ -1,0 +1,49 @@
+{
+  "identifier": "e118b911-f195-4001-95e0-4d4f5fe0ade8",
+  "enumCaseName": "overlayLightRay",
+  "displayName": "Light Rays",
+  "loggingName": "video_cutout_light_ray",
+  "legacyId": 5060,
+  "subject": {
+    "overlay": true
+  },
+  "customization": {
+    "amount": {
+      "default": 0.8,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "color": {
+      "default": "#FFFFFF",
+      "available": [
+        "#FFFFFF",
+        "#000000",
+        "#FFD600",
+        "#FF7A00",
+        "#FE1D37",
+        "#FF0169",
+        "#D300C5",
+        "#7638FA",
+        "#37038B",
+        "#1CD164",
+        "#0095F6",
+        "#AD88FC",
+        "#FDD5FD",
+        "#FFABE1",
+        "#FFC584",
+        "#FFF8C2",
+        "#09FF00",
+        "#FFFF00",
+        "#5AFAC7",
+        "#0000FF"
+      ]
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "2f018bab",
+      "handle": "AQAG88_mWMGA",
+      "md5": "951e296eae08fdfd3b12a97a91b5983d"
+    }
+  }
+}

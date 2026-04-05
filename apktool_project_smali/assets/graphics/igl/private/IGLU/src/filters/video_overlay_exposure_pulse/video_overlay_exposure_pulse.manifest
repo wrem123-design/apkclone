@@ -1,0 +1,29 @@
+{
+  "identifier": "041ea1a0-246d-4913-9d6a-7e01883c0c67",
+  "enumCaseName": "overlayExposurePulse",
+  "displayName": "Exposure Pulse",
+  "loggingName": "video_cutout_exposure_pulse",
+  "legacyId": 5065,
+  "subject": {
+    "overlay": true
+  },
+  "customization": {
+    "speed": {
+      "default": 1.0,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "8472c9e1",
+      "handle": "AQACkxdV2S8j",
+      "md5": "865afb57b136eb8dd915982f925e6d93"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEUifmdqdz"
+    }
+  }
+}

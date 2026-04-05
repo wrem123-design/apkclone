@@ -1,0 +1,22 @@
+{
+  "identifier": "7491b28e-5e62-4117-83e1-87f157f83321",
+  "displayName": "Hudson",
+  "loggingName": "hudson",
+  "assets": [
+    {
+      "name": "Blowout",
+      "assetHash": "ad7940ccd185321bc0ba8ee5c38627b13cdc4ee579c6ef1cc9bc89fbfb214e71",
+      "effectId": "2268508210305701"
+    },
+    {
+      "name": "MapHudson",
+      "assetHash": "68607b118835f44af8c5177509ec76f07bcf5204d0dffab9f47ea308a8f5e6e3",
+      "effectId": "2312157292595425"
+    },
+    {
+      "name": "Overlay",
+      "assetHash": "84b56063e8efd2fa742bd5a62235c378606dc3406613606f99f3c4044b20e31a",
+      "effectId": "1236494364700999"
+    }
+  ]
+}

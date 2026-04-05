@@ -1,0 +1,12 @@
+{
+  "identifier": "0992e520-0887-43d4-9879-8da7365e47eb",
+  "displayName": "Midnight",
+  "loggingName": "midnight",
+  "assets": [
+    {
+      "name": "LutMidnight",
+      "assetHash": "794632d27e8cb9723aabc290507d36e1391943f46dcce80571b422ea64300726",
+      "effectId": "2108449993282485"
+    }
+  ]
+}

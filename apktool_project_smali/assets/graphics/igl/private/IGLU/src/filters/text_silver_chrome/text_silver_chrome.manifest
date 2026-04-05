@@ -1,0 +1,17 @@
+{
+  "identifier": "86ed941b-455b-45dd-91bd-8ae0c4e66e96",
+  "displayName": "Text Silver Chrome",
+  "loggingName": "text_silver_chrome",
+  "assets": [
+    {
+      "name": "MetalMatcap",
+      "assetHash": "1830bfd8dc60652e6ad1c056f0666390e89c9bf5cb4817d54733102903c0f9ec",
+      "effectId": "1597794694755957"
+    },
+    {
+      "name": "SilverChromeMatcap",
+      "assetHash": "7a9989a14985bf7c919b9aea2a192fe0ca6f5b9255052983fefe9120bf9defc6",
+      "effectId": "1222369569602391"
+    }
+  ]
+}

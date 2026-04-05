@@ -1,0 +1,12 @@
+{
+  "identifier": "cba710ab-54f4-4a0f-9aef-870d3e2b25f2",
+  "displayName": "Cinema Blue",
+  "loggingName": "cinema_blue",
+  "assets": [
+    {
+      "name": "ClutCinemaBlue",
+      "assetHash": "f272af03fa3078145ae23e892cbb3cca002d92b17b3f0eca236b64f126abb573",
+      "effectId": "932967145776445"
+    }
+  ]
+}

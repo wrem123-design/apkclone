@@ -1,0 +1,19 @@
+{
+  "identifier": "edcc1f61-e79a-416e-b0d6-146eea445b7d",
+  "enumCaseName": "videoBWPulse",
+  "displayName": "B&W pulse",
+  "loggingName": "video_bw_pulse",
+  "legacyId": 2043,
+  "android": {
+    "previewAsset": {
+      "key": "d9fa9b77",
+      "handle": "AQAE6TeOErhq",
+      "md5": "f45365a51570faaea9430fc98aa46183"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAH04e_G_y9"
+    }
+  }
+}

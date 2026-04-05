@@ -1,0 +1,43 @@
+.class public final LX/0Hn;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# instance fields
+.field public final synthetic A00:Ljava/lang/String;
+
+
+# direct methods
+.method public constructor <init>(Ljava/lang/String;)V
+    .locals 0
+
+    .line 0
+    iput-object p1, p0, LX/0Hn;->A00:Ljava/lang/String;
+
+    .line 2
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 5
+    return-void
+.end method
+
+
+# virtual methods
+.method public final run()V
+    .locals 2
+
+    .line 0
+    sget-object v1, LX/0Hl;->A03:Ljava/util/concurrent/ConcurrentHashMap;
+
+    .line 2
+    iget-object v0, p0, LX/0Hn;->A00:Ljava/lang/String;
+
+    .line 4
+    invoke-virtual {v1, v0}, Ljava/util/AbstractMap;->remove(Ljava/lang/Object;)Ljava/lang/Object;
+
+    .line 7
+    return-void
+.end method

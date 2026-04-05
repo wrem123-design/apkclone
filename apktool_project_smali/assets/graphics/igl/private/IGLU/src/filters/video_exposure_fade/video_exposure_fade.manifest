@@ -1,0 +1,25 @@
+{
+  "identifier": "edba3d00-f10d-409e-a430-7604bff6b281",
+  "enumCaseName": "videoExposureFade",
+  "displayName": "Flash",
+  "loggingName": "video_exposure_fade",
+  "legacyId": 2041,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 600,
+    "curve": "circularInOut",
+    "reversed": true
+  },
+  "android": {
+    "previewAsset": {
+      "key": "547d1be7",
+      "handle": "AQAEqnFtw5Z6",
+      "md5": "ea0a785e9f67630132c4c1d9b65b7d4a"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADO5e5TVlY"
+    }
+  }
+}

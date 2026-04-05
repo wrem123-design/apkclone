@@ -1,0 +1,19 @@
+{
+  "identifier": "d1c67dc6-50cb-414e-8f0d-73dcc83a74a3",
+  "enumCaseName": "videoChromaticPulse",
+  "displayName": "Light pulse",
+  "loggingName": "video_chromatic_pulse",
+  "legacyId": 2054,
+  "android": {
+    "previewAsset": {
+      "key": "a77786b9",
+      "handle": "AQAGRgakHMN6",
+      "md5": "26b5695b7ee963dac04601762df56bd5"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAMI7GZSbgH"
+    }
+  }
+}

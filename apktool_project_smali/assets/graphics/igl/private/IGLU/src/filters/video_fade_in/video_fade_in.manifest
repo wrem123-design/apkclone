@@ -1,0 +1,25 @@
+{
+  "identifier": "c9ee520f-bc14-4865-a261-838360915edc",
+  "enumCaseName": "videoFadeIn",
+  "displayName": "Fade in",
+  "loggingName": "video_fade_in",
+  "legacyId": 2017,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 2000,
+    "curve": "linear",
+    "reversed": true
+  },
+  "android": {
+    "previewAsset": {
+      "key": "29f599aa",
+      "handle": "AQADluaB94tP",
+      "md5": "3e6a4285c360b09fb8ac001cc04541e5"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADMuDT6t9v"
+    }
+  }
+}

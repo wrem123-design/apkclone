@@ -1,0 +1,79 @@
+[Filter IgluscriptVideoRevealFilter]
+[BehaviorType fixedIntro]
+[BehaviorDuration 750]
+[AnimationCurve quadraticOut]
+
+[Init]
+fun init(Filter filter) {
+  filter.passes = {{
+      name = 'reveal, inputs = {'default},
+      uniforms = {
+        progress = 0.0,
+        reveal_progress = 1.0,
+        opacity = 1.0,
+      },
+      glslShader = glsl, metalShader = metal
+    }};
+}
+
+[PreRender]
+fun preRender(Filter filter) {
+  f32 p = getParameterFloat('progress);
+
+  # Reveal from left to right - progress 0.0 to 1.0 maps to reveal
+  # The animation curve already applies easing, so progress directly maps to reveal
+  f32 reveal_progress = p;
+  f32 opacity = 1.0;
+
+  setShaderUniform('reveal, 'progress, p);
+  setShaderUniform('reveal, 'reveal_progress, reveal_progress);
+  setShaderUniform('reveal, 'opacity, opacity);
+}
+
+string glsl = "varying vec2 sourceTextureCoordinate;
+
+BaseUniformsOpenGL;
+
+uniform float progress;
+uniform float reveal_progress;
+uniform float opacity;
+
+void main() {
+  vec2 uv = sourceTextureCoordinate;
+  vec4 color = sampleInput(uv);
+
+  // Horizontal reveal from left to right
+  // reveal_progress: 0 = fully hidden, 1 = fully revealed
+  float mask = step(uv.x, reveal_progress);
+
+  color.a = color.a * opacity * mask;
+  gl_FragColor = toOutputFormat(color);
+}
+";
+
+string metal = "
+using namespace metal;
+struct fragmentIn { float2 textureCoordinate [[user(locn0)]]; float2 sourceTextureCoordinate [[user(locn1)]]; };
+struct fragmentOut { float4 _gl_FragColor [[color(0)]]; };
+typedef struct {
+  float4x4 content_transform;
+  float4x4 texture_transform;
+  float progress;
+  float reveal_progress;
+  float opacity;
+ } Uniforms;
+
+fragment fragmentOut fragmentShader(fragmentIn in [[stage_in]],
+ constant Uniforms & uniforms [[buffer(1)]],
+ DefaultInputs defaultInputs) {
+
+  float2 uv = in.sourceTextureCoordinate;
+  float4 color = sampleInput(defaultInputs, uv);
+
+  // Horizontal reveal from left to right
+  float mask = step(uv.x, uniforms.reveal_progress);
+
+  color.a = color.a * uniforms.opacity * mask;
+  return {toOutputFormat(color)};
+}
+";

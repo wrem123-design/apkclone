@@ -1,0 +1,12 @@
+{
+  "identifier": "bb923333-6d51-4841-8b7b-66949a482840",
+  "displayName": "Text Path",
+  "loggingName": "text_path",
+  "assets": [
+    {
+      "name": "SlideRight",
+      "assetHash": "52e2dbdb59490bccaab861be24f90f5c92346bc647711c6ef676ebe5fda3e438",
+      "effectId": "26372106545782120"
+    }
+  ]
+}

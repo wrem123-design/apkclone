@@ -1,0 +1,17 @@
+{
+  "identifier": "2ac42a3b-dc55-47b3-afa4-6548484ac5ce",
+  "displayName": "Text Glass",
+  "loggingName": "text_glass",
+  "assets": [
+    {
+      "name": "BlackPlasticMatcap",
+      "assetHash": "15064eadffb50f7e5e7d1502105261bbeb7e066d9b1da61f71a62abc9076c86c",
+      "effectId": "1976298233771543"
+    },
+    {
+      "name": "GlassFresnelMatcap",
+      "assetHash": "223c2860895584b4947f36f09f57a59aea87be428d92788a03b48aff0ce53d1c",
+      "effectId": "1245292236995307"
+    }
+  ]
+}

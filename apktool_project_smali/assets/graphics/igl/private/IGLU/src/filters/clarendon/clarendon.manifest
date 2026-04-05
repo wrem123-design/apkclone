@@ -1,0 +1,17 @@
+{
+  "identifier": "ba0efbc2-00d4-46f4-ba83-8d7d892deec6",
+  "displayName": "Clarendon",
+  "loggingName": "clarendon",
+  "assets": [
+    {
+      "name": "Map1",
+      "assetHash": "287b352673f4c2c3d5f7123a8c95be3ccb99f535185ce2d5cc1cff3d97c57b3f",
+      "effectId": "2782924232055050"
+    },
+    {
+      "name": "Map2",
+      "assetHash": "13795f1b2e4a3209362c591295fc73ada20c5e49aebd6e4df659a26ad98a00f0",
+      "effectId": "1238508937751224"
+    }
+  ]
+}

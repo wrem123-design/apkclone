@@ -1,0 +1,13 @@
+/**
+ * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
+ */
+
+function(batchTrackingId, translatedTextJson) {
+  if (typeof window._PageTranslationHandler !== 'function') {
+    var submittedTranslations = new Map();
+    window._PageTranslationHandler = function(batchId, jsonObject) {
+      if (!submittedTranslations.has(batchId)) { return; }
+    };
+  }
+  window._PageTranslationHandler(batchTrackingId, JSON.parse(translatedTextJson));
+}

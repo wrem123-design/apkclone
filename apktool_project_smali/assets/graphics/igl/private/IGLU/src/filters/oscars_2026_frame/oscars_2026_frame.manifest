@@ -1,0 +1,32 @@
+{
+  "identifier": "d3b7b0a1-22c9-404b-85e9-2d655ff782fe",
+  "enumCaseName": "oscars2026Frame",
+  "displayName": "Oscars 2026 Frame",
+  "loggingName": "oscars_2026_frame",
+  "attribution": "@ethanbarber.co",
+  "legacyId": 2300,
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAG_nNSaubQ"
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "f81e404d",
+      "handle": "AQAEbhAAsLeS",
+      "md5": "36b0006d6e7e5ebdd3df979067f21139"
+    }
+  },
+  "customization": {
+    "lutStrength": {
+      "default": 0.5,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "grainStrength": {
+      "default": 0.5,
+      "min": 0.0,
+      "max": 1.0
+    }
+  }
+}

@@ -1,0 +1,36 @@
+.class public final LX/bwm;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements LX/mbo;
+
+
+# instance fields
+.field public final synthetic A00:LX/Nvd;
+
+
+# direct methods
+.method public constructor <init>(LX/Nvd;)V
+    .locals 0
+
+    iput-object p1, p0, LX/bwm;->A00:LX/Nvd;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final F1u()V
+    .locals 2
+
+    iget-object v1, p0, LX/bwm;->A00:LX/Nvd;
+
+    sget-object v0, LX/o5K;->A00:LX/o5K;
+
+    invoke-interface {v1, v0}, LX/Kn2;->GZu(Ljava/lang/Object;)Ljava/lang/Object;
+
+    return-void
+.end method

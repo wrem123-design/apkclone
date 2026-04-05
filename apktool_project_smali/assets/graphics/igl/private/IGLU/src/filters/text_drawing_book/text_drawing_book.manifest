@@ -1,0 +1,12 @@
+{
+  "identifier": "50ff4157-feb7-4258-98e2-ea027991d463",
+  "displayName": "Text Drawing Book",
+  "loggingName": "text_drawing_book",
+  "assets": [
+    {
+      "name": "PerlinNoise",
+      "assetHash": "42393e620664a372495800bfcf40ca960aa0ab3e2ddfe42fbfe2b86098d33000",
+      "effectId": "1259354255546062"
+    }
+  ]
+}

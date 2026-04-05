@@ -1,0 +1,24 @@
+{
+  "identifier": "e3a69afe-65e8-470a-be4d-b0d0259b29ac",
+  "enumCaseName": "videoDriftDown",
+  "displayName": "Drift down",
+  "loggingName": "video_drift_down",
+  "legacyId": 2026,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 3000,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "e530903d",
+      "handle": "AQAFu7ZOt849",
+      "md5": "b8532d3c01e204aa1f385c69a9b59c9a"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQACbWmgFZB4"
+    }
+  }
+}

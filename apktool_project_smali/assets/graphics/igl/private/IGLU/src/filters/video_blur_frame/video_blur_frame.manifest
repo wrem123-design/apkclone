@@ -1,0 +1,19 @@
+{
+  "identifier": "27bc0310-8445-4c3c-8596-93bdc3455986",
+  "enumCaseName": "videoBlurFrame",
+  "displayName": "Blur frame",
+  "loggingName": "video_blur_frame",
+  "legacyId": 2007,
+  "android": {
+    "previewAsset": {
+      "key": "c9e0acf9",
+      "handle": "AQACZtvaaLXM",
+      "md5": "686f548f8d6ab9e338e554e42a35a0cf"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAF5IjxsUZf"
+    }
+  }
+}

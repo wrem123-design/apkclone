@@ -1,0 +1,19 @@
+{
+  "identifier": "e9f3e029-9202-4bdc-895f-aab6f63caacf",
+  "enumCaseName": "videoBulge",
+  "displayName": "Bulge",
+  "loggingName": "video_bulge",
+  "legacyId": 2062,
+  "android": {
+    "previewAsset": {
+      "key": "a245b609",
+      "handle": "AQAiBPufzkDS",
+      "md5": "59cd62f4f20dff128664579f193f0d67"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAJtzvNxI1v"
+    }
+  }
+}

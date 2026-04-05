@@ -1,0 +1,19 @@
+{
+  "identifier": "f1cfc7d0-47a0-4fa5-8519-1750b3a3d01f",
+  "enumCaseName": "videoPlainFrame",
+  "displayName": "White frame",
+  "loggingName": "video_plain_frame",
+  "legacyId": 2006,
+  "android": {
+    "previewAsset": {
+      "key": "d80258de",
+      "handle": "AQAGwJEEbrFJ",
+      "md5": "11e94087c0708bce698165743556ff86"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAF8qPES4vN"
+    }
+  }
+}

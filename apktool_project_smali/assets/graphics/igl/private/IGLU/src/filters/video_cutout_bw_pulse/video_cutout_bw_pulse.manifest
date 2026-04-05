@@ -1,0 +1,6 @@
+{
+  "identifier": "8b255436-7e7a-429a-84e3-47a9de59a1f7",
+  "enumCaseName": "subjectBWPulse",
+  "displayName": "B&W pulse",
+  "loggingName": "video_cutout_bw_pulse"
+}

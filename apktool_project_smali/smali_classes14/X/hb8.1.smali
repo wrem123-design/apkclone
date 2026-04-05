@@ -1,0 +1,43 @@
+.class public final LX/hb8;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# instance fields
+.field public final synthetic A00:LX/OQ6;
+
+.field public final synthetic A01:Lkotlin/jvm/functions/Function1;
+
+
+# direct methods
+.method public constructor <init>(LX/OQ6;Lkotlin/jvm/functions/Function1;)V
+    .locals 0
+
+    iput-object p2, p0, LX/hb8;->A01:Lkotlin/jvm/functions/Function1;
+
+    iput-object p1, p0, LX/hb8;->A00:LX/OQ6;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final run()V
+    .locals 2
+
+    iget-object v1, p0, LX/hb8;->A01:Lkotlin/jvm/functions/Function1;
+
+    if-eqz v1, :cond_0
+
+    iget-object v0, p0, LX/hb8;->A00:LX/OQ6;
+
+    invoke-interface {v1, v0}, Lkotlin/jvm/functions/Function1;->invoke(Ljava/lang/Object;)Ljava/lang/Object;
+
+    :cond_0
+    return-void
+.end method

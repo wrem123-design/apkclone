@@ -1,0 +1,12 @@
+{
+  "identifier": "e2e35ba9-5924-4f03-ac80-bb6da3284314",
+  "displayName": "Text Displace Out",
+  "loggingName": "text_displace_out",
+  "assets": [
+    {
+      "name": "DisplaceIn",
+      "assetHash": "b857707b9642cbf8c0a0a318af39116cff592a1e10c0d64c1a5946145501a2d5",
+      "effectId": "1234560632154926"
+    }
+  ]
+}

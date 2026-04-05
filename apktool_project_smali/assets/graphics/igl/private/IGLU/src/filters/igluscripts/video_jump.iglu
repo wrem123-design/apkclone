@@ -1,0 +1,255 @@
+[Filter IgluscriptVideoJumpFilter]
+[BehaviorType fixedIntro]
+[BehaviorDuration 833]
+[AnimationCurve linear]
+
+fun mix(f32 a, f32 b, f32 t) f32 {
+  return a * (1.0 - t) + b * t;
+}
+
+fun easeOutCustom(f32 t, f32 c1, f32 c2, f32 c3, f32 c4) f32 {
+  f32 t2 = t * t;
+  f32 t3 = t2 * t;
+  return c1 * t3 + c2 * t2 + c3 * t + c4;
+}
+
+fun easeLinear(f32 t) f32 {
+  return t;
+}
+
+# Y-position keyframe times (normalized 0.0-1.0)
+f32 YT0 = 0.0;
+f32 YT1 = 0.36;
+f32 YT2 = 0.52;
+f32 YT3 = 0.68;
+f32 YT4 = 0.80;
+f32 YT5 = 0.92;
+f32 YT6 = 1.0;
+
+# Y-position keyframe values
+f32 YK0 = 0.27;
+f32 YK1 = -0.07;
+f32 YK2 = -0.023;
+f32 YK3 = -0.024;
+f32 YK4 = 0.0;
+f32 YK5 = -0.005;
+f32 YK6 = 0.0;
+
+# Rotation keyframe times (normalized 0.0-1.0)
+f32 RT0 = 0.0;
+f32 RT1 = 0.36;
+f32 RT2 = 0.52;
+f32 RT3 = 0.80;
+f32 RT4 = 0.92;
+f32 RT5 = 1.0;
+
+# Rotation keyframe values (in radians)
+f32 RK0 = 0.0;
+f32 RK1 = -0.262;
+f32 RK2 = -0.227;
+f32 RK3 = 0.052;
+f32 RK4 = -0.017;
+f32 RK5 = 0.0;
+
+# Opacity keyframe times (normalized 0.0-1.0)
+f32 OT0 = 0.0;
+f32 OT1 = 0.02;
+f32 OT2 = 0.06;
+
+# Opacity keyframe values
+f32 OK0 = 0.0;
+f32 OK1 = 0.0;
+f32 OK2 = 1.0;
+
+[Init]
+fun init(Filter filter) {
+  filter.passes = {{
+      name = 'jump, inputs = {'default},
+      uniforms = {
+        progress = 0.0,
+        y_offset = 0.0,
+        rotation = 0.0,
+        opacity = 1.0,
+      },
+      glslShader = glsl, metalShader = metal
+    }};
+}
+
+[PreRender]
+fun preRender(Filter filter) {
+  f32 p = getParameterFloat('progress);
+
+  f32 y_offset = 0.0;
+  f32 rotation = 0.0;
+  f32 opacity = 1.0;
+  f32 f = 0.0;
+  f32 t = 0.0;
+
+  # Calculate Y offset with easing
+  if (p < YT1) {
+    f = p / YT1;
+    t = easeOutCustom(f, 0.0, 0.0, 1.0, 0.0);
+    y_offset = mix(YK0, YK1, t);
+  } else if (p < YT2) {
+    f = (p - YT1) / (YT2 - YT1);
+    t = easeLinear(f);
+    y_offset = mix(YK1, YK2, t);
+  } else if (p < YT3) {
+    f = (p - YT2) / (YT3 - YT2);
+    t = easeLinear(f);
+    y_offset = mix(YK2, YK3, t);
+  } else if (p < YT4) {
+    f = (p - YT3) / (YT4 - YT3);
+    t = easeLinear(f);
+    y_offset = mix(YK3, YK4, t);
+  } else if (p < YT5) {
+    f = (p - YT4) / (YT5 - YT4);
+    t = easeLinear(f);
+    y_offset = mix(YK4, YK5, t);
+  } else if (p < YT6) {
+    f = (p - YT5) / (YT6 - YT5);
+    t = easeLinear(f);
+    y_offset = mix(YK5, YK6, t);
+  } else {
+    y_offset = YK6;
+  }
+
+  # Calculate rotation with easing
+  if (p < RT1) {
+    f = p / RT1;
+    t = easeOutCustom(f, 0.0, 0.0, 1.0, 0.0);
+    rotation = mix(RK0, RK1, t);
+  } else if (p < RT2) {
+    f = (p - RT1) / (RT2 - RT1);
+    t = easeLinear(f);
+    rotation = mix(RK1, RK2, t);
+  } else if (p < RT3) {
+    f = (p - RT2) / (RT3 - RT2);
+    t = easeLinear(f);
+    rotation = mix(RK2, RK3, t);
+  } else if (p < RT4) {
+    f = (p - RT3) / (RT4 - RT3);
+    t = easeLinear(f);
+    rotation = mix(RK3, RK4, t);
+  } else if (p < RT5) {
+    f = (p - RT4) / (RT5 - RT4);
+    t = easeLinear(f);
+    rotation = mix(RK4, RK5, t);
+  } else {
+    rotation = RK5;
+  }
+
+  # Calculate opacity with easing
+  if (p < OT1) {
+    opacity = OK0;
+  } else if (p < OT2) {
+    f = (p - OT1) / (OT2 - OT1);
+    t = easeLinear(f);
+    opacity = mix(OK1, OK2, t);
+  } else {
+    opacity = OK2;
+  }
+
+  setShaderUniform('jump, 'progress, p);
+  setShaderUniform('jump, 'y_offset, y_offset);
+  setShaderUniform('jump, 'rotation, rotation);
+  setShaderUniform('jump, 'opacity, opacity);
+}
+
+string glsl = "varying vec2 sourceTextureCoordinate;
+
+BaseUniformsOpenGL;
+
+uniform float progress;
+uniform float y_offset;
+uniform float rotation;
+uniform float opacity;
+
+vec2 mirrorUv(vec2 v) {
+  v = fract(v * 0.5) * 2.0;
+  return 1.0 - abs(1.0 - v);
+}
+
+void main() {
+  vec2 uv = sourceTextureCoordinate;
+  vec2 center = vec2(0.5);
+
+  // Translate to center
+  uv = uv - center;
+
+  // Apply rotation
+  float cosR = cos(rotation);
+  float sinR = sin(rotation);
+  vec2 rotated = vec2(
+    uv.x * cosR - uv.y * sinR,
+    uv.x * sinR + uv.y * cosR
+  );
+  uv = rotated;
+
+  // Translate back and apply Y offset
+  uv = uv + center;
+  uv.y = uv.y - y_offset;
+
+  // Mirror UVs at boundaries
+  uv = mirrorUv(uv);
+
+  vec4 color = sampleInput(uv);
+  color.a = color.a * opacity;
+  gl_FragColor = toOutputFormat(color);
+}
+";
+
+string metal = "
+using namespace metal;
+struct fragmentIn { float2 textureCoordinate [[user(locn0)]]; float2 sourceTextureCoordinate [[user(locn1)]]; };
+struct fragmentOut { float4 _gl_FragColor [[color(0)]]; };
+typedef struct {
+  float4x4 content_transform;
+  float4x4 texture_transform;
+  float progress;
+  float y_offset;
+  float rotation;
+  float opacity;
+ } Uniforms;
+
+    float mod(float x, float y) { return x - y * floor(x / y); }
+    float2 mod(float2 x, float2 y) { return x - y * floor(x / y); }
+    float3 mod(float3 x, float3 y) { return x - y * floor(x / y); }
+    float4 mod(float4 x, float4 y) { return x - y * floor(x / y); }
+
+float2 mirrorUv(float2 v) {
+  v = fract(v * 0.5) * 2.0;
+  return 1.0 - abs(1.0 - v);
+}
+
+fragment fragmentOut fragmentShader(fragmentIn in [[stage_in]],
+ constant Uniforms & uniforms [[buffer(1)]],
+ DefaultInputs defaultInputs) {
+
+  float2 uv = in.sourceTextureCoordinate;
+  float2 center = float2(0.5);
+
+  // Translate to center
+  uv = uv - center;
+
+  // Apply rotation
+  float cosR = cos(uniforms.rotation);
+  float sinR = sin(uniforms.rotation);
+  float2 rotated = float2(
+    uv.x * cosR - uv.y * sinR,
+    uv.x * sinR + uv.y * cosR
+  );
+  uv = rotated;
+
+  // Translate back and apply Y offset
+  uv = uv + center;
+  uv.y = uv.y - uniforms.y_offset;
+
+  // Mirror UVs at boundaries
+  uv = mirrorUv(uv);
+
+  float4 color = sampleInput(defaultInputs, uv);
+  color.a = color.a * uniforms.opacity;
+  return {toOutputFormat(color)};
+}
+";

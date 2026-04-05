@@ -1,0 +1,24 @@
+{
+  "identifier": "5e3ac690-7f8a-4e73-86fd-d958683c92ab",
+  "enumCaseName": "videoInfiniteGrid",
+  "displayName": "Infinite grid",
+  "loggingName": "video_infinite_grid",
+  "legacyId": 3015,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 3000,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "eae73e79",
+      "handle": "AQACnZIpOYBi",
+      "md5": "6a9947be8c94b9c41aa84d2bfaef13a7"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADl0eUk0uz"
+    }
+  }
+}

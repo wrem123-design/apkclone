@@ -1,0 +1,120 @@
+.class public abstract LX/Blg;
+.super LX/1V8;
+.source ""
+
+
+# direct methods
+.method public static A00(LX/1V8;)Lcom/google/common/collect/ImmutableList;
+    .locals 1
+
+    iget-object p0, p0, LX/1V8;->innerData:LX/27n;
+
+    const v0, -0x24a8a496
+
+    invoke-interface {p0, v0}, LX/27n;->Cfk(I)LX/27n;
+
+    move-result-object v0
+
+    invoke-static {v0}, LX/659;->A0u(Ljava/lang/Object;)V
+
+    invoke-static {v0}, LX/Blg;->A06(LX/27n;)Lcom/google/common/collect/ImmutableList;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public static A06(LX/27n;)Lcom/google/common/collect/ImmutableList;
+    .locals 3
+
+    const v0, -0x54705ae1
+
+    invoke-interface {p0, v0}, LX/27n;->Cfd(I)Lcom/google/common/collect/ImmutableList;
+
+    move-result-object v0
+
+    invoke-static {v0}, LX/011;->A0W(Ljava/lang/Iterable;)Ljava/util/ArrayList;
+
+    move-result-object p0
+
+    invoke-virtual {v0}, Ljava/util/AbstractCollection;->iterator()Ljava/util/Iterator;
+
+    move-result-object v2
+
+    :goto_0
+    invoke-interface {v2}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    invoke-static {v2}, LX/021;->A07(Ljava/util/Iterator;)LX/27n;
+
+    move-result-object v1
+
+    new-instance v0, LX/9Ox;
+
+    invoke-direct {v0, v1}, LX/1V8;-><init>(LX/27n;)V
+
+    invoke-virtual {p0, v0}, Ljava/util/AbstractCollection;->add(Ljava/lang/Object;)Z
+
+    goto :goto_0
+
+    :cond_0
+    invoke-static {p0}, LX/031;->A0J(Ljava/util/Collection;)Lcom/google/common/collect/ImmutableList;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public static A07(LX/27n;)Lcom/google/common/collect/ImmutableList;
+    .locals 3
+
+    const v0, 0x38805e2e
+
+    invoke-interface {p0, v0}, LX/27n;->CMS(I)Lcom/google/common/collect/ImmutableList;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_1
+
+    invoke-static {v0}, LX/011;->A0W(Ljava/lang/Iterable;)Ljava/util/ArrayList;
+
+    move-result-object p0
+
+    invoke-virtual {v0}, Ljava/util/AbstractCollection;->iterator()Ljava/util/Iterator;
+
+    move-result-object v2
+
+    :goto_0
+    invoke-interface {v2}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    invoke-static {v2}, LX/021;->A07(Ljava/util/Iterator;)LX/27n;
+
+    move-result-object v1
+
+    new-instance v0, LX/BMd;
+
+    invoke-direct {v0, v1}, LX/1V8;-><init>(LX/27n;)V
+
+    invoke-virtual {p0, v0}, Ljava/util/AbstractCollection;->add(Ljava/lang/Object;)Z
+
+    goto :goto_0
+
+    :cond_0
+    invoke-static {p0}, Lcom/google/common/collect/ImmutableList;->copyOf(Ljava/util/Collection;)Lcom/google/common/collect/ImmutableList;
+
+    move-result-object v0
+
+    return-object v0
+
+    :cond_1
+    const/4 v0, 0x0
+
+    return-object v0
+.end method

@@ -1,0 +1,24 @@
+{
+  "identifier": "103b140e-1dee-4fe7-962a-91321bdcbd2b",
+  "enumCaseName": "videoBlackout",
+  "displayName": "Blackout",
+  "loggingName": "video_blackout",
+  "legacyId": 3005,
+  "behavior": {
+    "type": "fixedOutro",
+    "durationMs": 500,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "2c9141db",
+      "handle": "AQAOWgg89x-L",
+      "md5": "5fedac159284b67249af379598fc0685"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQBcgZVqy2-a"
+    }
+  }
+}

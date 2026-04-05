@@ -1,0 +1,19 @@
+{
+  "identifier": "1a5f546b-2496-4a70-a64b-b414f9984b4a",
+  "enumCaseName": "videoColorShutter",
+  "displayName": "Color shutter",
+  "loggingName": "video_color_shutter",
+  "legacyId": 2067,
+  "android": {
+    "previewAsset": {
+      "key": "79732ed3",
+      "handle": "AQAGet5miZzN",
+      "md5": "22e482187da128ace32b47275a72952b"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQADXsYJ-ZMd"
+    }
+  }
+}

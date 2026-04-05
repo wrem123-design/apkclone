@@ -1,0 +1,19 @@
+{
+  "identifier": "bd52c6b2-cdb5-4ef5-9015-df6bec4ac41d",
+  "enumCaseName": "videoWashedOut",
+  "displayName": "Washed out",
+  "loggingName": "video_washed_out",
+  "legacyId": 3012,
+  "android": {
+    "previewAsset": {
+      "key": "c44e57f2",
+      "handle": "AQACgO_Tn_oC",
+      "md5": "d279f77bccd495fee82d4a4cfb9e6c79"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEp3Qh8Iws"
+    }
+  }
+}

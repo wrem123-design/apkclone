@@ -1,0 +1,42 @@
+.class public final LX/jJl;
+.super Ljava/lang/Object;
+.source ""
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# instance fields
+.field public final synthetic A00:LX/ZYp;
+
+
+# direct methods
+.method public constructor <init>(LX/ZYp;)V
+    .locals 0
+
+    iput-object p1, p0, LX/jJl;->A00:LX/ZYp;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final run()V
+    .locals 2
+
+    iget-object v1, p0, LX/jJl;->A00:LX/ZYp;
+
+    const/4 v0, 0x0
+
+    iput-boolean v0, v1, LX/ZYp;->A04:Z
+
+    const/4 v0, 0x1
+
+    iput-boolean v0, v1, LX/ZYp;->A03:Z
+
+    invoke-static {v1}, LX/ZYp;->A00(LX/ZYp;)V
+
+    return-void
+.end method

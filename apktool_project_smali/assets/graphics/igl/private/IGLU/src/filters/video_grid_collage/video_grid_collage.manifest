@@ -1,0 +1,24 @@
+{
+  "identifier": "43adfc61-01f8-48ef-8e07-5c27482dcac9",
+  "enumCaseName": "videoGridCollage",
+  "displayName": "Grid collage",
+  "loggingName": "video_grid_collage",
+  "legacyId": 2051,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 2000,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "816ecbda",
+      "handle": "AQAES1JQIjdU",
+      "md5": "d4ab7a110a7cc077861e9bf0ace5983c"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAEyePTvgmr"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "identifier": "b9985578-463c-4257-bc90-528c02a28273",
+  "enumCaseName": "subjectBlur",
+  "displayName": "Blur",
+  "loggingName": "video_cutout_blur",
+  "legacyId": 2088,
+  "subject": {
+    "enabled": true,
+    "fullFrameEnabled": true,
+    "typeSuggestions": [
+      "person",
+      "head",
+      "clothing"
+    ]
+  },
+  "customization": {
+    "color": {
+      "default": "#000000",
+      "available": [
+        "#000000",
+        "#FFFFFF",
+        "#FFD600",
+        "#FF7A00",
+        "#FE1D37",
+        "#FF0169",
+        "#D300C5",
+        "#7638FA",
+        "#37038B",
+        "#1CD164",
+        "#0095F6",
+        "#AD88FC",
+        "#FDD5FD",
+        "#FFABE1",
+        "#FFC584",
+        "#FFF8C2",
+        "#09FF00",
+        "#FFFF00",
+        "#5AFAC7",
+        "#0000FF"
+      ]
+    },
+    "amount": {
+      "default": 0.7,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "android": {
+    "previewAsset": {
+      "key": "a4818008",
+      "handle": "AQAFo0oWB_l3",
+      "md5": "022fbdce0357b47ad606cbdcca62b9fc"
+    }
+  },
+  "assets": [
+    {
+      "name": "GradientOrange",
+      "assetHash": "32edfea62f355125f02c7bdb00eca706f06850c52d7f9fdfe38f8dbed4b1622b",
+      "effectId": "919213973916839"
+    }
+  ],
+  "ios": {
+    "previewAsset": {
+      "isImageFormat": true,
+      "handle": "AQAHEmC73-YM"
+    }
+  }
+}

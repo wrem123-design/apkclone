@@ -1,0 +1,17 @@
+/**
+ * (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
+ */
+
+function(cssSelector, viewportLandingZone) {
+  try {
+    var element = document.querySelector(cssSelector);
+    if (viewportLandingZone && ['start', 'center', 'end'].indexOf(viewportLandingZone) !== -1) {
+      element.scrollIntoView({behavior: 'smooth', block: viewportLandingZone});
+    } else {
+      element.scrollIntoView({behavior: 'smooth'});
+    }
+    return {success: true};
+  } catch (error) {
+    return {success: false, error: error.message};
+  }
+}

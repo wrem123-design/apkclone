@@ -1,0 +1,64 @@
+[Filter IgluscriptVideoFadeFilter]
+[BehaviorType fixedIntro]
+[BehaviorDuration 500]
+[AnimationCurve quadraticIn]
+
+[Init]
+fun init(Filter filter) {
+  filter.passes = {{
+      name = 'fade, inputs = {'default},
+      uniforms = {
+        progress = 0.0,
+        opacity = 1.0,
+      },
+      glslShader = glsl, metalShader = metal
+    }};
+}
+
+[PreRender]
+fun preRender(Filter filter) {
+  f32 p = getParameterFloat('progress);
+
+  # Simple fade in - progress 0.0 to 1.0 maps directly to opacity
+  f32 opacity = p;
+
+  setShaderUniform('fade, 'progress, p);
+  setShaderUniform('fade, 'opacity, opacity);
+}
+
+string glsl = "varying vec2 sourceTextureCoordinate;
+
+BaseUniformsOpenGL;
+
+uniform float progress;
+uniform float opacity;
+
+void main() {
+  vec2 uv = sourceTextureCoordinate;
+  vec4 color = sampleInput(uv);
+  color.a = color.a * opacity;
+  gl_FragColor = toOutputFormat(color);
+}
+";
+
+string metal = "
+using namespace metal;
+struct fragmentIn { float2 textureCoordinate [[user(locn0)]]; float2 sourceTextureCoordinate [[user(locn1)]]; };
+struct fragmentOut { float4 _gl_FragColor [[color(0)]]; };
+typedef struct {
+  float4x4 content_transform;
+  float4x4 texture_transform;
+  float progress;
+  float opacity;
+ } Uniforms;
+
+fragment fragmentOut fragmentShader(fragmentIn in [[stage_in]],
+ constant Uniforms & uniforms [[buffer(1)]],
+ DefaultInputs defaultInputs) {
+
+  float2 uv = in.sourceTextureCoordinate;
+  float4 color = sampleInput(defaultInputs, uv);
+  color.a = color.a * uniforms.opacity;
+  return {toOutputFormat(color)};
+}
+";

@@ -1,0 +1,24 @@
+{
+  "identifier": "64a9671e-5789-420d-9161-ff603cbac9e5",
+  "enumCaseName": "videoZoomBounce",
+  "displayName": "Zoom bounce",
+  "loggingName": "video_zoom_bounce",
+  "legacyId": 2060,
+  "behavior": {
+    "type": "fixedIntro",
+    "durationMs": 750,
+    "curve": "linear"
+  },
+  "android": {
+    "previewAsset": {
+      "key": "e83c06ee",
+      "handle": "AQAEmG9w231E",
+      "md5": "9f61d6eea7182e6666ccfff808274bf7"
+    }
+  },
+  "ios": {
+    "previewAsset": {
+      "handle": "AQAIYoIH4Uhx"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+.class public final LX/RG2;
+.super LX/J7H;
+.source ""
+
+
+# instance fields
+.field public A00:LX/3Q9;
+
+.field public A01:Z
+
+
+# virtual methods
+.method public final equals(Ljava/lang/Object;)Z
+    .locals 3
+
+    instance-of v0, p1, LX/RG2;
+
+    const/4 v2, 0x0
+
+    if-eqz v0, :cond_0
+
+    iget-object v1, p0, LX/RG2;->A00:LX/3Q9;
+
+    check-cast p1, LX/RG2;
+
+    iget-object v0, p1, LX/RG2;->A00:LX/3Q9;
+
+    invoke-static {v1, v0}, LX/659;->areEqual(Ljava/lang/Object;Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    iget-boolean v1, p0, LX/RG2;->A01:Z
+
+    iget-boolean v0, p1, LX/RG2;->A01:Z
+
+    if-ne v1, v0, :cond_0
+
+    const/4 v2, 0x1
+
+    :cond_0
+    return v2
+.end method
+
+.method public final hashCode()I
+    .locals 2
+
+    iget-object v0, p0, LX/RG2;->A00:LX/3Q9;
+
+    invoke-static {v0}, LX/020;->A03(Ljava/lang/Object;)I
+
+    move-result v0
+
+    invoke-static {v0}, LX/838;->A00(I)I
+
+    move-result v1
+
+    iget-boolean v0, p0, LX/RG2;->A01:Z
+
+    invoke-static {v1, v0}, LX/020;->A01(IZ)I
+
+    move-result v0
+
+    return v0
+.end method
