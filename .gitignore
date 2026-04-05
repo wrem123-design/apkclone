@@ -5,7 +5,6 @@ jadx_out/
 apktool_framework/
 apktool_mcp_workspace/
 apktool_project_full/
-apktool_project_smali/dist/
 
 *.apk
 *.apks
@@ -13,3 +12,7 @@ apktool_project_smali/dist/
 *.zip
 *.mdb
 *.keystore
+
+!apktool_project_smali/dist/
+!apktool_project_smali/dist/*.apk
+!apktool_project_smali/dist/*.idsig
