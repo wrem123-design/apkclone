@@ -25,5 +25,8 @@
 .method private static native splitVideo()V
 .end method
 
-.method public static native startSettings(Ljava/lang/Object;Ljava/lang/Object;)V
+.method public static startSettings(Ljava/lang/Object;Ljava/lang/Object;)V
+    .locals 0
+
+    return-void
 .end method
