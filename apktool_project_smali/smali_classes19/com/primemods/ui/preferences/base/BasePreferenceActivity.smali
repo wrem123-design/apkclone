@@ -50,8 +50,6 @@
 
     invoke-super {p0, p1}, Landroid/preference/PreferenceActivity;->onPostCreate(Landroid/os/Bundle;)V
 
-    invoke-static {p0}, Lcom/primemods/utils/KoreanLocalization;->localize(Landroid/preference/PreferenceActivity;)V
-
     return-void
 .end method
 
@@ -59,8 +57,6 @@
     .locals 0
 
     invoke-super {p0}, Landroid/preference/PreferenceActivity;->onPostResume()V
-
-    invoke-static {p0}, Lcom/primemods/utils/KoreanLocalization;->localize(Landroid/preference/PreferenceActivity;)V
 
     return-void
 .end method

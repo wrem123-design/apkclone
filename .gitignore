@@ -5,6 +5,9 @@ jadx_out/
 apktool_framework/
 apktool_mcp_workspace/
 apktool_project_full/
+build_apk/
+InstaPrime-ko-final/
+*.idsig
 
 *.apk
 *.apks

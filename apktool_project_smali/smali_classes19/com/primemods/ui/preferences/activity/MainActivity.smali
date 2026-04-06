@@ -54,7 +54,7 @@
     if-eqz v1, :cond_1
 
     :cond_0
-    const-string v1, "Made with \u2764 By Shinyoung"
+    const-string v1, "Shinyoung이 \u2665로 제작"
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
@@ -103,7 +103,7 @@
 
     invoke-super {p0}, Lcom/primemods/ui/preferences/base/BasePreferenceActivity;->onResume()V
 
-    const-string v0, "InstaPrime \uc124\uc815"
+    const-string v0, "\uc778\uc2a4\ud0c0\ud504\ub77c\uc784 \uc124\uc815"
 
     invoke-virtual {p0, v0}, Lcom/primemods/ui/preferences/activity/MainActivity;->setToolbar(Ljava/lang/String;)V
 
