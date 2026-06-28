@@ -35258,6 +35258,39 @@
     };
     // ---------------------------------------------------------------------
 
+    // --- FINAL ROOM SETTINGS TOP ACTION ONLY FIX ---
+    function mgTopRoomSettingsButtonHtml() {
+        return '<button class="mg-btn mg-top-extra primary mg-room-settings-top-btn" title="채팅방 설정" data-action="mg-toggle-room-settings">방 설정</button>';
+    }
+
+    if (typeof mgRoomSettingsFloatingButtonHtml === 'function') {
+        mgRoomSettingsFloatingButtonHtml = function() { return ''; };
+    }
+
+    const mgBaseAppHtmlRoomSettingsTopOnly = appHtml;
+    appHtml = function(...args) {
+        let html = String(mgBaseAppHtmlRoomSettingsTopOnly.apply(this, args));
+        html = html.replace(/<button\b(?=[^>]*class="[^"]*\bmg-room-settings-fab\b)[\s\S]*?<\/button>/g, '');
+        if (activeTab === 'chat') {
+            html = html.replace(/<button\b(?=[^>]*data-action="(?:toggle-notifications|open-notification-center)")[\s\S]*?<\/button>/g, '');
+            html = html.replace(/<button\b(?=[^>]*data-action="mg-toggle-room-settings")[\s\S]*?<\/button>/g, '');
+            if (html.includes('<div class="mg-actions">')) {
+                html = html.replace('<div class="mg-actions">', `<div class="mg-actions">${mgTopRoomSettingsButtonHtml()}`);
+            }
+        }
+        return html;
+    };
+
+    const mgBaseInjectStylesRoomSettingsTopOnly = injectStyles;
+    injectStyles = function(...args) {
+        mgBaseInjectStylesRoomSettingsTopOnly.apply(this, args);
+        mgEnsureStyle('mg-room-settings-top-only-style', `
+            .mg-room-settings-fab{display:none!important}
+            .mg-view-chat .mg-room-settings-top-btn{display:inline-flex!important;align-items:center!important;justify-content:center!important}
+        `);
+    };
+    // ---------------------------------------------------------------------
+
     // --- FINAL BACKUP / IMPORT SUMMARY UX ---
     function mgStateSummaryForUser(data = state) {
         const characters = Array.isArray(data.characters) ? data.characters.length : 0;
