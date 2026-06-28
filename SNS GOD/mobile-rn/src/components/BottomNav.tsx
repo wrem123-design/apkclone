@@ -5,7 +5,7 @@ import { colors } from '../theme';
 export type BottomTab = 'friends' | 'instagram' | 'twitter' | 'random' | 'etc';
 
 const TABS: { key: BottomTab; label: string; icon: string }[] = [
-  { key: 'friends', label: '친구', icon: '●' },
+  { key: 'friends', label: '친구', icon: '' },
   { key: 'instagram', label: '인스타그램', icon: '◎' },
   { key: 'twitter', label: '트위터', icon: 'X' },
   { key: 'random', label: '랜덤', icon: '?' },
@@ -27,7 +27,7 @@ export function BottomNav({ active, onSelect }: {
             onPress={() => onSelect(tab.key)}
             style={[styles.item, selected && styles.itemActive]}
           >
-            <Text style={[styles.icon, selected && styles.iconActive]}>{tab.icon}</Text>
+            {tab.key === 'friends' ? <FriendIcon selected={selected} /> : <Text style={[styles.icon, selected && styles.iconActive]}>{tab.icon}</Text>}
           </Pressable>
         );
       })}
@@ -36,6 +36,15 @@ export function BottomNav({ active, onSelect }: {
 }
 
 export const BOTTOM_NAV_HEIGHT = 64;
+
+function FriendIcon({ selected }: { selected: boolean }) {
+  return (
+    <View style={styles.friendIcon}>
+      <View style={[styles.friendHead, selected && styles.friendActive]} />
+      <View style={[styles.friendBody, selected && styles.friendActive]} />
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   wrap: {
@@ -65,5 +74,30 @@ const styles = StyleSheet.create({
   },
   iconActive: {
     color: colors.danger
+  },
+  friendIcon: {
+    width: 28,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'flex-end'
+  },
+  friendHead: {
+    width: 11,
+    height: 11,
+    borderRadius: 6,
+    backgroundColor: '#111',
+    marginBottom: 3
+  },
+  friendBody: {
+    width: 24,
+    height: 12,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
+    backgroundColor: '#111'
+  },
+  friendActive: {
+    backgroundColor: colors.danger
   }
 });

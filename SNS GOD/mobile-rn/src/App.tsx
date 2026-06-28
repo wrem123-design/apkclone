@@ -167,7 +167,14 @@ export default function App() {
     <SafeAreaView style={styles.safe}>
       <View style={styles.content}>
       {route.name === 'settings' ? (
-        <SettingsScreen state={state} onChange={commit} onBack={() => setRoute({ name: 'chatList' })} onOpenLorebook={() => setRoute({ name: 'lorebook' })} onOpenPrompts={() => setRoute({ name: 'prompts' })} />
+        <SettingsScreen
+          state={state}
+          onChange={commit}
+          onBack={() => setRoute({ name: 'chatList' })}
+          onOpenLorebook={() => setRoute({ name: 'lorebook' })}
+          onOpenPrompts={() => setRoute({ name: 'prompts' })}
+          onOpenCharacterSettings={characterId => setRoute({ name: 'characterSettings', characterId })}
+        />
       ) : route.name === 'lorebook' ? (
         <LorebookScreen state={state} onChange={commit} onBack={() => setRoute({ name: 'settings' })} />
       ) : route.name === 'prompts' ? (

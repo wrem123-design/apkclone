@@ -4,7 +4,7 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import { colors } from '../theme';
-import { ApiProvider, SNSGodState } from '../types';
+import { ApiProvider, CalendarEvent, SNSGodState } from '../types';
 import { normalizeLegacyState } from '../storage/importLegacy';
 import { callLLMText } from '../logic/api';
 
@@ -24,13 +24,35 @@ const PROVIDER_PRESETS: Partial<Record<ApiProvider, { endpoint: string; model: s
   ]
 };
 
-export function SettingsScreen({ state, onChange, onBack, onOpenLorebook, onOpenPrompts }: {
+type SettingsSection = 'user' | 'characters' | 'stickers' | 'prompts' | 'lorebook' | 'screen' | 'api' | 'image';
+
+const SECTION_TABS: { key: SettingsSection; label: string }[] = [
+  { key: 'user', label: '유저 설정' },
+  { key: 'characters', label: '캐릭터별 설정' },
+  { key: 'stickers', label: '스티커' },
+  { key: 'prompts', label: '프롬프트' },
+  { key: 'lorebook', label: '공통 로어북' },
+  { key: 'screen', label: '화면' },
+  { key: 'api', label: 'API' },
+  { key: 'image', label: '이미지' }
+];
+
+const EVENT_PRESETS = [
+  { title: "나's birthday", date: '1985-02-08', type: '유저 생일', prompt: "Event type: the user's birthday. The celebrant is 나. Write as the character directly to 나 in a private DM." },
+  { title: '연인 기념일', date: 'MM-DD', type: '연인', prompt: 'Event type: relationship anniversary. The character remembers it naturally and may contact the user first.' },
+  { title: '결혼기념일', date: 'MM-DD', type: '결혼기념일', prompt: 'Event type: wedding anniversary. Keep the tone intimate and in character.' },
+  { title: '약속', date: 'YYYY-MM-DD', type: '약속', prompt: 'Event type: appointment. The character may mention or prepare for the plan.' }
+];
+
+export function SettingsScreen({ state, onChange, onBack, onOpenLorebook, onOpenPrompts, onOpenCharacterSettings }: {
   state: SNSGodState;
   onChange: (next: SNSGodState) => Promise<void> | void;
   onBack: () => void;
   onOpenLorebook?: () => void;
   onOpenPrompts?: () => void;
+  onOpenCharacterSettings?: (characterId: string) => void;
 }) {
+  const [activeSection, setActiveSection] = useState<SettingsSection | null>(null);
   const [provider, setProvider] = useState<ApiProvider>(state.config.apiType);
   const profile = useMemo(() => state.config.apiProfiles[provider] || {}, [state.config.apiProfiles, provider]);
   const keySlots = useMemo(() => {
@@ -48,6 +70,7 @@ export function SettingsScreen({ state, onChange, onBack, onOpenLorebook, onOpen
   const [roomName, setRoomName] = useState(state.config.roomName || '채팅');
   const [language, setLanguage] = useState(state.config.language || 'Korean');
   const [userDescription, setUserDescription] = useState(state.config.userDescription || '');
+  const [fontScale, setFontScale] = useState(String(state.config.fontScale || 1));
   const [snsAutoChance, setSnsAutoChance] = useState(String(state.config.snsAutoChance ?? 40));
   const [snsStartCount, setSnsStartCount] = useState(String(state.config.snsStartCount ?? 6));
   const [autoEnabled, setAutoEnabled] = useState(state.config.autoEnabled !== false);
@@ -80,6 +103,22 @@ export function SettingsScreen({ state, onChange, onBack, onOpenLorebook, onOpen
   const [testingApi, setTestingApi] = useState(false);
   const [status, setStatus] = useState('');
   const [showKeys, setShowKeys] = useState(false);
+  const userEvents = Array.isArray(state.config.userCalendarEvents) ? state.config.userCalendarEvents as CalendarEvent[] : [];
+  const [eventTitle, setEventTitle] = useState('');
+  const [eventDate, setEventDate] = useState('');
+  const [eventType, setEventType] = useState('');
+  const [eventPrompt, setEventPrompt] = useState('');
+
+  function openSection(section: SettingsSection) {
+    setActiveSection(current => current === section ? null : section);
+  }
+
+  function applyEventPreset(preset: typeof EVENT_PRESETS[number]) {
+    setEventTitle(preset.title);
+    setEventDate(preset.date);
+    setEventType(preset.type);
+    setEventPrompt(preset.prompt);
+  }
 
   function selectProvider(nextProvider: ApiProvider) {
     const nextProfile = state.config.apiProfiles[nextProvider] || {};
@@ -186,6 +225,7 @@ export function SettingsScreen({ state, onChange, onBack, onOpenLorebook, onOpen
         userName: userName.trim() || '나',
         roomName: roomName.trim() || '채팅',
         language: language.trim() || 'Korean',
+        fontScale: Math.max(0.7, Math.min(1.6, Number(fontScale) || 1)),
         userDescription
       }
       });
@@ -194,6 +234,53 @@ export function SettingsScreen({ state, onChange, onBack, onOpenLorebook, onOpen
       setStatus(`내 프로필 저장 실패: ${error instanceof Error ? error.message : String(error)}`);
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function addUserEvent() {
+    const title = eventTitle.trim();
+    const date = eventDate.trim();
+    if (!title || !date) {
+      setStatus('기념일 추가 실패: 제목과 날짜를 입력하세요.');
+      return;
+    }
+    const event: CalendarEvent = {
+      id: `user_event_${Date.now().toString(36)}`,
+      title,
+      date,
+      type: eventType.trim() || '기념일',
+      prompt: eventPrompt.trim()
+    };
+    try {
+      await onChange({
+        ...state,
+        config: {
+          ...state.config,
+          userCalendarEvents: [event, ...userEvents]
+        }
+      });
+      setEventTitle('');
+      setEventDate('');
+      setEventType('');
+      setEventPrompt('');
+      setStatus('사용자 공통 기념일 추가 완료');
+    } catch (error) {
+      setStatus(`사용자 공통 기념일 추가 실패: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+
+  async function deleteUserEvent(id: string) {
+    try {
+      await onChange({
+        ...state,
+        config: {
+          ...state.config,
+          userCalendarEvents: userEvents.filter(event => event.id !== id)
+        }
+      });
+      setStatus('사용자 공통 기념일 삭제 완료');
+    } catch (error) {
+      setStatus(`사용자 공통 기념일 삭제 실패: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 
@@ -341,9 +428,64 @@ export function SettingsScreen({ state, onChange, onBack, onOpenLorebook, onOpen
         <Pressable onPress={onBack} style={styles.back}><Text style={styles.backText}>‹</Text></Pressable>
         <Text style={styles.title}>설정</Text>
       </View>
+      <View style={styles.sectionBar}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.sectionBarContent}>
+          {SECTION_TABS.map(tab => (
+            <Pressable key={tab.key} onPress={() => openSection(tab.key)} style={[styles.sectionTab, activeSection === tab.key && styles.sectionTabActive]}>
+              <Text style={[styles.sectionTabText, activeSection === tab.key && styles.sectionTabTextActive]}>{tab.label}</Text>
+            </Pressable>
+          ))}
+        </ScrollView>
+      </View>
       <ScrollView contentContainerStyle={styles.content}>
         {status ? <View style={styles.statusBox}><Text style={styles.statusText}>{status}</Text></View> : null}
-        <View style={styles.card}>
+        {!activeSection ? (
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>카테고리를 선택하세요</Text>
+            <Text style={styles.help}>원본 Web 설정처럼 항목을 접어두고, 상단 버튼을 누르면 해당 카테고리만 펼쳐집니다.</Text>
+            <Text style={styles.missingTitle}>원본 옵션 확인</Text>
+            <Text style={styles.help}>구현됨: 유저 프로필, 사용자 공통 기념일, 자동화, 캐릭터별 설정 이동, 스티커 확인, 프롬프트/로어북 이동, 화면, API, 이미지, SNS 생성 옵션.</Text>
+            <Text style={styles.help}>별도 화면에서 관리: 캐릭터별 세부값, 방별 로어북/관계 메모, 프롬프트 전문 편집.</Text>
+          </View>
+        ) : null}
+        <View style={[styles.card, activeSection !== 'characters' && styles.hidden]}>
+          <Text style={styles.cardTitle}>캐릭터별 설정</Text>
+          <Text style={styles.help}>캐릭터, 능동 채팅, 삼화 태그, 로어북은 캐릭터 편집 화면에서 관리합니다.</Text>
+          {state.characters.map(character => (
+            <Pressable key={character.id} onPress={() => onOpenCharacterSettings?.(character.id)} style={styles.listRow}>
+              <View style={[styles.avatarDot, { backgroundColor: character.color || colors.accent }]}><Text style={styles.avatarDotText}>{character.avatarText || character.name.slice(0, 1)}</Text></View>
+              <View style={styles.listBody}>
+                <Text style={styles.listTitle}>{character.name}</Text>
+                <Text style={styles.listSub}>@{character.handle || character.id} · 로어북 {(character.memories || []).length}개 · 스티커 {(character.stickers || []).length}개</Text>
+              </View>
+              <Text style={styles.chevron}>›</Text>
+            </Pressable>
+          ))}
+        </View>
+        <View style={[styles.card, activeSection !== 'stickers' && styles.hidden]}>
+          <Text style={styles.cardTitle}>스티커</Text>
+          <Text style={styles.help}>공용 스티커와 캐릭터별 스티커를 확인합니다. 편집은 캐릭터 설정의 스티커 영역에서 진행합니다.</Text>
+          {(state.userStickers || []).length ? (state.userStickers || []).map(sticker => (
+            <View key={sticker.id} style={styles.listRow}>
+              <View style={styles.stickerIcon}><Text style={styles.stickerIconText}>S</Text></View>
+              <View style={styles.listBody}>
+                <Text style={styles.listTitle}>{sticker.name || sticker.id}</Text>
+                <Text style={styles.listSub}>{sticker.description || '공용 스티커'}</Text>
+              </View>
+            </View>
+          )) : <Text style={styles.emptyText}>아직 공용 스티커가 없습니다.</Text>}
+          {state.characters.map(character => (
+            <Pressable key={character.id} onPress={() => onOpenCharacterSettings?.(character.id)} style={styles.listRow}>
+              <View style={[styles.avatarDot, { backgroundColor: character.color || colors.accent }]}><Text style={styles.avatarDotText}>{character.avatarText || character.name.slice(0, 1)}</Text></View>
+              <View style={styles.listBody}>
+                <Text style={styles.listTitle}>{character.name} 스티커</Text>
+                <Text style={styles.listSub}>{(character.stickers || []).length}개</Text>
+              </View>
+              <Text style={styles.chevron}>›</Text>
+            </Pressable>
+          ))}
+        </View>
+        <View style={[styles.card, activeSection !== 'user' && styles.hidden]}>
           <Text style={styles.cardTitle}>내 기본 프로필</Text>
           <Text style={styles.label}>서비스 이름</Text>
           <TextInput value={roomName} onChangeText={setRoomName} style={styles.input} />
@@ -351,12 +493,58 @@ export function SettingsScreen({ state, onChange, onBack, onOpenLorebook, onOpen
           <TextInput value={userName} onChangeText={setUserName} style={styles.input} />
           <Text style={styles.label}>출력 언어</Text>
           <TextInput value={language} onChangeText={setLanguage} style={styles.input} autoCapitalize="none" />
+          <Text style={styles.label}>폰트 배율</Text>
+          <TextInput value={fontScale} onChangeText={setFontScale} style={styles.input} keyboardType="decimal-pad" />
           <Text style={styles.label}>내 소개</Text>
-          <TextInput value={userDescription} onChangeText={setUserDescription} style={[styles.input, styles.textarea]} multiline textAlignVertical="top" />
+          <TextInput
+            value={userDescription}
+            onChangeText={setUserDescription}
+            style={[styles.input, styles.profileTextarea]}
+            multiline
+            scrollEnabled
+            textAlignVertical="top"
+          />
           <Pressable onPress={saveProfile} style={styles.primary}><Text style={styles.primaryText}>프로필 저장</Text></Pressable>
         </View>
 
-        <View style={styles.card}>
+        <View style={[styles.card, activeSection !== 'user' && styles.hidden]}>
+          <Text style={styles.cardTitle}>사용자 공통 기념일</Text>
+          <Text style={styles.help}>여기에 저장한 생일과 공통 기념일은 모든 캐릭터에게 적용됩니다. MM-DD는 매년 반복, YYYY-MM-DD는 한 번만 적용됩니다.</Text>
+          <View style={styles.presetRow}>
+            {EVENT_PRESETS.map(preset => (
+              <Pressable key={preset.type} onPress={() => applyEventPreset(preset)} style={styles.presetButton}>
+                <Text style={styles.presetText}>{preset.type}</Text>
+              </Pressable>
+            ))}
+          </View>
+          <Text style={styles.label}>제목</Text>
+          <TextInput value={eventTitle} onChangeText={setEventTitle} style={styles.input} />
+          <View style={styles.twoCols}>
+            <View style={styles.col}>
+              <Text style={styles.label}>날짜</Text>
+              <TextInput value={eventDate} onChangeText={setEventDate} style={styles.input} placeholder="MM-DD 또는 YYYY-MM-DD" placeholderTextColor="#9a9387" />
+            </View>
+            <View style={styles.col}>
+              <Text style={styles.label}>유형</Text>
+              <TextInput value={eventType} onChangeText={setEventType} style={styles.input} />
+            </View>
+          </View>
+          <Text style={styles.label}>이벤트 지시</Text>
+          <TextInput value={eventPrompt} onChangeText={setEventPrompt} style={[styles.input, styles.textareaSmall]} multiline textAlignVertical="top" />
+          <Pressable onPress={addUserEvent} style={styles.primary}><Text style={styles.primaryText}>기념일 추가</Text></Pressable>
+          {userEvents.length ? userEvents.map(event => (
+            <View key={event.id} style={styles.eventRow}>
+              <View style={styles.listBody}>
+                <Text style={styles.listTitle}>{event.title}</Text>
+                <Text style={styles.listSub}>{event.date} · {event.type || '기념일'}</Text>
+                {event.prompt ? <Text style={styles.eventPrompt} numberOfLines={2}>{event.prompt}</Text> : null}
+              </View>
+              <Pressable onPress={() => deleteUserEvent(event.id)} style={styles.deleteButton}><Text style={styles.deleteText}>삭제</Text></Pressable>
+            </View>
+          )) : <Text style={styles.emptyText}>아직 사용자 공통 기념일이 없습니다.</Text>}
+        </View>
+
+        <View style={[styles.card, activeSection !== 'api' && styles.hidden]}>
           <Text style={styles.cardTitle}>API 설정</Text>
           <Text style={styles.label}>Provider</Text>
           <View style={styles.segmentRow}>
@@ -403,7 +591,7 @@ export function SettingsScreen({ state, onChange, onBack, onOpenLorebook, onOpen
           </View>
         </View>
 
-        <View style={styles.card}>
+        <View style={[styles.card, activeSection !== 'screen' && styles.hidden]}>
           <Text style={styles.cardTitle}>화면</Text>
           <Text style={styles.label}>SNS 테마</Text>
           <View style={styles.segmentRow}>
@@ -417,7 +605,7 @@ export function SettingsScreen({ state, onChange, onBack, onOpenLorebook, onOpen
           <Text style={styles.help}>채팅 목록 화면의 레이아웃과 색을 바꿉니다. 저장 버튼 없이 바로 저장됩니다.</Text>
         </View>
 
-        <View style={styles.card}>
+        <View style={[styles.card, activeSection !== 'image' && styles.hidden]}>
           <Text style={styles.cardTitle}>이미지 생성</Text>
           <SwitchLine label="AI 이미지 생성 사용" value={imageEnabled} onChange={setImageEnabled} />
           <SwitchLine label="삽화/태그 모드" value={imageIllustration} onChange={setImageIllustration} />
@@ -446,7 +634,7 @@ export function SettingsScreen({ state, onChange, onBack, onOpenLorebook, onOpen
           <Pressable onPress={saveImageGeneration} style={styles.primary}><Text style={styles.primaryText}>이미지 설정 저장</Text></Pressable>
         </View>
 
-        <View style={styles.card}>
+        <View style={[styles.card, activeSection !== 'prompts' && styles.hidden]}>
           <Text style={styles.cardTitle}>SNS 생성 옵션</Text>
           <Text style={styles.label}>기본 플랫폼</Text>
           <View style={styles.segmentRow}>
@@ -476,7 +664,7 @@ export function SettingsScreen({ state, onChange, onBack, onOpenLorebook, onOpen
           <Pressable onPress={saveSnsOptions} style={styles.primary}><Text style={styles.primaryText}>SNS 옵션 저장</Text></Pressable>
         </View>
 
-        <View style={styles.card}>
+        <View style={[styles.card, activeSection !== 'user' && styles.hidden]}>
           <Text style={styles.cardTitle}>자동화</Text>
           <SwitchLine label="전체 자동화" value={autoEnabled} onChange={setAutoEnabled} />
           <SwitchLine label="랜덤 첫 메시지" value={randomDmEnabled} onChange={setRandomDmEnabled} />
@@ -495,7 +683,7 @@ export function SettingsScreen({ state, onChange, onBack, onOpenLorebook, onOpen
           <Pressable onPress={saveAutomation} style={styles.primary}><Text style={styles.primaryText}>자동화 저장</Text></Pressable>
         </View>
 
-        <View style={styles.card}>
+        <View style={[styles.card, activeSection !== 'user' && styles.hidden]}>
           <Text style={styles.cardTitle}>백업</Text>
           <Text style={styles.help}>현재 WebView 앱에서 백업한 msgod_state_v2.json을 새 저장소로 가져오거나, RN 앱의 현재 데이터를 JSON으로 내보냅니다.</Text>
           <Text style={styles.label}>백업 JSON 붙여넣기</Text>
@@ -504,11 +692,15 @@ export function SettingsScreen({ state, onChange, onBack, onOpenLorebook, onOpen
           <Pressable onPress={importPastedBackup} disabled={saving} style={[styles.secondary, saving && styles.disabled]}><Text style={styles.secondaryText}>붙여넣은 JSON 임포트</Text></Pressable>
           <Pressable onPress={exportBackup} style={styles.secondary}><Text style={styles.secondaryText}>현재 데이터 내보내기/공유</Text></Pressable>
         </View>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>로어북</Text>
-          <Text style={styles.help}>트리거 단어가 나올 때만 참고하는 설정입니다.</Text>
-          <Pressable onPress={onOpenLorebook} style={styles.secondary}><Text style={styles.secondaryText}>로어북 관리</Text></Pressable>
+        <View style={[styles.card, activeSection !== 'prompts' && styles.hidden]}>
+          <Text style={styles.cardTitle}>프롬프트</Text>
+          <Text style={styles.help}>대화, SNS, 프로필 생성 지시문을 원본 PC 버전처럼 별도 화면에서 편집합니다.</Text>
           <Pressable onPress={onOpenPrompts} style={styles.secondary}><Text style={styles.secondaryText}>프롬프트 관리</Text></Pressable>
+        </View>
+        <View style={[styles.card, activeSection !== 'lorebook' && styles.hidden]}>
+          <Text style={styles.cardTitle}>공통 로어북</Text>
+          <Text style={styles.help}>트리거 단어가 나올 때만 참고하는 설정입니다. 현재 공통/캐릭터 로어북 항목은 {(state.loreEntries || []).length}개입니다.</Text>
+          <Pressable onPress={onOpenLorebook} style={styles.secondary}><Text style={styles.secondaryText}>로어북 관리</Text></Pressable>
         </View>
       </ScrollView>
     </View>
@@ -530,11 +722,20 @@ const styles = StyleSheet.create({
   back: { width: 40, height: 40, alignItems: 'center', justifyContent: 'center', borderRadius: 20, backgroundColor: '#eee8dc' },
   backText: { fontSize: 32, color: colors.text, lineHeight: 34 },
   title: { fontSize: 21, fontWeight: '900', color: colors.text },
+  sectionBar: { backgroundColor: colors.panel, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.border },
+  sectionBarContent: { paddingHorizontal: 12, paddingVertical: 10, gap: 8 },
+  sectionTab: { minHeight: 36, paddingHorizontal: 12, borderRadius: 18, borderWidth: 1, borderColor: colors.border, backgroundColor: '#fffefa', alignItems: 'center', justifyContent: 'center' },
+  sectionTabActive: { backgroundColor: colors.accent, borderColor: '#b89117' },
+  sectionTabText: { color: colors.sub, fontWeight: '900', fontSize: 12 },
+  sectionTabTextActive: { color: '#241a00' },
   content: { padding: 16, gap: 14 },
   card: { backgroundColor: colors.panel, borderWidth: 1, borderColor: colors.border, borderRadius: 8, padding: 14 },
+  hidden: { display: 'none' },
   cardTitle: { fontSize: 17, fontWeight: '900', color: colors.text, marginBottom: 12 },
+  missingTitle: { marginTop: 14, marginBottom: 6, color: colors.text, fontWeight: '900' },
   label: { fontSize: 12, fontWeight: '800', color: colors.sub, marginTop: 10, marginBottom: 6 },
   input: { minHeight: 44, borderWidth: 1, borderColor: colors.border, borderRadius: 7, paddingHorizontal: 12, color: colors.text, backgroundColor: '#fffefa' },
+  profileTextarea: { height: 112, paddingVertical: 10 },
   textarea: { minHeight: 128, paddingVertical: 10 },
   textareaSmall: { minHeight: 86, paddingVertical: 10 },
   segmentRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
@@ -564,5 +765,19 @@ const styles = StyleSheet.create({
   help: { color: colors.sub, lineHeight: 20 }
   ,
   statusBox: { backgroundColor: '#fff3c4', borderWidth: 1, borderColor: '#d6b84c', borderRadius: 8, padding: 12 },
-  statusText: { color: '#3a2a00', fontWeight: '900', lineHeight: 20 }
+  statusText: { color: '#3a2a00', fontWeight: '900', lineHeight: 20 },
+  listRow: { minHeight: 64, marginTop: 10, padding: 10, borderRadius: 8, borderWidth: 1, borderColor: colors.border, backgroundColor: '#fffefa', flexDirection: 'row', alignItems: 'center', gap: 10 },
+  avatarDot: { width: 42, height: 42, borderRadius: 21, alignItems: 'center', justifyContent: 'center' },
+  avatarDotText: { color: colors.text, fontWeight: '900' },
+  listBody: { flex: 1 },
+  listTitle: { color: colors.text, fontWeight: '900', fontSize: 15 },
+  listSub: { marginTop: 3, color: colors.sub, fontSize: 12, fontWeight: '700' },
+  chevron: { color: colors.sub, fontSize: 24, fontWeight: '900' },
+  stickerIcon: { width: 42, height: 42, borderRadius: 12, backgroundColor: '#eee8dc', alignItems: 'center', justifyContent: 'center' },
+  stickerIconText: { color: colors.text, fontWeight: '900' },
+  emptyText: { marginTop: 10, color: colors.sub, fontWeight: '800' },
+  eventRow: { marginTop: 10, padding: 10, borderRadius: 8, borderWidth: 1, borderColor: colors.border, backgroundColor: '#f0eee8', flexDirection: 'row', alignItems: 'center', gap: 10 },
+  eventPrompt: { marginTop: 5, color: colors.sub, lineHeight: 18 },
+  deleteButton: { minHeight: 34, paddingHorizontal: 10, borderRadius: 8, borderWidth: 1, borderColor: '#f0b7b7', backgroundColor: '#fff1f1', alignItems: 'center', justifyContent: 'center' },
+  deleteText: { color: '#d14444', fontWeight: '900' }
 });
