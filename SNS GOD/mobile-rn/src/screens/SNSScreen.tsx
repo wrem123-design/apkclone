@@ -7,12 +7,13 @@ import { generateSNSCommentReply, generateSNSPost, generateSnsDmReply } from '..
 import { makeId } from '../logic/ids';
 import { pickImageDataUri } from '../logic/media';
 
-export function SNSScreen({ state, onBack, onChange }: {
+export function SNSScreen({ state, platform, onOpenSettings, onOpenNotifications, onChange }: {
   state: SNSGodState;
-  onBack: () => void;
+  platform: SNSPost['platform'];
+  onOpenSettings: () => void;
+  onOpenNotifications: () => void;
   onChange: (next: SNSGodState) => Promise<void> | void;
 }) {
-  const [platform, setPlatform] = useState<SNSPost['platform']>('instagram');
   const [selectedCharacterId, setSelectedCharacterId] = useState(state.characters[0]?.id || '');
   const [loading, setLoading] = useState(false);
   const [imageData, setImageData] = useState('');
@@ -20,6 +21,7 @@ export function SNSScreen({ state, onBack, onChange }: {
   const [dmText, setDmText] = useState('');
   const selectedCharacter = state.characters.find(character => character.id === selectedCharacterId) || state.characters[0];
   const posts = (state.snsPosts || []).filter(post => post.platform === platform);
+  const unreadNotifications = (state.notifications || []).filter(item => !item.read).length;
 
   async function generate() {
     if (!selectedCharacter || loading) return;
@@ -120,16 +122,19 @@ export function SNSScreen({ state, onBack, onChange }: {
         />
       ) : null}
       <View style={styles.header}>
-        <Pressable onPress={onBack} style={styles.back}><Text style={styles.backText}>‹</Text></Pressable>
         <View style={styles.headerTitle}>
           <Text style={styles.title}>{platform === 'instagram' ? 'Instagram' : 'Twitter/X'}</Text>
           <Text style={styles.subtitle}>{posts.length} posts</Text>
         </View>
-      </View>
-
-      <View style={styles.toolbar}>
-        <Segment label="Instagram" active={platform === 'instagram'} onPress={() => setPlatform('instagram')} />
-        <Segment label="Twitter/X" active={platform === 'twitter'} onPress={() => setPlatform('twitter')} />
+        <View style={styles.headerActions}>
+          <Pressable accessibilityLabel="알림" onPress={onOpenNotifications} style={styles.roundIcon}>
+            <Text style={styles.roundIconText}>!</Text>
+            {unreadNotifications > 0 ? <Text style={styles.alertBadge}>{unreadNotifications}</Text> : null}
+          </Pressable>
+          <Pressable accessibilityLabel="설정" onPress={onOpenSettings} style={styles.roundIcon}>
+            <Text style={styles.roundIconText}>⚙</Text>
+          </Pressable>
+        </View>
       </View>
 
       <View style={styles.characterRail}>
@@ -172,14 +177,6 @@ export function SNSScreen({ state, onBack, onChange }: {
         renderItem={({ item }) => <PostCard post={item} character={state.characters.find(character => character.id === item.characterId)} onLike={() => likePost(item.id)} onComment={content => addComment(item.id, content)} onAiComment={content => addAiComment(item, content)} />}
       />
     </View>
-  );
-}
-
-function Segment({ label, active, onPress }: { label: string; active: boolean; onPress: () => void }) {
-  return (
-    <Pressable onPress={onPress} style={[styles.segment, active && styles.segmentActive]}>
-      <Text style={[styles.segmentText, active && styles.segmentTextActive]}>{label}</Text>
-    </Pressable>
   );
 }
 
@@ -282,17 +279,14 @@ function PostCard({ post, character, onLike, onComment, onAiComment }: { post: S
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: '#fbfaf7' },
-  header: { minHeight: 70, paddingTop: 10, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: '#f6fbff', borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.border },
-  back: { width: 42, height: 42, alignItems: 'center', justifyContent: 'center', borderRadius: 21, backgroundColor: '#eee8dc' },
-  backText: { fontSize: 34, lineHeight: 36, color: colors.text },
-  headerTitle: { flex: 1, alignItems: 'center', marginRight: 52 },
+  header: { minHeight: 72, paddingTop: 10, paddingHorizontal: 18, flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: '#f6fbff', borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.border },
+  headerTitle: { flex: 1 },
   title: { fontSize: 18, fontWeight: '900', color: colors.text },
   subtitle: { color: colors.sub, fontSize: 12, fontWeight: '700' },
-  toolbar: { flexDirection: 'row', gap: 8, padding: 12 },
-  segment: { flex: 1, height: 38, borderRadius: 19, borderWidth: 1, borderColor: colors.border, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' },
-  segmentActive: { backgroundColor: '#111' },
-  segmentText: { color: colors.sub, fontWeight: '900' },
-  segmentTextActive: { color: '#fff' },
+  headerActions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  roundIcon: { width: 40, height: 40, borderRadius: 20, backgroundColor: '#eee8dc', borderWidth: 1, borderColor: colors.border, alignItems: 'center', justifyContent: 'center', position: 'relative' },
+  roundIconText: { color: colors.text, fontWeight: '900', fontSize: 20, lineHeight: 24 },
+  alertBadge: { position: 'absolute', top: -3, right: -4, minWidth: 19, height: 19, borderRadius: 10, overflow: 'hidden', lineHeight: 19, textAlign: 'center', backgroundColor: colors.danger, color: '#fff', fontWeight: '900', fontSize: 11 },
   characterRail: { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.border },
   characterRailContent: { paddingHorizontal: 12, paddingBottom: 12, gap: 10 },
   characterChip: { width: 78, alignItems: 'center', gap: 6, padding: 8, borderRadius: 12 },

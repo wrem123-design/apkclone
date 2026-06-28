@@ -19,9 +19,11 @@ import { GroupChatRoomScreen } from './screens/GroupChatRoomScreen';
 import { GroupRoomSettingsScreen } from './screens/GroupRoomSettingsScreen';
 import { PromptSettingsScreen } from './screens/PromptSettingsScreen';
 import { GalleryScreen } from './screens/GalleryScreen';
+import { BottomNav, BottomTab } from './components/BottomNav';
+import { MenuHubScreen } from './screens/MenuHubScreen';
 import { loadState, saveState } from './storage/persist';
 import { colors } from './theme';
-import { SNSGodCharacter, SNSGodState } from './types';
+import { SNSGodCharacter, SNSGodState, SNSPost } from './types';
 import { runAutomationTick } from './logic/automation';
 
 type Route =
@@ -37,7 +39,9 @@ type Route =
   | { name: 'groupRoomSettings'; roomId: string; returnRoomId: string }
   | { name: 'lorebook' }
   | { name: 'prompts' }
-  | { name: 'sns' }
+  | { name: 'sns'; platform: SNSPost['platform'] }
+  | { name: 'randomHub' }
+  | { name: 'etc' }
   | { name: 'gallery' }
   | { name: 'random' }
   | { name: 'sumgod' }
@@ -64,7 +68,7 @@ export default function App() {
   useEffect(() => {
     const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
       if (route.name === 'chatList') return false;
-      if (route.name === 'settings' || route.name === 'sns' || route.name === 'gallery' || route.name === 'random' || route.name === 'sumgod' || route.name === 'notifications' || route.name === 'newRoom' || route.name === 'newGroupRoom' || route.name === 'newCharacter') {
+      if (route.name === 'settings' || route.name === 'sns' || route.name === 'randomHub' || route.name === 'etc' || route.name === 'gallery' || route.name === 'random' || route.name === 'sumgod' || route.name === 'notifications' || route.name === 'newRoom' || route.name === 'newGroupRoom' || route.name === 'newCharacter') {
         setRoute({ name: 'chatList' });
         return true;
       }
@@ -133,6 +137,23 @@ export default function App() {
     else setRoute({ name: 'newRoom' });
   }
 
+  function openBottomTab(tab: BottomTab) {
+    if (tab === 'friends') setRoute({ name: 'chatList' });
+    if (tab === 'instagram') setRoute({ name: 'sns', platform: 'instagram' });
+    if (tab === 'twitter') setRoute({ name: 'sns', platform: 'twitter' });
+    if (tab === 'random') setRoute({ name: 'randomHub' });
+    if (tab === 'etc') setRoute({ name: 'etc' });
+  }
+
+  function activeBottomTab(): BottomTab {
+    if (route.name === 'sns') return route.platform === 'twitter' ? 'twitter' : 'instagram';
+    if (route.name === 'randomHub' || route.name === 'random' || route.name === 'sumgod' || route.name === 'gallery') return 'random';
+    if (route.name === 'etc' || route.name === 'newRoom' || route.name === 'newGroupRoom' || route.name === 'newCharacter' || route.name === 'notifications') return 'etc';
+    return 'friends';
+  }
+
+  const showBottomNav = route.name === 'chatList' || route.name === 'sns' || route.name === 'randomHub' || route.name === 'etc';
+
   if (!state) {
     return (
       <SafeAreaView style={styles.loading}>
@@ -144,6 +165,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.safe}>
+      <View style={styles.content}>
       {route.name === 'settings' ? (
         <SettingsScreen state={state} onChange={commit} onBack={() => setRoute({ name: 'chatList' })} onOpenLorebook={() => setRoute({ name: 'lorebook' })} onOpenPrompts={() => setRoute({ name: 'prompts' })} />
       ) : route.name === 'lorebook' ? (
@@ -151,7 +173,37 @@ export default function App() {
       ) : route.name === 'prompts' ? (
         <PromptSettingsScreen state={state} onChange={commit} onBack={() => setRoute({ name: 'settings' })} />
       ) : route.name === 'sns' ? (
-        <SNSScreen state={state} onChange={commit} onBack={() => setRoute({ name: 'chatList' })} />
+        <SNSScreen
+          state={state}
+          platform={route.platform}
+          onChange={commit}
+          onOpenSettings={() => setRoute({ name: 'settings' })}
+          onOpenNotifications={() => setRoute({ name: 'notifications' })}
+        />
+      ) : route.name === 'randomHub' ? (
+        <MenuHubScreen
+          mode="random"
+          onOpenRandom={() => setRoute({ name: 'random' })}
+          onOpenSumGod={() => setRoute({ name: 'sumgod' })}
+          onOpenGallery={() => setRoute({ name: 'gallery' })}
+          onNewCharacter={() => setRoute({ name: 'newCharacter' })}
+          onNewGroupRoom={() => setRoute({ name: 'newGroupRoom' })}
+          onNewRoom={() => setRoute({ name: 'newRoom' })}
+          onOpenNotifications={() => setRoute({ name: 'notifications' })}
+          onOpenSettings={() => setRoute({ name: 'settings' })}
+        />
+      ) : route.name === 'etc' ? (
+        <MenuHubScreen
+          mode="etc"
+          onOpenRandom={() => setRoute({ name: 'random' })}
+          onOpenSumGod={() => setRoute({ name: 'sumgod' })}
+          onOpenGallery={() => setRoute({ name: 'gallery' })}
+          onNewCharacter={() => setRoute({ name: 'newCharacter' })}
+          onNewGroupRoom={() => setRoute({ name: 'newGroupRoom' })}
+          onNewRoom={() => setRoute({ name: 'newRoom' })}
+          onOpenNotifications={() => setRoute({ name: 'notifications' })}
+          onOpenSettings={() => setRoute({ name: 'settings' })}
+        />
       ) : route.name === 'gallery' ? (
         <GalleryScreen state={state} onBack={() => setRoute({ name: 'chatList' })} />
       ) : route.name === 'random' ? (
@@ -209,21 +261,20 @@ export default function App() {
           onNewRoom={() => setRoute({ name: 'newRoom' })}
           onNewGroupRoom={() => setRoute({ name: 'newGroupRoom' })}
           onNewCharacter={() => setRoute({ name: 'newCharacter' })}
-          onOpenSNS={() => setRoute({ name: 'sns' })}
-          onOpenGallery={() => setRoute({ name: 'gallery' })}
-          onOpenRandom={() => setRoute({ name: 'random' })}
-          onOpenSumGod={() => setRoute({ name: 'sumgod' })}
           onOpenProfile={characterId => setRoute({ name: 'profile', characterId })}
           onOpenNotifications={() => setRoute({ name: 'notifications' })}
           onOpenGroupRoom={roomId => setRoute({ name: 'groupChatRoom', roomId })}
         />
       )}
+      </View>
+      {showBottomNav ? <BottomNav active={activeBottomTab()} onSelect={openBottomTab} /> : null}
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: '#fff' },
+  content: { flex: 1 },
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#050b16' },
   loadingText: { marginTop: 12, color: '#fff', fontWeight: '900' }
 });
