@@ -34683,6 +34683,273 @@
     };
     // ---------------------------------------------------------------------
 
+    // --- FINAL SETTINGS / DEBUG / GENERATION STABILITY CONSOLIDATION ---
+    let mgCharacterGenerateBusy = false;
+    let mgLastSavedAt = 0;
+    let mgLastSaveLabel = '';
+
+    function mgCurrentApiSummary() {
+        const apiType = state.config?.apiType || 'gemini';
+        const profile = state.config?.apiProfiles?.[apiType] || {};
+        return {
+            provider: apiType,
+            model: profile.apiModel || profile.staticModel || '',
+            endpoint: profile.apiEndpoint || '',
+            hasKey: Boolean(profile.apiKey || profile.serviceAccountJson),
+            maxTokens: profile.maxTokens || '',
+            temperature: profile.temperature ?? ''
+        };
+    }
+
+    async function mgFinalPersist(label = '저장') {
+        mgLastSaveLabel = label;
+        mgLastSavedAt = Date.now();
+        await saveState();
+        if (typeof flushSaveState === 'function') await flushSaveState();
+        logDebug('save', `${label} 완료`, { at: mgLastSavedAt, activeTab, phoneApp: mgPhoneApp || '', snsTheme: typeof mgSnsThemeValue === 'function' ? mgSnsThemeValue() : '' });
+    }
+
+    const mgBaseSaveRoomSettingsUnified = saveRoomSettingsFromForm;
+    saveRoomSettingsFromForm = async function(...args) {
+        const result = await mgBaseSaveRoomSettingsUnified.apply(this, args);
+        await mgFinalPersist('기본 설정 저장');
+        return result;
+    };
+
+    const mgBaseSaveCharacterUnified = saveCharacterFromForm;
+    saveCharacterFromForm = async function(...args) {
+        const result = await mgBaseSaveCharacterUnified.apply(this, args);
+        await mgFinalPersist('캐릭터 설정 저장');
+        return result;
+    };
+
+    const mgBaseSaveApiUnified = saveApiFromForm;
+    saveApiFromForm = async function(...args) {
+        const result = await mgBaseSaveApiUnified.apply(this, args);
+        await mgFinalPersist('API/이미지 설정 저장');
+        return result;
+    };
+
+    const mgBaseSavePromptsUnified = savePromptsFromForm;
+    savePromptsFromForm = async function(...args) {
+        const result = await mgBaseSavePromptsUnified.apply(this, args);
+        await mgFinalPersist('프롬프트 저장');
+        return result;
+    };
+
+    const mgBaseSaveAppearanceUnified = saveAppearanceFromForm;
+    saveAppearanceFromForm = async function(...args) {
+        const selectedSnsTheme = document.getElementById('ui-sns-theme')?.value;
+        const result = await mgBaseSaveAppearanceUnified.apply(this, args);
+        if (selectedSnsTheme) uiConfig().snsTheme = selectedSnsTheme;
+        await mgFinalPersist('화면 설정 저장');
+        return result;
+    };
+
+    const mgBaseCallLLMDebugVisibility = callLLM;
+    callLLM = async function(messages, overrides = {}) {
+        const summary = mgCurrentApiSummary();
+        const startedAt = Date.now();
+        logDebug('api-call', `${summary.provider} 호출 시작`, { model: summary.model, hasKey: summary.hasKey, maxTokens: overrides.maxTokens || summary.maxTokens, responseMimeType: overrides.responseMimeType ?? 'application/json' });
+        try {
+            const payload = await mgBaseCallLLMDebugVisibility(messages, overrides);
+            logDebug('api-ok', `${summary.provider} 호출 완료`, { model: summary.model, elapsedMs: Date.now() - startedAt, textLength: String(payload?.rawText || payload?.text || '').length });
+            return payload;
+        } catch (error) {
+            logDebug('api-error', `${summary.provider} 호출 실패: ${error.message}`, { model: summary.model, elapsedMs: Date.now() - startedAt });
+            throw error;
+        }
+    };
+
+    const mgBaseGenerateCharacterProfileStable = generateCharacterProfile;
+    generateCharacterProfile = async function(...args) {
+        if (mgCharacterGenerateBusy) return;
+        mgCharacterGenerateBusy = true;
+        logDebug('character-ai', '캐릭터 AI 생성 시작', mgCurrentApiSummary());
+        if (typeof showTransientNotice === 'function') showTransientNotice('캐릭터를 생성하는 중입니다...');
+        render();
+        try {
+            const result = await mgBaseGenerateCharacterProfileStable.apply(this, args);
+            logDebug('character-ai', '캐릭터 AI 생성 종료', { selectedCharacterId });
+            return result;
+        } catch (error) {
+            logDebug('character-ai-error', `캐릭터 AI 생성 실패: ${error.message}`, {});
+            throw error;
+        } finally {
+            mgCharacterGenerateBusy = false;
+            render();
+        }
+    };
+
+    const mgBaseCharactersHtmlStableLabels = charactersHtml;
+    charactersHtml = function(...args) {
+        let html = mgBaseCharactersHtmlStableLabels.apply(this, args);
+        html = html.replace(/(<button\b[^>]*data-action="generate-character"[^>]*>)[\s\S]*?(<\/button>)/, `$1${mgCharacterGenerateBusy ? '생성 중...' : 'AI 생성'}$2`);
+        if (mgCharacterGenerateBusy) html = html.replace(/(<button\b[^>]*data-action="generate-character")/g, '$1 disabled');
+        html = html.replace(/<span class="mg-label">핸들<\/span>/g, '<span class="mg-label">SNS 아이디(@handle)</span>');
+        return html;
+    };
+
+    const mgBaseDebugHtmlFinalVisibility = debugHtml;
+    debugHtml = function(...args) {
+        const api = mgCurrentApiSummary();
+        const unreadTotal = Object.values(state.unreadCounts || {}).reduce((sum, value) => sum + Math.max(0, Number(value) || 0), 0);
+        const notificationCount = typeof mgNotificationUnreadCount === 'function' ? mgNotificationUnreadCount() : ensureNotificationLog().length;
+        const status = `<div class="mg-section mg-debug-status-final"><h3>현재 상태</h3><div class="mg-debug-status-grid">
+            <span><b>API</b><em>${escapeHtml(api.provider)} · ${escapeHtml(api.model || '모델 없음')} · ${api.hasKey ? '키 있음' : '키 없음'}</em></span>
+            <span><b>화면</b><em>${escapeHtml(uiConfig().preset || 'classic')} · SNS ${escapeHtml(typeof mgSnsThemeValue === 'function' ? mgSnsThemeValue() : 'default')} · ${escapeHtml(mgPhoneApp || 'home')}</em></span>
+            <span><b>알림</b><em>안읽음 ${escapeHtml(unreadTotal)} · 센터 ${escapeHtml(notificationCount)}</em></span>
+            <span><b>저장</b><em>${mgLastSavedAt ? `${escapeHtml(mgLastSaveLabel)} · ${escapeHtml(formatTime(mgLastSavedAt))}` : '이번 실행 후 저장 기록 없음'}</em></span>
+        </div></div>`;
+        return String(mgBaseDebugHtmlFinalVisibility.apply(this, args)).replace('<section class="mg-panel mg-settings">', `<section class="mg-panel mg-settings">${status}`);
+    };
+
+    const mgBaseInjectStylesStabilityConsolidation = injectStyles;
+    injectStyles = function(...args) {
+        mgBaseInjectStylesStabilityConsolidation.apply(this, args);
+        mgEnsureStyle('mg-stability-consolidation-style', `
+            .mg-debug-status-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+            .mg-debug-status-grid span{display:grid;gap:4px;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--surface)}
+            .mg-debug-status-grid b{font-size:12px;color:var(--muted)}
+            .mg-debug-status-grid em{font-style:normal;color:var(--text);font-weight:800;overflow-wrap:anywhere}
+            @media(max-width:780px){.mg-debug-status-grid{grid-template-columns:1fr}}
+        `);
+    };
+    // ---------------------------------------------------------------------
+
+    // --- FINAL NOTIFICATION / UNREAD STATE UNIFICATION ---
+    function mgMarkNotificationsReadForRoom(roomId) {
+        const id = String(roomId || '');
+        if (!id || typeof mgNotifications !== 'function') return false;
+        let changed = false;
+        for (const item of mgNotifications()) {
+            if (String(item?.target?.roomId || '') === id && !item.read) {
+                item.read = true;
+                changed = true;
+            }
+        }
+        if (mgActiveNotificationBannerId) {
+            const active = mgNotifications().find(item => item.id === mgActiveNotificationBannerId);
+            if (active && String(active?.target?.roomId || '') === id) {
+                mgActiveNotificationBannerId = '';
+                changed = true;
+            }
+        }
+        if (state.unreadCounts?.[id]) {
+            delete state.unreadCounts[id];
+            changed = true;
+        }
+        return changed;
+    }
+
+    function mgNotificationRoomUnreadCount(roomId) {
+        const id = String(roomId || '');
+        if (!id || typeof mgNotifications !== 'function') return 0;
+        return mgNotifications().reduce((sum, item) => sum + (!item.read && String(item?.target?.roomId || '') === id ? Math.max(1, Number(item.count) || 1) : 0), 0);
+    }
+
+    const mgBaseUnreadCountUnified = typeof mgUnreadCount === 'function' ? mgUnreadCount : null;
+    if (mgBaseUnreadCountUnified) {
+        mgUnreadCount = function(roomId) {
+            return Math.max(mgBaseUnreadCountUnified(roomId), mgNotificationRoomUnreadCount(roomId));
+        };
+    }
+
+    const mgBaseHandleActionNotificationUnreadUnified = handleAction;
+    handleAction = async function(action, element) {
+        if (action === 'select-room' || action === 'select-group-room' || action === 'select-random-chat') {
+            const roomId = element?.dataset?.id || selectedRoomId;
+            mgMarkNotificationsReadForRoom(roomId);
+            const result = await mgBaseHandleActionNotificationUnreadUnified(action, element);
+            await mgFinalPersist('채팅방 읽음 처리');
+            return result;
+        }
+        return mgBaseHandleActionNotificationUnreadUnified(action, element);
+    };
+
+    const mgBaseChatHtmlNotificationUnreadUnified = chatHtml;
+    chatHtml = function(...args) {
+        const changed = mgMarkNotificationsReadForRoom(selectedRoomId);
+        if (changed) saveState().catch(console.warn);
+        return mgBaseChatHtmlNotificationUnreadUnified.apply(this, args);
+    };
+    // ---------------------------------------------------------------------
+
+    // --- FINAL KAKAO ROUTE HARDENING ---
+    function mgForceKakaoMessengerHomeIfNeeded() {
+        if (!mgFinalIsKakaoTheme() || mgPhoneApp !== 'messenger') return false;
+        if (activeTab === 'chat' || activeTab === 'snsdm') return false;
+        activeTab = 'home';
+        mgMessengerLastTab = 'home';
+        return true;
+    }
+
+    const mgBaseSaveAppearanceKakaoRouteHardening = saveAppearanceFromForm;
+    saveAppearanceFromForm = async function(...args) {
+        const result = await mgBaseSaveAppearanceKakaoRouteHardening.apply(this, args);
+        if (mgForceKakaoMessengerHomeIfNeeded()) {
+            await mgFinalPersist('카카오톡 테마 라우팅 저장');
+            render();
+        }
+        return result;
+    };
+
+    const mgBaseAppHtmlKakaoRouteHardening = appHtml;
+    appHtml = function(...args) {
+        mgForceKakaoMessengerHomeIfNeeded();
+        return mgBaseAppHtmlKakaoRouteHardening.apply(this, args);
+    };
+    // ---------------------------------------------------------------------
+
+    // --- FINAL BACKUP / IMPORT SUMMARY UX ---
+    function mgStateSummaryForUser(data = state) {
+        const characters = Array.isArray(data.characters) ? data.characters.length : 0;
+        const rooms = Object.values(data.chatRooms || {}).reduce((sum, list) => sum + (Array.isArray(list) ? list.length : 0), 0) + (Array.isArray(data.groupRooms) ? data.groupRooms.length : 0);
+        const messages = Object.values(data.messages || {}).reduce((sum, list) => sum + (Array.isArray(list) ? list.length : 0), 0);
+        const snsPosts = Array.isArray(data.snsPosts) ? data.snsPosts.length : 0;
+        const notifications = Array.isArray(data.notifications) ? data.notifications.length : Array.isArray(data.notificationLog) ? data.notificationLog.length : 0;
+        const hasImages = JSON.stringify({
+            characters: data.characters || [],
+            snsPosts: data.snsPosts || [],
+            messages: data.messages || {}
+        }).includes('data:image/');
+        return { characters, rooms, messages, snsPosts, notifications, hasImages };
+    }
+
+    function mgSummaryText(prefix, summary) {
+        return `${prefix}: 캐릭터 ${summary.characters}명, 채팅방 ${summary.rooms}개, 메시지 ${summary.messages}개, SNS ${summary.snsPosts}개, 알림 ${summary.notifications}개${summary.hasImages ? ', 이미지 포함' : ', 이미지 없음/외부 저장'}`;
+    }
+
+    const mgBaseBackupAllSummary = backupAll;
+    backupAll = function(...args) {
+        const summary = mgStateSummaryForUser(state);
+        const result = mgBaseBackupAllSummary.apply(this, args);
+        logDebug('backup', mgSummaryText('전체 백업 내보내기', summary), summary);
+        if (typeof showTransientNotice === 'function') showTransientNotice(mgSummaryText('백업 생성', summary));
+        return result;
+    };
+
+    handleRestoreFile = async function(event) {
+        const file = event.target.files?.[0];
+        event.target.value = '';
+        if (!file || !confirm('백업을 불러오면 현재 데이터가 덮어씌워집니다. 계속할까요?')) return;
+        try {
+            const data = JSON.parse(await file.text());
+            const summary = mgStateSummaryForUser(data);
+            state = { ...createDefaultState(), ...data, config: mergeConfig(data.config), characters: (data.characters || []).map(normalizeCharacter) };
+            ensureRooms();
+            selectedRoomId = state.selectedRoomId || getFirstAvailableRoomId();
+            selectedCharacterId = getCurrentRoom()?.characterId || '';
+            await mgFinalPersist('전체 백업 불러오기');
+            alert(mgSummaryText('불러오기 완료', summary));
+            render();
+        } catch (error) {
+            logDebug('restore-error', `불러오기 실패: ${error.message}`, {});
+            alert(`불러오기 실패: ${error.message}`);
+        }
+    };
+    // ---------------------------------------------------------------------
+
     await loadState();
     mgPruneSnsPosts();
     mgBackfillPhoneSummaries();
