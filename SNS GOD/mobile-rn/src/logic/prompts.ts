@@ -48,6 +48,15 @@ export function buildChatPrompt(state: SNSGodState, character: SNSGodCharacter, 
     .map(item => `- ${item.id}: ${item.name}${item.description ? ` (${item.description})` : ''}`)
     .join('\n');
   const roomNote = [room.relationshipNote, room.roomPrompt].filter(Boolean).join('\n');
+  const imageInstruction = state.config.imageGeneration?.enabled === false
+    ? 'Image sending is disabled. Do not include imagePrompt.'
+    : [
+      'When a selfie/photo/picture would be natural, include imagePrompt on exactly one message.',
+      state.config.imageGeneration?.illustrationMode
+        ? 'Write imagePrompt as final comma-separated English illustration tags.'
+        : 'Write imagePrompt as a specific, grounded phone-photo scene.',
+      'Do not claim an image was attached unless imagePrompt is included.'
+    ].join(' ');
   const content = [
     prompts.systemRules,
     prompts.roleObjective.replaceAll('{character.name}', character.name),
@@ -60,6 +69,7 @@ export function buildChatPrompt(state: SNSGodState, character: SNSGodCharacter, 
     `User visible name in this room: ${userNameFor(state, character, room)}.`,
     `User profile: ${userProfileFor(state, character) || '(empty)'}`,
     `Character profile: ${character.prompt || '(empty)'}`,
+    imageInstruction,
     roomNote ? `Room-only relationship/context note:\n${roomNote}` : '',
     memoryText ? `Character memories:\n${memoryText}` : '',
     stickerText ? `Available stickers:\n${stickerText}` : 'Available stickers: none',

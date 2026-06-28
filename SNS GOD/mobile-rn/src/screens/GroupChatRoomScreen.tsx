@@ -1,8 +1,8 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, FlatList, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Alert, FlatList, Image, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Avatar } from '../components/Avatar';
 import { colors } from '../theme';
-import { callLLM } from '../logic/api';
+import { callLLM, generateImageDataUri } from '../logic/api';
 import { makeId } from '../logic/ids';
 import { SNSGodCharacter, SNSGodMessage, SNSGodState } from '../types';
 
@@ -96,7 +96,15 @@ export function GroupChatRoomScreen({ state, roomId, onBack, onChange, onOpenSet
           config: { ...next.config, apiProfiles: { ...next.config.apiProfiles, [next.config.apiType]: { ...profile, apiKeyIndex: keyIndex } } }
         };
         for (const bubble of reply.messages.length ? reply.messages.slice(0, 2) : [{ content: '응.' }]) {
-          const characterMessage: SNSGodMessage = { id: makeId('msg'), role: 'character', characterId: speaker.id, content: bubble.content || '', createdAt: Date.now(), sticker: bubble.sticker, imagePrompt: bubble.imagePrompt, imageCaption: bubble.imageCaption };
+          let mediaData = '';
+          if (bubble.imagePrompt && next.config.imageGeneration?.enabled !== false) {
+            try {
+              mediaData = await generateImageDataUri(next, bubble.imagePrompt, speaker);
+            } catch (error) {
+              bubble.imageCaption = `${bubble.imageCaption || ''}\n이미지 생성 실패: ${error instanceof Error ? error.message : String(error)}`.trim();
+            }
+          }
+          const characterMessage: SNSGodMessage = { id: makeId('msg'), role: 'character', characterId: speaker.id, content: bubble.content || '', createdAt: Date.now(), sticker: bubble.sticker, imagePrompt: bubble.imagePrompt, imageCaption: bubble.imageCaption, mediaData: mediaData || undefined, mediaType: mediaData ? 'image' : undefined };
           next = {
             ...next,
             messages: {
@@ -163,6 +171,7 @@ function GroupBubble({ message, participants, userName }: { message: SNSGodMessa
   const mine = message.role === 'user';
   const system = message.role === 'system';
   const character = participants.find(item => item.id === message.characterId);
+  const sticker = message.sticker ? (character?.stickers || []).find(item => String(item.id) === String(message.sticker)) : undefined;
   if (system) return <View style={styles.systemBubble}><Text style={styles.systemText}>{message.content}</Text></View>;
   return (
     <View style={[styles.messageRow, mine && styles.messageRowMine]}>
@@ -170,7 +179,10 @@ function GroupBubble({ message, participants, userName }: { message: SNSGodMessa
       <View style={[styles.bubble, mine ? styles.myBubble : styles.theirBubble]}>
         {!mine ? <Text style={styles.speaker}>{character?.name || 'Character'}</Text> : <Text style={styles.speakerMine}>{userName}</Text>}
         <Text style={styles.bubbleText}>{message.content}</Text>
-        {message.sticker ? <Text style={styles.stickerText}>스티커 · {message.sticker}</Text> : null}
+        {sticker?.data || sticker?.mediaData ? <Image source={{ uri: sticker.data || sticker.mediaData || '' }} style={styles.stickerImage} resizeMode="contain" /> : message.sticker ? <Text style={styles.stickerText}>스티커 · {sticker?.name || message.sticker}</Text> : null}
+        {message.mediaData ? <Image source={{ uri: message.mediaData }} style={styles.messageImage} resizeMode="cover" /> : null}
+        {message.imagePrompt ? <Text style={styles.imageHint}>이미지 프롬프트: {message.imagePrompt}</Text> : null}
+        {message.imageCaption ? <Text style={styles.imageHint}>{message.imageCaption}</Text> : null}
       </View>
     </View>
   );
@@ -196,6 +208,9 @@ const styles = StyleSheet.create({
   speakerMine: { display: 'none' },
   bubbleText: { fontSize: 16, lineHeight: 22, color: '#222' },
   stickerText: { marginTop: 6, color: '#6c4f00', fontWeight: '900' },
+  stickerImage: { marginTop: 8, width: 128, height: 128, borderRadius: 12 },
+  messageImage: { marginTop: 8, width: 210, height: 210, maxWidth: '100%', borderRadius: 12, backgroundColor: '#eee' },
+  imageHint: { marginTop: 6, fontSize: 12, color: colors.sub },
   systemBubble: { alignSelf: 'center', maxWidth: '88%', borderRadius: 14, paddingHorizontal: 12, paddingVertical: 7, backgroundColor: 'rgba(255,255,255,0.45)' },
   systemText: { color: '#4f5a62', fontSize: 12, fontWeight: '700' },
   composer: { flexDirection: 'row', alignItems: 'flex-end', gap: 8, padding: 10, backgroundColor: '#f7f2e9', borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.border },

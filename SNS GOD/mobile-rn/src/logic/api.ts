@@ -1,4 +1,4 @@
-import { ApiProfile, SNSGodState } from '../types';
+import { ApiProfile, ImageGenerationConfig, SNSGodCharacter, SNSGodState } from '../types';
 
 type ChatMessage = { role: 'system' | 'user' | 'assistant'; content: string };
 
@@ -127,4 +127,70 @@ export async function callLLMText(state: SNSGodState, messages: ChatMessage[]): 
     }
   }
   throw new Error(`API 호출에 실패했습니다.\n${errors.join('\n')}`);
+}
+
+function extractImageBase64(value: unknown): string | undefined {
+  if (!value) return undefined;
+  if (typeof value === 'string') {
+    if (value.startsWith('data:image/')) return value;
+    if (/^[A-Za-z0-9+/=\s]{200,}$/.test(value)) return value.replace(/\s/g, '');
+    return undefined;
+  }
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const found = extractImageBase64(item);
+      if (found) return found;
+    }
+    return undefined;
+  }
+  if (typeof value === 'object') {
+    const record = value as Record<string, unknown>;
+    for (const key of ['b64_json', 'base64', 'image_base64', 'data']) {
+      const found = extractImageBase64(record[key]);
+      if (found) return found;
+    }
+    if (record.type === 'image_generation_call') {
+      const found = extractImageBase64(record.result);
+      if (found) return found;
+    }
+    for (const nested of Object.values(record)) {
+      const found = extractImageBase64(nested);
+      if (found) return found;
+    }
+  }
+  return undefined;
+}
+
+function imagePromptFor(config: ImageGenerationConfig, character: SNSGodCharacter | undefined, prompt: string): string {
+  const prefix = config.promptPrefix || 'Create a realistic in-character phone photo. Natural lighting, casual composition, no text overlay.';
+  const profile = character?.prompt ? `Character profile: ${character.prompt}` : '';
+  const name = character?.name ? `Character name: ${character.name}` : '';
+  const nsfw = config.nsfw ? 'NSFW/private fictional image is allowed when appropriate.' : 'Keep it safe and non-explicit.';
+  return [prefix, name, profile, nsfw, `Requested image: ${prompt}`, config.negativePrompt ? `Avoid: ${config.negativePrompt}` : ''].filter(Boolean).join('\n');
+}
+
+export async function generateImageDataUri(state: SNSGodState, prompt: string, character?: SNSGodCharacter): Promise<string> {
+  const config = state.config.imageGeneration || {};
+  if (config.enabled === false) throw new Error('이미지 생성 설정이 꺼져 있습니다.');
+  const openAiProfile = state.config.apiProfiles.openai || {};
+  const apiKey = String(config.apiKey || openAiProfile.apiKey || '').trim();
+  if (!apiKey) throw new Error('이미지 생성 API 키가 비어 있습니다. 설정 > 이미지 생성에서 키를 입력하세요.');
+  const endpoint = String(config.apiEndpoint || 'https://api.openai.com/v1/responses');
+  const model = String(config.apiModel || 'gpt-5');
+  const tool: Record<string, unknown> = { type: 'image_generation' };
+  if (config.size) tool.size = config.size;
+  if (config.quality) tool.quality = config.quality;
+  const body = endpoint.includes('/images/generations')
+    ? { model, prompt: imagePromptFor(config, character, prompt), size: config.size || '1024x1024', response_format: 'b64_json' }
+    : { model, input: imagePromptFor(config, character, prompt), tools: [tool], tool_choice: { type: 'image_generation' } };
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
+    body: JSON.stringify(body)
+  });
+  const text = await response.text();
+  if (!response.ok) throw new Error(`이미지 API ${response.status}: ${text.slice(0, 320)}`);
+  const base64 = extractImageBase64(JSON.parse(text));
+  if (!base64) throw new Error('이미지 API 응답에 이미지 데이터가 없습니다.');
+  return base64.startsWith('data:image/') ? base64 : `data:image/png;base64,${base64}`;
 }

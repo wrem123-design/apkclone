@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { ActivityIndicator, Alert, FlatList, Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Avatar } from '../components/Avatar';
 import { colors } from '../theme';
-import { SNSGodCharacter, SNSGodState, SNSPost } from '../types';
-import { generateSNSPost } from '../logic/sns';
+import { SNSDmThread, SNSGodCharacter, SNSGodState, SNSPost } from '../types';
+import { generateSNSCommentReply, generateSNSPost, generateSnsDmReply } from '../logic/sns';
 import { makeId } from '../logic/ids';
 import { pickImageDataUri } from '../logic/media';
 
@@ -16,6 +16,8 @@ export function SNSScreen({ state, onBack, onChange }: {
   const [selectedCharacterId, setSelectedCharacterId] = useState(state.characters[0]?.id || '');
   const [loading, setLoading] = useState(false);
   const [imageData, setImageData] = useState('');
+  const [activeDmId, setActiveDmId] = useState('');
+  const [dmText, setDmText] = useState('');
   const selectedCharacter = state.characters.find(character => character.id === selectedCharacterId) || state.characters[0];
   const posts = (state.snsPosts || []).filter(post => post.platform === platform);
 
@@ -61,8 +63,62 @@ export function SNSScreen({ state, onBack, onChange }: {
     });
   }
 
+  async function addAiComment(post: SNSPost, content: string) {
+    const trimmed = content.trim() || '이 게시물에 어울리는 자연스러운 댓글';
+    setLoading(true);
+    try {
+      const result = await generateSNSCommentReply(state, post, trimmed);
+      const profile = state.config.apiProfiles[state.config.apiType] || {};
+      await onChange({
+        ...state,
+        config: { ...state.config, apiProfiles: { ...state.config.apiProfiles, [state.config.apiType]: { ...profile, apiKeyIndex: result.keyIndex } } },
+        snsPosts: (state.snsPosts || []).map(item => item.id === post.id ? { ...item, comments: [...(item.comments || []), result.comment], replies: (item.replies || item.comments?.length || 0) + 1 } : item)
+      });
+    } catch (error) {
+      Alert.alert('AI 댓글 생성 실패', error instanceof Error ? error.message : String(error));
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function sendDmReply(ai: boolean) {
+    const thread = (state.snsDmThreads || []).find(item => item.id === activeDmId);
+    const trimmed = dmText.trim();
+    if (!thread || !trimmed || loading) return;
+    const userMessage = { id: makeId('snsdmmsg'), from: 'user' as const, author: state.config.userName || '나', body: trimmed, createdAt: Date.now() };
+    const withUser: SNSGodState = {
+      ...state,
+      snsDmThreads: (state.snsDmThreads || []).map(item => item.id === thread.id ? { ...item, messages: [...item.messages, userMessage], updatedAt: Date.now(), unread: 0 } : item)
+    };
+    setDmText('');
+    if (!ai) {
+      await onChange(withUser);
+      return;
+    }
+    setLoading(true);
+    try {
+      await onChange(await generateSnsDmReply(withUser, thread.id, trimmed));
+    } catch (error) {
+      Alert.alert('SNS DM 답장 실패', error instanceof Error ? error.message : String(error));
+      await onChange(withUser);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <View style={styles.screen}>
+      {activeDmId ? (
+        <DmModal
+          thread={(state.snsDmThreads || []).find(item => item.id === activeDmId)}
+          value={dmText}
+          onChangeText={setDmText}
+          onClose={() => setActiveDmId('')}
+          onSend={() => sendDmReply(false)}
+          onAiSend={() => sendDmReply(true)}
+          loading={loading}
+        />
+      ) : null}
       <View style={styles.header}>
         <Pressable onPress={onBack} style={styles.back}><Text style={styles.backText}>‹</Text></Pressable>
         <View style={styles.headerTitle}>
@@ -88,7 +144,7 @@ export function SNSScreen({ state, onBack, onChange }: {
 
       <View style={styles.generator}>
         <Text style={styles.generatorTitle}>SNS 생성</Text>
-        <Text style={styles.generatorSub}>{selectedCharacter?.name || '캐릭터'} · 최근 DM 맥락 참고</Text>
+        <Text style={styles.generatorSub}>{selectedCharacter?.name || '캐릭터'} · 댓글/DM/이미지 포함</Text>
         {imageData ? <Image source={{ uri: imageData }} style={styles.pendingImage} /> : null}
         <Pressable onPress={choosePostImage} style={styles.secondary}><Text style={styles.secondaryText}>{imageData ? '사진 변경' : '사진 선택'}</Text></Pressable>
         <Pressable onPress={generate} style={styles.primary} disabled={loading || !selectedCharacter}>
@@ -96,11 +152,24 @@ export function SNSScreen({ state, onBack, onChange }: {
         </Pressable>
       </View>
 
+      {(state.snsDmThreads || []).length ? (
+        <View style={styles.dmStrip}>
+          <Text style={styles.dmTitle}>SNS DM</Text>
+          <FlatList
+            horizontal
+            data={(state.snsDmThreads || []).slice(0, 8)}
+            keyExtractor={item => item.id}
+            contentContainerStyle={styles.dmList}
+            renderItem={({ item }) => <Pressable onPress={() => setActiveDmId(item.id)}><DmCard thread={item} /></Pressable>}
+          />
+        </View>
+      ) : null}
+
       <FlatList
         data={posts}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.feed}
-        renderItem={({ item }) => <PostCard post={item} character={state.characters.find(character => character.id === item.characterId)} onLike={() => likePost(item.id)} onComment={content => addComment(item.id, content)} />}
+        renderItem={({ item }) => <PostCard post={item} character={state.characters.find(character => character.id === item.characterId)} onLike={() => likePost(item.id)} onComment={content => addComment(item.id, content)} onAiComment={content => addAiComment(item, content)} />}
       />
     </View>
   );
@@ -123,7 +192,56 @@ function CharacterChip({ character, active, onPress }: { character: SNSGodCharac
   );
 }
 
-function PostCard({ post, character, onLike, onComment }: { post: SNSPost; character?: SNSGodCharacter; onLike: () => void; onComment: (content: string) => void }) {
+function DmCard({ thread }: { thread: SNSDmThread }) {
+  const last = thread.messages[thread.messages.length - 1];
+  return (
+    <View style={styles.dmCard}>
+      <Text style={styles.dmCardTitle} numberOfLines={1}>{thread.title}</Text>
+      <Text style={styles.dmCardBody} numberOfLines={2}>{last?.body || '새 SNS DM'}</Text>
+      {thread.unread ? <Text style={styles.dmBadge}>{thread.unread}</Text> : null}
+    </View>
+  );
+}
+
+function DmModal({ thread, value, onChangeText, onClose, onSend, onAiSend, loading }: {
+  thread?: SNSDmThread;
+  value: string;
+  onChangeText: (value: string) => void;
+  onClose: () => void;
+  onSend: () => void;
+  onAiSend: () => void;
+  loading: boolean;
+}) {
+  if (!thread) return null;
+  return (
+    <View style={styles.modal}>
+      <View style={styles.dmPanel}>
+        <View style={styles.dmPanelHeader}>
+          <Text style={styles.dmPanelTitle}>{thread.title}</Text>
+          <Pressable onPress={onClose} style={styles.dmPanelClose}><Text style={styles.dmPanelCloseText}>닫기</Text></Pressable>
+        </View>
+        <FlatList
+          data={thread.messages}
+          keyExtractor={item => item.id}
+          contentContainerStyle={styles.dmMessages}
+          renderItem={({ item }) => (
+            <View style={[styles.dmBubble, item.from === 'user' && styles.dmBubbleMine]}>
+              <Text style={styles.dmSpeaker}>{item.author || item.from}</Text>
+              <Text style={styles.dmBubbleText}>{item.body}</Text>
+            </View>
+          )}
+        />
+        <View style={styles.dmComposer}>
+          <TextInput value={value} onChangeText={onChangeText} style={styles.dmInput} placeholder="SNS DM 입력" placeholderTextColor="#aaa" />
+          <Pressable onPress={onSend} style={styles.dmSend}><Text style={styles.dmSendText}>보내기</Text></Pressable>
+          <Pressable onPress={onAiSend} disabled={loading} style={[styles.dmSend, styles.dmAiSend, loading && styles.disabled]}><Text style={styles.dmAiText}>AI</Text></Pressable>
+        </View>
+      </View>
+    </View>
+  );
+}
+
+function PostCard({ post, character, onLike, onComment, onAiComment }: { post: SNSPost; character?: SNSGodCharacter; onLike: () => void; onComment: (content: string) => void; onAiComment: (content: string) => void }) {
   const [comment, setComment] = useState('');
   function submitComment() {
     onComment(comment);
@@ -135,7 +253,7 @@ function PostCard({ post, character, onLike, onComment }: { post: SNSPost; chara
         <Avatar character={character} size={42} />
         <View style={styles.postMeta}>
           <Text style={styles.postName}>{character?.name || 'Character'}</Text>
-          <Text style={styles.postTime}>{new Date(post.createdAt).toLocaleString()}</Text>
+          <Text style={styles.postTime}>@{post.handle || character?.handle || character?.id} · {new Date(post.createdAt).toLocaleString()}</Text>
         </View>
         <Text style={styles.more}>...</Text>
       </View>
@@ -144,17 +262,19 @@ function PostCard({ post, character, onLike, onComment }: { post: SNSPost; chara
       {post.hashtags?.length ? <Text style={styles.tags}>{post.hashtags.map(tag => `#${tag}`).join(' ')}</Text> : null}
       <View style={styles.postFooter}>
         <Pressable onPress={onLike}><Text style={styles.footerText}>좋아요 {post.likes || 0}개</Text></Pressable>
-        <Text style={styles.footerText}>댓글 {post.comments?.length || 0}개</Text>
+        <Text style={styles.footerText}>댓글 {post.replies || post.comments?.length || 0}개</Text>
+        {post.platform === 'twitter' ? <Text style={styles.footerText}>조회 {post.views || 0}</Text> : null}
       </View>
-      {(post.comments || []).slice(-3).map(item => (
+      {(post.comments || []).slice(-5).map(item => (
         <View key={item.id} style={styles.commentRow}>
-          <Text style={styles.commentAuthor}>{item.author}</Text>
+          <Text style={styles.commentAuthor}>{item.author}{item.ai ? ' · AI' : ''}</Text>
           <Text style={styles.commentText}>{item.content}</Text>
         </View>
       ))}
       <View style={styles.commentComposer}>
         <TextInput value={comment} onChangeText={setComment} style={styles.commentInput} placeholder="댓글 달기" placeholderTextColor="#aaa" />
         <Pressable onPress={submitComment} style={styles.commentButton}><Text style={styles.commentButtonText}>게시</Text></Pressable>
+        <Pressable onPress={() => { onAiComment(comment); setComment(''); }} style={styles.commentButtonAlt}><Text style={styles.commentButtonAltText}>AI</Text></Pressable>
       </View>
     </View>
   );
@@ -187,6 +307,13 @@ const styles = StyleSheet.create({
   secondaryText: { color: colors.text, fontWeight: '900' },
   pendingImage: { marginTop: 12, width: '100%', height: 180, borderRadius: 8, backgroundColor: '#eee' },
   feed: { padding: 12, gap: 14, paddingBottom: 28 },
+  dmStrip: { paddingVertical: 10, borderTopWidth: StyleSheet.hairlineWidth, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: colors.border, backgroundColor: '#fffefa' },
+  dmTitle: { paddingHorizontal: 12, color: colors.text, fontWeight: '900', marginBottom: 8 },
+  dmList: { paddingHorizontal: 12, gap: 8 },
+  dmCard: { width: 180, minHeight: 72, padding: 10, borderRadius: 8, borderWidth: 1, borderColor: colors.border, backgroundColor: '#fff', position: 'relative' },
+  dmCardTitle: { color: colors.text, fontWeight: '900' },
+  dmCardBody: { marginTop: 5, color: colors.sub, lineHeight: 18 },
+  dmBadge: { position: 'absolute', top: 8, right: 8, minWidth: 20, height: 20, borderRadius: 10, overflow: 'hidden', textAlign: 'center', lineHeight: 20, backgroundColor: colors.danger, color: '#fff', fontWeight: '900' },
   postCard: { borderRadius: 8, borderWidth: 1, borderColor: colors.border, backgroundColor: '#fff', overflow: 'hidden' },
   postHeader: { minHeight: 64, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center', gap: 10, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.border },
   postMeta: { flex: 1 },
@@ -204,5 +331,25 @@ const styles = StyleSheet.create({
   commentComposer: { flexDirection: 'row', gap: 8, padding: 12, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.border },
   commentInput: { flex: 1, minHeight: 38, borderRadius: 19, paddingHorizontal: 12, backgroundColor: '#f7f5ef', color: colors.text },
   commentButton: { minWidth: 52, minHeight: 38, borderRadius: 19, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.accent },
-  commentButtonText: { color: '#241a00', fontWeight: '900' }
+  commentButtonAlt: { minWidth: 44, minHeight: 38, borderRadius: 19, alignItems: 'center', justifyContent: 'center', backgroundColor: '#111' },
+  commentButtonText: { color: '#241a00', fontWeight: '900' },
+  commentButtonAltText: { color: '#fff', fontWeight: '900' },
+  modal: { ...StyleSheet.absoluteFillObject, zIndex: 20, backgroundColor: 'rgba(0,0,0,0.38)', justifyContent: 'flex-end' },
+  dmPanel: { maxHeight: '82%', backgroundColor: '#f7f2e9', borderTopLeftRadius: 18, borderTopRightRadius: 18, overflow: 'hidden' },
+  dmPanelHeader: { minHeight: 58, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.border },
+  dmPanelTitle: { color: colors.text, fontSize: 17, fontWeight: '900' },
+  dmPanelClose: { minHeight: 36, paddingHorizontal: 12, borderRadius: 18, backgroundColor: '#fff' },
+  dmPanelCloseText: { lineHeight: 36, color: colors.text, fontWeight: '900' },
+  dmMessages: { padding: 12, gap: 8 },
+  dmBubble: { alignSelf: 'flex-start', maxWidth: '84%', padding: 10, borderRadius: 14, backgroundColor: '#fff' },
+  dmBubbleMine: { alignSelf: 'flex-end', backgroundColor: '#fee56a' },
+  dmSpeaker: { color: colors.sub, fontSize: 11, fontWeight: '900', marginBottom: 3 },
+  dmBubbleText: { color: colors.text, fontSize: 15, lineHeight: 21 },
+  dmComposer: { flexDirection: 'row', gap: 8, padding: 10, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.border },
+  dmInput: { flex: 1, minHeight: 42, borderRadius: 18, backgroundColor: '#fff', paddingHorizontal: 12, color: colors.text },
+  dmSend: { minWidth: 58, minHeight: 42, borderRadius: 16, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' },
+  dmAiSend: { backgroundColor: '#111' },
+  dmSendText: { color: '#241a00', fontWeight: '900' },
+  dmAiText: { color: '#fff', fontWeight: '900' },
+  disabled: { opacity: 0.55 }
 });

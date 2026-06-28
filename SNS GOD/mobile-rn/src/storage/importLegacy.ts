@@ -66,6 +66,28 @@ function normalizeRooms(parsed: Record<string, unknown>, fallback: SNSGodState):
   return Object.keys(normalized).length ? normalized : fallback.chatRooms;
 }
 
+function normalizeSnsDmThreads(parsed: Record<string, unknown>, characters: SNSGodState['characters']): SNSGodState['snsDmThreads'] {
+  return (firstArray(parsed.snsDmThreads, parsed.dmThreads, parsed.snsDms) || []).filter(isObject).map((item, index) => {
+    const rawMessages = Array.isArray(item.messages) ? item.messages : [];
+    return {
+      id: String(item.id || item.threadId || `snsdm_${index}`),
+      postId: item.postId ? String(item.postId) : undefined,
+      characterId: String(item.characterId || item.authorId || characters[0]?.id || 'unknown'),
+      title: String(item.title || item.name || 'SNS DM'),
+      messages: rawMessages.filter(isObject).map((message, messageIndex) => ({
+        id: String(message.id || `snsdmmsg_${index}_${messageIndex}`),
+        from: String(message.from || message.role || '').toLowerCase().includes('user') ? 'user' as const : String(message.from || '').toLowerCase().includes('third') ? 'thirdParty' as const : 'character' as const,
+        author: message.author ? String(message.author) : message.from ? String(message.from) : undefined,
+        body: String(message.body || message.content || message.text || ''),
+        createdAt: Number(message.createdAt || message.time || Date.now())
+      })).filter(message => message.body),
+      createdAt: Number(item.createdAt || item.time || Date.now()),
+      updatedAt: Number(item.updatedAt || item.lastActivity || item.createdAt || Date.now()),
+      unread: Number(item.unread || 0)
+    };
+  });
+}
+
 export function normalizeLegacyState(rawJson: string): SNSGodState {
   const parsed = JSON.parse(rawJson) as unknown;
   if (!isObject(parsed)) throw new Error('백업 JSON 형식이 올바르지 않습니다.');
@@ -110,7 +132,7 @@ export function normalizeLegacyState(rawJson: string): SNSGodState {
       content: String(item.content || item.text || item.caption || ''),
       createdAt: Number(item.createdAt || item.time || Date.now())
     })) as SNSGodState['snsPosts'],
-    snsDmThreads: firstArray(parsed.snsDmThreads, parsed.dmThreads, parsed.snsDms) || [],
+    snsDmThreads: normalizeSnsDmThreads(parsed, characters),
     groupRooms: (firstArray(parsed.groupRooms, parsed.groupChatRooms, parsed.groups) || []).map(item => {
       if (!isObject(item)) return item;
       const participants = Array.isArray(item.participantIds)

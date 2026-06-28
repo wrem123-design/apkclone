@@ -3,7 +3,7 @@ import { ActivityIndicator, Alert, FlatList, Image, KeyboardAvoidingView, Platfo
 import { Avatar } from '../components/Avatar';
 import { colors } from '../theme';
 import { SNSGodMessage, SNSGodState } from '../types';
-import { callLLM } from '../logic/api';
+import { callLLM, generateImageDataUri } from '../logic/api';
 import { makeId } from '../logic/ids';
 import { appendMessage, findCharacter, findRoom, roomMessages, updateCharacter } from '../logic/stateHelpers';
 import { buildChatPrompt } from '../logic/prompts';
@@ -56,6 +56,14 @@ export function ChatRoomScreen({ state, roomId, onBack, onChange, onOpenRoomSett
       };
       const bubbles = reply.messages.length ? reply.messages : [{ content: '응.' }];
       for (const bubble of bubbles) {
+        let mediaData = '';
+        if (bubble.imagePrompt && next.config.imageGeneration?.enabled !== false) {
+          try {
+            mediaData = await generateImageDataUri(next, bubble.imagePrompt, character);
+          } catch (error) {
+            bubble.imageCaption = `${bubble.imageCaption || ''}\n이미지 생성 실패: ${error instanceof Error ? error.message : String(error)}`.trim();
+          }
+        }
         next = appendMessage(next, room.id, {
           id: makeId('msg'),
           role: 'character',
@@ -64,7 +72,9 @@ export function ChatRoomScreen({ state, roomId, onBack, onChange, onOpenRoomSett
           createdAt: Date.now(),
           sticker: bubble.sticker,
           imagePrompt: bubble.imagePrompt,
-          imageCaption: bubble.imageCaption
+          imageCaption: bubble.imageCaption,
+          mediaData: mediaData || undefined,
+          mediaType: mediaData ? 'image' : undefined
         });
       }
       if (reply.newMemory?.trim()) {
@@ -131,7 +141,7 @@ export function ChatRoomScreen({ state, roomId, onBack, onChange, onOpenRoomSett
         data={messages}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.messages}
-        renderItem={({ item }) => <MessageBubble message={item} characterName={character.name} characterColor={character.color} />}
+        renderItem={({ item }) => <MessageBubble message={item} character={character} />}
       />
 
       <View style={styles.composer}>
@@ -152,20 +162,22 @@ export function ChatRoomScreen({ state, roomId, onBack, onChange, onOpenRoomSett
   );
 }
 
-function MessageBubble({ message, characterName, characterColor }: { message: SNSGodMessage; characterName: string; characterColor?: string }) {
+function MessageBubble({ message, character }: { message: SNSGodMessage; character: NonNullable<ReturnType<typeof findCharacter>> }) {
   const mine = message.role === 'user';
   const system = message.role === 'system';
+  const sticker = message.sticker ? (character.stickers || []).find(item => String(item.id) === String(message.sticker)) : undefined;
   if (system) {
     return <View style={styles.systemBubble}><Text style={styles.systemText}>{message.content}</Text></View>;
   }
   return (
     <View style={[styles.messageRow, mine && styles.messageRowMine]}>
-      {!mine ? <Avatar character={{ id: 'c', name: characterName, color: characterColor, avatarText: characterName.slice(0, 1) }} size={34} /> : null}
+      {!mine ? <Avatar character={character} size={34} /> : null}
       <View style={[styles.bubble, mine ? styles.myBubble : styles.theirBubble]}>
         <Text style={[styles.bubbleText, mine && styles.myText]}>{message.content}</Text>
-        {message.sticker ? <Text style={styles.stickerText}>스티커 · {message.sticker}</Text> : null}
+        {sticker?.data || sticker?.mediaData ? <Image source={{ uri: sticker.data || sticker.mediaData || '' }} style={styles.stickerImage} resizeMode="contain" /> : message.sticker ? <Text style={styles.stickerText}>스티커 · {sticker?.name || message.sticker}</Text> : null}
         {message.mediaData ? <Image source={{ uri: message.mediaData }} style={styles.messageImage} resizeMode="cover" /> : null}
         {message.imagePrompt ? <Text style={styles.imageHint}>이미지 프롬프트: {message.imagePrompt}</Text> : null}
+        {message.imageCaption ? <Text style={styles.imageHint}>{message.imageCaption}</Text> : null}
       </View>
     </View>
   );
@@ -192,6 +204,7 @@ const styles = StyleSheet.create({
   bubbleText: { fontSize: 16, lineHeight: 22, color: '#222' },
   myText: { color: '#211b00' },
   stickerText: { marginTop: 6, color: '#6c4f00', fontWeight: '900' },
+  stickerImage: { marginTop: 8, width: 128, height: 128, borderRadius: 12 },
   messageImage: { marginTop: 8, width: 210, height: 210, maxWidth: '100%', borderRadius: 12, backgroundColor: '#eee' },
   imageHint: { marginTop: 6, fontSize: 12, color: colors.sub },
   systemBubble: { alignSelf: 'center', maxWidth: '88%', borderRadius: 14, paddingHorizontal: 12, paddingVertical: 7, backgroundColor: 'rgba(255,255,255,0.45)' },

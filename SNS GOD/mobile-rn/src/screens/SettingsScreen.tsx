@@ -54,6 +54,27 @@ export function SettingsScreen({ state, onChange, onBack, onOpenLorebook, onOpen
   const [randomDmEnabled, setRandomDmEnabled] = useState(state.config.randomDmEnabled !== false);
   const [snsAutoPostEnabled, setSnsAutoPostEnabled] = useState(state.config.snsAutoPostEnabled !== false);
   const [characterPhoneCallEnabled, setCharacterPhoneCallEnabled] = useState(state.config.characterPhoneCallEnabled !== false);
+  const imageConfig = state.config.imageGeneration || {};
+  const snsConfig = state.config.sns || {};
+  const [imageEnabled, setImageEnabled] = useState(imageConfig.enabled === true);
+  const [imageApiKey, setImageApiKey] = useState(String(imageConfig.apiKey || ''));
+  const [imageEndpoint, setImageEndpoint] = useState(String(imageConfig.apiEndpoint || 'https://api.openai.com/v1/responses'));
+  const [imageModel, setImageModel] = useState(String(imageConfig.apiModel || 'gpt-5'));
+  const [imageSize, setImageSize] = useState(String(imageConfig.size || '1024x1024'));
+  const [imageQuality, setImageQuality] = useState(String(imageConfig.quality || 'auto'));
+  const [imagePrefix, setImagePrefix] = useState(String(imageConfig.promptPrefix || ''));
+  const [imageNegative, setImageNegative] = useState(String(imageConfig.negativePrompt || ''));
+  const [imageNsfw, setImageNsfw] = useState(imageConfig.nsfw === true);
+  const [imageIllustration, setImageIllustration] = useState(imageConfig.illustrationMode === true);
+  const [snsDefaultPlatform, setSnsDefaultPlatform] = useState(String(snsConfig.platform || 'hybrid'));
+  const [snsCommentQty, setSnsCommentQty] = useState(String(snsConfig.commentQty || '2-4'));
+  const [snsSubject, setSnsSubject] = useState(String(snsConfig.subject || ''));
+  const [snsMood, setSnsMood] = useState(String(snsConfig.mood || ''));
+  const [snsAnonymous, setSnsAnonymous] = useState(snsConfig.anonymous === true);
+  const [snsTextOnly, setSnsTextOnly] = useState(snsConfig.textOnly === true);
+  const [snsNoDM, setSnsNoDM] = useState(snsConfig.noDM === true);
+  const [snsThirdPartyDM, setSnsThirdPartyDM] = useState(snsConfig.thirdPartyDM === true);
+  const [snsAutoImage, setSnsAutoImage] = useState(snsConfig.autoImage !== false);
   const [importJson, setImportJson] = useState('');
   const [saving, setSaving] = useState(false);
   const [testingApi, setTestingApi] = useState(false);
@@ -200,6 +221,68 @@ export function SettingsScreen({ state, onChange, onBack, onOpenLorebook, onOpen
     }
   }
 
+  async function saveImageGeneration() {
+    if (saving) return;
+    setSaving(true);
+    try {
+      await onChange({
+        ...state,
+        config: {
+          ...state.config,
+          imageGeneration: {
+            ...(state.config.imageGeneration || {}),
+            enabled: imageEnabled,
+            provider: 'openai',
+            apiKey: imageApiKey.trim(),
+            apiEndpoint: imageEndpoint.trim() || 'https://api.openai.com/v1/responses',
+            apiModel: imageModel.trim() || 'gpt-5',
+            size: imageSize.trim() || '1024x1024',
+            quality: imageQuality.trim() || 'auto',
+            promptPrefix: imagePrefix,
+            negativePrompt: imageNegative,
+            nsfw: imageNsfw,
+            illustrationMode: imageIllustration
+          }
+        }
+      });
+      setStatus('이미지 생성 설정 저장 완료');
+    } catch (error) {
+      setStatus(`이미지 생성 설정 저장 실패: ${error instanceof Error ? error.message : String(error)}`);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function saveSnsOptions() {
+    if (saving) return;
+    setSaving(true);
+    try {
+      await onChange({
+        ...state,
+        config: {
+          ...state.config,
+          sns: {
+            ...(state.config.sns || {}),
+            platform: snsDefaultPlatform === 'twitter' || snsDefaultPlatform === 'instagram' ? snsDefaultPlatform : 'hybrid',
+            commentQty: snsCommentQty.trim() || '2-4',
+            subject: snsSubject,
+            mood: snsMood,
+            anonymous: snsAnonymous,
+            textOnly: snsTextOnly,
+            noDM: snsNoDM,
+            thirdPartyDM: snsThirdPartyDM,
+            autoImage: snsAutoImage
+          }
+        }
+      });
+      setStatus('SNS 옵션 저장 완료');
+    } catch (error) {
+      setStatus(`SNS 옵션 저장 실패: ${error instanceof Error ? error.message : String(error)}`);
+    } finally {
+      setSaving(false);
+    }
+  }
+
   async function exportBackup() {
     try {
       const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
@@ -335,6 +418,65 @@ export function SettingsScreen({ state, onChange, onBack, onOpenLorebook, onOpen
         </View>
 
         <View style={styles.card}>
+          <Text style={styles.cardTitle}>이미지 생성</Text>
+          <SwitchLine label="AI 이미지 생성 사용" value={imageEnabled} onChange={setImageEnabled} />
+          <SwitchLine label="삽화/태그 모드" value={imageIllustration} onChange={setImageIllustration} />
+          <SwitchLine label="NSFW 프롬프트 허용" value={imageNsfw} onChange={setImageNsfw} />
+          <Text style={styles.label}>Endpoint</Text>
+          <TextInput value={imageEndpoint} onChangeText={setImageEndpoint} style={styles.input} autoCapitalize="none" />
+          <Text style={styles.label}>모델</Text>
+          <TextInput value={imageModel} onChangeText={setImageModel} style={styles.input} autoCapitalize="none" />
+          <Text style={styles.label}>이미지 API 키</Text>
+          <TextInput value={imageApiKey} onChangeText={setImageApiKey} style={styles.input} secureTextEntry={!showKeys} autoCapitalize="none" />
+          <View style={styles.twoCols}>
+            <View style={styles.col}>
+              <Text style={styles.label}>크기</Text>
+              <TextInput value={imageSize} onChangeText={setImageSize} style={styles.input} autoCapitalize="none" />
+            </View>
+            <View style={styles.col}>
+              <Text style={styles.label}>품질</Text>
+              <TextInput value={imageQuality} onChangeText={setImageQuality} style={styles.input} autoCapitalize="none" />
+            </View>
+          </View>
+          <Text style={styles.label}>프롬프트 접두 지시</Text>
+          <TextInput value={imagePrefix} onChangeText={setImagePrefix} style={[styles.input, styles.textarea]} multiline textAlignVertical="top" />
+          <Text style={styles.label}>네거티브 프롬프트</Text>
+          <TextInput value={imageNegative} onChangeText={setImageNegative} style={[styles.input, styles.textareaSmall]} multiline textAlignVertical="top" />
+          <Text style={styles.help}>OpenAI Responses image_generation 또는 /images/generations 호환 endpoint를 사용할 수 있습니다. 비워두면 OpenAI 텍스트 API 키를 대체 사용합니다.</Text>
+          <Pressable onPress={saveImageGeneration} style={styles.primary}><Text style={styles.primaryText}>이미지 설정 저장</Text></Pressable>
+        </View>
+
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>SNS 생성 옵션</Text>
+          <Text style={styles.label}>기본 플랫폼</Text>
+          <View style={styles.segmentRow}>
+            {['hybrid', 'instagram', 'twitter'].map(item => (
+              <Pressable key={item} onPress={() => setSnsDefaultPlatform(item)} style={[styles.segment, snsDefaultPlatform === item && styles.segmentActive]}>
+                <Text style={[styles.segmentText, snsDefaultPlatform === item && styles.segmentTextActive]}>{item}</Text>
+              </Pressable>
+            ))}
+          </View>
+          <View style={styles.twoCols}>
+            <View style={styles.col}>
+              <Text style={styles.label}>댓글 수</Text>
+              <TextInput value={snsCommentQty} onChangeText={setSnsCommentQty} style={styles.input} />
+            </View>
+            <View style={styles.col}>
+              <Text style={styles.label}>무드</Text>
+              <TextInput value={snsMood} onChangeText={setSnsMood} style={styles.input} />
+            </View>
+          </View>
+          <Text style={styles.label}>소재</Text>
+          <TextInput value={snsSubject} onChangeText={setSnsSubject} style={styles.input} />
+          <SwitchLine label="익명계" value={snsAnonymous} onChange={setSnsAnonymous} />
+          <SwitchLine label="글만 생성" value={snsTextOnly} onChange={setSnsTextOnly} />
+          <SwitchLine label="SNS DM 생성 안함" value={snsNoDM} onChange={setSnsNoDM} />
+          <SwitchLine label="제3자 DM 허용" value={snsThirdPartyDM} onChange={setSnsThirdPartyDM} />
+          <SwitchLine label="이미지 자동 생성" value={snsAutoImage} onChange={setSnsAutoImage} />
+          <Pressable onPress={saveSnsOptions} style={styles.primary}><Text style={styles.primaryText}>SNS 옵션 저장</Text></Pressable>
+        </View>
+
+        <View style={styles.card}>
           <Text style={styles.cardTitle}>자동화</Text>
           <SwitchLine label="전체 자동화" value={autoEnabled} onChange={setAutoEnabled} />
           <SwitchLine label="랜덤 첫 메시지" value={randomDmEnabled} onChange={setRandomDmEnabled} />
@@ -394,6 +536,7 @@ const styles = StyleSheet.create({
   label: { fontSize: 12, fontWeight: '800', color: colors.sub, marginTop: 10, marginBottom: 6 },
   input: { minHeight: 44, borderWidth: 1, borderColor: colors.border, borderRadius: 7, paddingHorizontal: 12, color: colors.text, backgroundColor: '#fffefa' },
   textarea: { minHeight: 128, paddingVertical: 10 },
+  textareaSmall: { minHeight: 86, paddingVertical: 10 },
   segmentRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   segment: { minHeight: 36, paddingHorizontal: 12, borderRadius: 18, borderWidth: 1, borderColor: colors.border, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fffefa' },
   segmentActive: { backgroundColor: colors.accent, borderColor: '#b89117' },

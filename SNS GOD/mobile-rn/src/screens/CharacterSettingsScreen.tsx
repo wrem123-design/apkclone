@@ -5,6 +5,7 @@ import { SNSGodCharacter, SNSGodState } from '../types';
 import { clampNumber } from '../logic/ids';
 import { findCharacter, updateCharacter } from '../logic/stateHelpers';
 import { pickImageDataUri } from '../logic/media';
+import { generateImageDataUri } from '../logic/api';
 
 export function CharacterSettingsScreen({ state, characterId, onBack, onChange }: {
   state: SNSGodState;
@@ -15,7 +16,7 @@ export function CharacterSettingsScreen({ state, characterId, onBack, onChange }
   const character = findCharacter(state, characterId);
   const [draft, setDraft] = useState<SNSGodCharacter | null>(character ? { ...character } : null);
   const [memoryText, setMemoryText] = useState((character?.memories || []).join('\n'));
-  const [stickerText, setStickerText] = useState((character?.stickers || []).map(item => `${item.id}|${item.name}|${item.description || ''}`).join('\n'));
+  const [stickerText, setStickerText] = useState((character?.stickers || []).map(item => `${item.id}|${item.name}|${item.description || ''}|${item.data || item.mediaData || ''}`).join('\n'));
 
   if (!character || !draft) {
     return (
@@ -47,8 +48,8 @@ export function CharacterSettingsScreen({ state, characterId, onBack, onChange }
       ,
       memories: memoryText.split('\n').map(item => item.trim()).filter(Boolean).slice(-80),
       stickers: stickerText.split('\n').map(item => item.trim()).filter(Boolean).map((line, index) => {
-        const [id, name, description] = line.split('|').map(part => part.trim());
-        return { id: id || `sticker_${index + 1}`, name: name || id || `스티커 ${index + 1}`, description: description || undefined };
+        const [id, name, description, data] = line.split('|').map(part => part.trim());
+        return { id: id || `sticker_${index + 1}`, name: name || id || `스티커 ${index + 1}`, description: description || undefined, data: data || undefined, mediaData: data || undefined };
       }).slice(0, 80)
     });
     await onChange(next);
@@ -68,6 +69,31 @@ export function CharacterSettingsScreen({ state, characterId, onBack, onChange }
     }
   }
 
+  async function addStickerImage() {
+    try {
+      const image = await pickImageDataUri();
+      if (!image || !draft) return;
+      const id = `sticker_${Date.now().toString(36)}`;
+      const line = `${id}|${draft.name} 스티커|직접 추가한 이미지 스티커|${image}`;
+      setStickerText(prev => prev.trim() ? `${prev.trim()}\n${line}` : line);
+    } catch (error) {
+      Alert.alert('스티커 선택 실패', error instanceof Error ? error.message : String(error));
+    }
+  }
+
+  async function generateProfileImage(kind: 'profileImage' | 'coverImage') {
+    if (!draft) return;
+    try {
+      const prompt = kind === 'profileImage'
+        ? String(draft.profileAvatarPrompt || `portrait profile photo, clear face, casual expression, messenger profile picture, ${draft.name}`)
+        : String(draft.profileCoverPrompt || `quiet mood cover background for ${draft.name}, no people, no text`);
+      const image = await generateImageDataUri(state, prompt, draft);
+      set(kind, image);
+    } catch (error) {
+      Alert.alert('AI 이미지 생성 실패', error instanceof Error ? error.message : String(error));
+    }
+  }
+
   return (
     <View style={styles.screen}>
       <View style={styles.header}>
@@ -83,8 +109,10 @@ export function CharacterSettingsScreen({ state, characterId, onBack, onChange }
           <Field label="상태 메시지" value={String(draft.statusMessage || '')} onChangeText={value => set('statusMessage', value)} />
           <Field label="프로필 상태 문구" value={String(draft.profileMessage || '')} onChangeText={value => set('profileMessage', value)} help="캐릭터 사진을 눌렀을 때 보이는 프로필 문구입니다." />
           <ImageField label="아바타/목록 사진" value={draft.avatar} onChoose={() => chooseImage('avatar')} onClear={() => set('avatar', '')} />
-          <ImageField label="프로필 큰 사진" value={draft.profileImage} onChoose={() => chooseImage('profileImage')} onClear={() => set('profileImage', '')} />
-          <ImageField label="프로필 배경 사진" value={draft.coverImage} onChoose={() => chooseImage('coverImage')} onClear={() => set('coverImage', '')} wide />
+          <ImageField label="프로필 큰 사진" value={draft.profileImage} onChoose={() => chooseImage('profileImage')} onClear={() => set('profileImage', '')} onGenerate={() => generateProfileImage('profileImage')} />
+          <ImageField label="프로필 배경 사진" value={draft.coverImage} onChoose={() => chooseImage('coverImage')} onClear={() => set('coverImage', '')} onGenerate={() => generateProfileImage('coverImage')} wide />
+          <Field label="프로필사진 프롬프트" value={String(draft.profileAvatarPrompt || '')} onChangeText={value => set('profileAvatarPrompt', value)} multiline />
+          <Field label="배경사진 프롬프트" value={String(draft.profileCoverPrompt || '')} onChangeText={value => set('profileCoverPrompt', value)} multiline />
           <SwitchRow label="활성화" value={draft.enabled !== false} onValueChange={value => set('enabled', value)} />
           <SwitchRow label="먼저 말하기" value={draft.proactiveEnabled !== false} onValueChange={value => set('proactiveEnabled', value)} />
         </Section>
@@ -116,12 +144,14 @@ export function CharacterSettingsScreen({ state, characterId, onBack, onChange }
         </Section>
 
         <Section title="스티커">
+          <StickerPreview text={stickerText} />
+          <Pressable onPress={addStickerImage} style={styles.imageButton}><Text style={styles.imageButtonText}>이미지 스티커 추가</Text></Pressable>
           <Field
             label="캐릭터 스티커"
             value={stickerText}
             onChangeText={setStickerText}
             multiline
-            help="한 줄에 id|이름|설명 형식입니다. AI가 답변 JSON의 sticker 값으로 id를 반환하면 말풍선에 표시됩니다."
+            help="한 줄에 id|이름|설명|이미지dataURI 형식입니다. AI가 답변 JSON의 sticker 값으로 id를 반환하면 실제 이미지가 표시됩니다."
           />
         </Section>
 
@@ -161,7 +191,7 @@ function NumberField({ label, value, onChange, help }: { label: string; value: u
   return <Field label={label} value={String(value ?? '')} onChangeText={text => onChange(Number(text) || 0)} help={help} />;
 }
 
-function ImageField({ label, value, onChoose, onClear, wide }: { label: string; value?: string; onChoose: () => void; onClear: () => void; wide?: boolean }) {
+function ImageField({ label, value, onChoose, onClear, onGenerate, wide }: { label: string; value?: string; onChoose: () => void; onClear: () => void; onGenerate?: () => void; wide?: boolean }) {
   return (
     <View style={styles.field}>
       <Text style={styles.label}>{label}</Text>
@@ -169,10 +199,29 @@ function ImageField({ label, value, onChoose, onClear, wide }: { label: string; 
         {value ? <Image source={{ uri: value }} style={[styles.preview, wide && styles.previewWide]} /> : <View style={[styles.preview, styles.emptyPreview, wide && styles.previewWide]}><Text style={styles.emptyPreviewText}>사진 없음</Text></View>}
         <View style={styles.imageButtons}>
           <Pressable onPress={onChoose} style={styles.imageButton}><Text style={styles.imageButtonText}>사진 선택</Text></Pressable>
+          {onGenerate ? <Pressable onPress={onGenerate} style={styles.imageButton}><Text style={styles.imageButtonText}>AI 생성</Text></Pressable> : null}
           <Pressable onPress={onClear} style={styles.imageButton}><Text style={styles.imageButtonText}>비우기</Text></Pressable>
         </View>
       </View>
       <Text style={styles.help}>휴대폰 갤러리에서 직접 선택합니다. 백업에는 이미지 데이터가 함께 저장됩니다.</Text>
+    </View>
+  );
+}
+
+function StickerPreview({ text }: { text: string }) {
+  const stickers = text.split('\n').map(line => {
+    const [id, name, description, data] = line.split('|').map(part => part.trim());
+    return { id, name, description, data };
+  }).filter(item => item.id || item.name || item.data).slice(0, 12);
+  if (!stickers.length) return <Text style={styles.help}>등록된 스티커가 없습니다.</Text>;
+  return (
+    <View style={styles.stickerGrid}>
+      {stickers.map((item, index) => (
+        <View key={`${item.id}-${index}`} style={styles.stickerTile}>
+          {item.data?.startsWith('data:') ? <Image source={{ uri: item.data }} style={styles.stickerImage} /> : <Text style={styles.stickerFallback}>ID</Text>}
+          <Text style={styles.stickerName} numberOfLines={1}>{item.name || item.id}</Text>
+        </View>
+      ))}
     </View>
   );
 }
@@ -212,6 +261,11 @@ const styles = StyleSheet.create({
   imageButtons: { flex: 1, gap: 8 },
   imageButton: { minHeight: 38, borderRadius: 8, borderWidth: 1, borderColor: colors.border, backgroundColor: '#fffefa', alignItems: 'center', justifyContent: 'center' },
   imageButtonText: { color: colors.text, fontWeight: '900' },
+  stickerGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  stickerTile: { width: 74, padding: 6, borderRadius: 8, borderWidth: 1, borderColor: colors.border, backgroundColor: '#fffefa', alignItems: 'center' },
+  stickerImage: { width: 48, height: 48, borderRadius: 8 },
+  stickerFallback: { width: 48, height: 48, borderRadius: 8, overflow: 'hidden', lineHeight: 48, textAlign: 'center', backgroundColor: '#eee8dc', color: colors.sub, fontWeight: '900' },
+  stickerName: { marginTop: 5, fontSize: 11, color: colors.text, fontWeight: '800' },
   primary: { minHeight: 48, borderRadius: 8, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' },
   primaryText: { color: '#241a00', fontWeight: '900', fontSize: 16 },
   empty: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.bg, padding: 24 },
