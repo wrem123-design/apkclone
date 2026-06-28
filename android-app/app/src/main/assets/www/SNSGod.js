@@ -35155,6 +35155,109 @@
     };
     // ---------------------------------------------------------------------
 
+    // --- FINAL KAKAO NAV / ROOM SETTINGS / PROFILE PARITY FIX ---
+    function mgReturnToThemeChatList() {
+        if (typeof mgFinalIsKakaoTheme === 'function' && mgFinalIsKakaoTheme()) {
+            mgPhoneApp = 'messenger';
+            activeTab = 'home';
+            mgMessengerLastTab = 'home';
+            return true;
+        }
+        activeTab = 'home';
+        return false;
+    }
+
+    if (typeof mgMoveAndroidBackUp === 'function') {
+        const mgBaseMoveAndroidBackThemeRoute = mgMoveAndroidBackUp;
+        mgMoveAndroidBackUp = function() {
+            if (['settings', 'appearance', 'characters', 'api', 'image', 'prompts', 'stickers', 'debug', 'lorebook'].includes(activeTab)) {
+                mgReturnToThemeChatList();
+                render();
+                return true;
+            }
+            return mgBaseMoveAndroidBackThemeRoute();
+        };
+        window.__snsGodAndroidBack = function() {
+            try { return mgMoveAndroidBackUp(); }
+            catch (error) {
+                console.warn('[SNSGod] Android back handler failed', error);
+                return false;
+            }
+        };
+    }
+
+    const mgBaseKakaoChatRowHtmlProfileParity = mgKakaoChatRowHtml;
+    mgKakaoChatRowHtml = function(row) {
+        const characterId = row?.avatars?.[0]?.id || '';
+        const count = row.type === 'group' ? `<span class="mg-kakao-member-count">${escapeHtml(row.count || 0)}</span>` : '';
+        const unread = row.unread ? `<span class="mg-kakao-unread">${escapeHtml(row.unread > 99 ? '99+' : row.unread)}</span>` : '';
+        if (!characterId || row.type === 'group') return mgBaseKakaoChatRowHtmlProfileParity(row);
+        return `<div class="mg-kakao-chat-row-wrap ${row.unread ? 'has-unread' : ''}">
+            <button class="mg-kakao-profile-open" type="button" data-action="show-bot-profile" data-id="${escapeHtml(characterId)}" title="프로필 보기">${mgKakaoStackAvatarHtml(row.avatars)}</button>
+            <button class="mg-kakao-chat-row mg-kakao-chat-open ${row.unread ? 'has-unread' : ''}" type="button" data-action="${escapeHtml(row.action)}" data-id="${escapeHtml(row.id)}">
+                <span class="mg-kakao-chat-main">
+                    <span class="mg-kakao-chat-title">${escapeHtml(row.title)}${count}</span>
+                    <span class="mg-kakao-chat-preview">${escapeHtml(row.subtitle || '대화 없음')}</span>
+                </span>
+                <span class="mg-kakao-chat-side"><span>${escapeHtml(row.time)}</span>${unread}</span>
+            </button>
+        </div>`;
+    };
+
+    const mgBaseHandleActionKakaoNavRoomProfile = handleAction;
+    handleAction = async function(action, element) {
+        if (action === 'go-back' && ['settings', 'appearance', 'characters', 'api', 'image', 'prompts', 'stickers', 'debug', 'lorebook'].includes(activeTab)) {
+            mgReturnToThemeChatList();
+            showStickerPanel = false;
+            openMessageMenuId = '';
+            render();
+            return;
+        }
+        if (action === 'select-room' || action === 'select-group-room' || action === 'select-random-chat') {
+            if (typeof mgUnifiedRoomSettingsOpen !== 'undefined') mgUnifiedRoomSettingsOpen = false;
+        }
+        if (action === 'mg-save-room-settings') {
+            if (typeof mgApplyUnifiedRoomSettingsFromForm === 'function') mgApplyUnifiedRoomSettingsFromForm({ persist: false });
+            if (typeof mgUnifiedRoomSettingsOpen !== 'undefined') mgUnifiedRoomSettingsOpen = false;
+            await mgFinalPersist('채팅방 설정 저장');
+            if (typeof showTransientNotice === 'function') showTransientNotice('채팅방 설정 저장 완료');
+            render();
+            return;
+        }
+        return mgBaseHandleActionKakaoNavRoomProfile(action, element);
+    };
+
+    const mgBaseAppHtmlChatTopRoomSettings = appHtml;
+    appHtml = function(...args) {
+        let html = String(mgBaseAppHtmlChatTopRoomSettings.apply(this, args));
+        if (activeTab === 'chat') {
+            html = html.replace(/<button\b(?=[^>]*data-action="(?:toggle-notifications|open-notification-center)")[\s\S]*?<\/button>/g, '');
+            if (!html.includes('data-action="mg-toggle-room-settings"') && html.includes('<div class="mg-actions">')) {
+                html = html.replace('<div class="mg-actions">', '<div class="mg-actions"><button class="mg-btn mg-top-extra primary" title="채팅방 설정" data-action="mg-toggle-room-settings">방 설정</button>');
+            }
+        }
+        if (botProfileModalCharacterId && !html.includes('mg-profile-card-modal') && typeof mgBotProfileModalHtml === 'function') html += mgBotProfileModalHtml();
+        return html;
+    };
+
+    const mgBaseInjectStylesKakaoProfileParity = injectStyles;
+    injectStyles = function(...args) {
+        mgBaseInjectStylesKakaoProfileParity.apply(this, args);
+        mgEnsureStyle('mg-kakao-profile-room-settings-fix-style', `
+            .mg-kakao-chat-row-wrap{display:grid;grid-template-columns:72px minmax(0,1fr);gap:18px;align-items:center;width:100%;min-height:96px;padding:12px 0;background:#fff;color:#111}
+            .mg-kakao-chat-row-wrap:hover{background:#f2f2f2}
+            .mg-kakao-profile-open{width:64px;height:64px;border:0;background:transparent;padding:0;display:grid;place-items:center;cursor:pointer}
+            .mg-kakao-profile-open>.mg-avatar{width:64px!important;height:64px!important;border-radius:24px!important;font-size:20px!important;box-shadow:none!important}
+            .mg-kakao-chat-open{grid-template-columns:minmax(0,1fr) auto!important;min-height:72px!important;padding:0!important;background:transparent!important}
+            .mg-view-chat .mg-actions [data-action="open-notification-center"],.mg-view-chat .mg-actions [data-action="toggle-notifications"]{display:none!important}
+            @media(max-width:780px){
+                .mg-kakao-chat-row-wrap{grid-template-columns:58px minmax(0,1fr);gap:14px;min-height:82px}
+                .mg-kakao-profile-open,.mg-kakao-profile-open>.mg-avatar{width:54px!important;height:54px!important;border-radius:20px!important}
+            }
+        `);
+    };
+    // ---------------------------------------------------------------------
+
     // --- FINAL BACKUP / IMPORT SUMMARY UX ---
     function mgStateSummaryForUser(data = state) {
         const characters = Array.isArray(data.characters) ? data.characters.length : 0;
