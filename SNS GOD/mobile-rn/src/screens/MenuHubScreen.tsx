@@ -9,34 +9,23 @@ type MenuItem = {
   onPress: () => void;
 };
 
-export function MenuHubScreen({ mode, onOpenRandom, onOpenSumGod, onOpenGallery, onNewCharacter, onNewGroupRoom, onNewRoom, onOpenNotifications, onOpenSettings }: {
-  mode: 'random' | 'etc';
-  onOpenRandom: () => void;
+export function MenuHubScreen({ mode, onOpenSumGod, onOpenGallery, onOpenNotifications, onOpenSettings }: {
+  mode: 'etc';
   onOpenSumGod: () => void;
   onOpenGallery: () => void;
-  onNewCharacter: () => void;
-  onNewGroupRoom: () => void;
-  onNewRoom: () => void;
   onOpenNotifications: () => void;
   onOpenSettings: () => void;
 }) {
-  const items: MenuItem[] = mode === 'random'
-    ? [
-      { title: '랜덤채팅', subtitle: '임시 캐릭터와 대화', icon: '?', onPress: onOpenRandom },
-      { title: 'SumGod', subtitle: '커플 질문 다이어리', icon: 'S', onPress: onOpenSumGod },
-      { title: '갤러리', subtitle: '저장된 이미지 보기', icon: '□', onPress: onOpenGallery }
-    ]
-    : [
-      { title: '새 1:1 대화', subtitle: '캐릭터별 대화방 추가', icon: '+', onPress: onNewRoom },
-      { title: '새 그룹대화', subtitle: '여러 캐릭터 단톡방', icon: '▦', onPress: onNewGroupRoom },
-      { title: '새 캐릭터', subtitle: '캐릭터 생성/등록', icon: '◇', onPress: onNewCharacter },
-      { title: '알림 목록', subtitle: '최근 알림 10개 확인', icon: '!', onPress: onOpenNotifications }
-    ];
+  const items: MenuItem[] = [
+    { title: 'SumGod', subtitle: '커플 질문 다이어리', icon: 'S', onPress: onOpenSumGod },
+    { title: '갤러리', subtitle: '저장된 이미지 보기', icon: '□', onPress: onOpenGallery },
+    { title: '알림 목록', subtitle: '최근 알림 10개 확인', icon: '!', onPress: onOpenNotifications }
+  ];
 
   return (
     <View style={styles.screen}>
       <View style={styles.header}>
-        <Text style={styles.title}>{mode === 'random' ? 'RANDOM' : 'ETC'}</Text>
+        <Text style={styles.title}>ETC</Text>
         <View style={styles.headerActions}>
           <Pressable accessibilityLabel="알림" onPress={onOpenNotifications} style={styles.roundIcon}><Text style={styles.roundIconText}>!</Text></Pressable>
           <Pressable accessibilityLabel="설정" onPress={onOpenSettings} style={styles.roundIcon}><Text style={styles.roundIconText}>⚙</Text></Pressable>

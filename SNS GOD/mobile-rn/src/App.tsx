@@ -141,18 +141,18 @@ export default function App() {
     if (tab === 'friends') setRoute({ name: 'chatList' });
     if (tab === 'instagram') setRoute({ name: 'sns', platform: 'instagram' });
     if (tab === 'twitter') setRoute({ name: 'sns', platform: 'twitter' });
-    if (tab === 'random') setRoute({ name: 'randomHub' });
+    if (tab === 'random') setRoute({ name: 'random' });
     if (tab === 'etc') setRoute({ name: 'etc' });
   }
 
   function activeBottomTab(): BottomTab {
     if (route.name === 'sns') return route.platform === 'twitter' ? 'twitter' : 'instagram';
-    if (route.name === 'randomHub' || route.name === 'random' || route.name === 'sumgod' || route.name === 'gallery') return 'random';
-    if (route.name === 'etc' || route.name === 'newRoom' || route.name === 'newGroupRoom' || route.name === 'newCharacter' || route.name === 'notifications') return 'etc';
+    if (route.name === 'random' || route.name === 'randomHub') return 'random';
+    if (route.name === 'etc' || route.name === 'sumgod' || route.name === 'gallery' || route.name === 'notifications') return 'etc';
     return 'friends';
   }
 
-  const showBottomNav = route.name === 'chatList' || route.name === 'sns' || route.name === 'randomHub' || route.name === 'etc';
+  const showBottomNav = route.name === 'chatList' || route.name === 'sns' || route.name === 'random' || route.name === 'etc' || route.name === 'sumgod' || route.name === 'gallery';
 
   if (!state) {
     return (
@@ -180,27 +180,11 @@ export default function App() {
           onOpenSettings={() => setRoute({ name: 'settings' })}
           onOpenNotifications={() => setRoute({ name: 'notifications' })}
         />
-      ) : route.name === 'randomHub' ? (
-        <MenuHubScreen
-          mode="random"
-          onOpenRandom={() => setRoute({ name: 'random' })}
-          onOpenSumGod={() => setRoute({ name: 'sumgod' })}
-          onOpenGallery={() => setRoute({ name: 'gallery' })}
-          onNewCharacter={() => setRoute({ name: 'newCharacter' })}
-          onNewGroupRoom={() => setRoute({ name: 'newGroupRoom' })}
-          onNewRoom={() => setRoute({ name: 'newRoom' })}
-          onOpenNotifications={() => setRoute({ name: 'notifications' })}
-          onOpenSettings={() => setRoute({ name: 'settings' })}
-        />
-      ) : route.name === 'etc' ? (
+      ) : route.name === 'randomHub' || route.name === 'etc' ? (
         <MenuHubScreen
           mode="etc"
-          onOpenRandom={() => setRoute({ name: 'random' })}
           onOpenSumGod={() => setRoute({ name: 'sumgod' })}
           onOpenGallery={() => setRoute({ name: 'gallery' })}
-          onNewCharacter={() => setRoute({ name: 'newCharacter' })}
-          onNewGroupRoom={() => setRoute({ name: 'newGroupRoom' })}
-          onNewRoom={() => setRoute({ name: 'newRoom' })}
           onOpenNotifications={() => setRoute({ name: 'notifications' })}
           onOpenSettings={() => setRoute({ name: 'settings' })}
         />

@@ -19,8 +19,11 @@ export function SNSScreen({ state, platform, onOpenSettings, onOpenNotifications
   const [imageData, setImageData] = useState('');
   const [activeDmId, setActiveDmId] = useState('');
   const [dmText, setDmText] = useState('');
+  const [showGenerator, setShowGenerator] = useState(false);
+  const [showDmList, setShowDmList] = useState(false);
   const selectedCharacter = state.characters.find(character => character.id === selectedCharacterId) || state.characters[0];
-  const posts = (state.snsPosts || []).filter(post => post.platform === platform);
+  const posts = (state.snsPosts || []).filter(post => post.platform === platform && (!selectedCharacter?.id || post.characterId === selectedCharacter.id));
+  const dmThreads = (state.snsDmThreads || []).filter(thread => !selectedCharacter?.id || thread.characterId === selectedCharacter.id);
   const unreadNotifications = (state.notifications || []).filter(item => !item.read).length;
 
   async function generate() {
@@ -33,6 +36,7 @@ export function SNSScreen({ state, platform, onOpenSettings, onOpenNotifications
         : generated;
       await onChange(next);
       setImageData('');
+      setShowGenerator(false);
     } catch (error) {
       Alert.alert('SNS 생성 실패', error instanceof Error ? error.message : String(error));
     } finally {
@@ -47,6 +51,10 @@ export function SNSScreen({ state, platform, onOpenSettings, onOpenNotifications
     } catch (error) {
       Alert.alert('사진 선택 실패', error instanceof Error ? error.message : String(error));
     }
+  }
+
+  function clearPostImage() {
+    setImageData('');
   }
 
   async function likePost(postId: string) {
@@ -124,9 +132,16 @@ export function SNSScreen({ state, platform, onOpenSettings, onOpenNotifications
       <View style={styles.header}>
         <View style={styles.headerTitle}>
           <Text style={styles.title}>{platform === 'instagram' ? 'Instagram' : 'Twitter/X'}</Text>
-          <Text style={styles.subtitle}>{posts.length} posts</Text>
+          <Text style={styles.subtitle}>{selectedCharacter?.name || '전체'} · {posts.length} posts</Text>
         </View>
         <View style={styles.headerActions}>
+          <Pressable accessibilityLabel="SNS 생성" onPress={() => setShowGenerator(value => !value)} style={[styles.actionPill, showGenerator && styles.actionPillActive]}>
+            <Text style={[styles.actionPillText, showGenerator && styles.actionPillTextActive]}>SNS 생성</Text>
+          </Pressable>
+          <Pressable accessibilityLabel="SNS DM" onPress={() => setShowDmList(value => !value)} style={[styles.roundIcon, showDmList && styles.roundIconActive]}>
+            <Text style={[styles.roundIconText, showDmList && styles.roundIconTextActive]}>DM</Text>
+            {dmThreads.some(thread => thread.unread) ? <Text style={styles.alertBadge}>{dmThreads.reduce((sum, thread) => sum + (thread.unread || 0), 0)}</Text> : null}
+          </Pressable>
           <Pressable accessibilityLabel="알림" onPress={onOpenNotifications} style={styles.roundIcon}>
             <Text style={styles.roundIconText}>!</Text>
             {unreadNotifications > 0 ? <Text style={styles.alertBadge}>{unreadNotifications}</Text> : null}
@@ -147,22 +162,25 @@ export function SNSScreen({ state, platform, onOpenSettings, onOpenNotifications
         />
       </View>
 
-      <View style={styles.generator}>
+      {showGenerator ? <View style={styles.generator}>
         <Text style={styles.generatorTitle}>SNS 생성</Text>
-        <Text style={styles.generatorSub}>{selectedCharacter?.name || '캐릭터'} · 댓글/DM/이미지 포함</Text>
+        <Text style={styles.generatorSub}>{selectedCharacter?.name || '캐릭터'} · {platform === 'instagram' ? 'Instagram' : 'Twitter/X'} · 댓글/DM/이미지 포함</Text>
         {imageData ? <Image source={{ uri: imageData }} style={styles.pendingImage} /> : null}
-        <Pressable onPress={choosePostImage} style={styles.secondary}><Text style={styles.secondaryText}>{imageData ? '사진 변경' : '사진 선택'}</Text></Pressable>
+        <View style={styles.generatorActions}>
+          <Pressable onPress={choosePostImage} style={styles.secondary}><Text style={styles.secondaryText}>{imageData ? '사진 변경' : '사진 첨부'}</Text></Pressable>
+          {imageData ? <Pressable onPress={clearPostImage} style={styles.secondary}><Text style={styles.secondaryText}>첨부 해제</Text></Pressable> : null}
+        </View>
         <Pressable onPress={generate} style={styles.primary} disabled={loading || !selectedCharacter}>
           {loading ? <ActivityIndicator color="#241a00" /> : <Text style={styles.primaryText}>SNS 생성</Text>}
         </Pressable>
-      </View>
+      </View> : null}
 
-      {(state.snsDmThreads || []).length ? (
+      {showDmList && dmThreads.length ? (
         <View style={styles.dmStrip}>
           <Text style={styles.dmTitle}>SNS DM</Text>
           <FlatList
             horizontal
-            data={(state.snsDmThreads || []).slice(0, 8)}
+            data={dmThreads.slice(0, 8)}
             keyExtractor={item => item.id}
             contentContainerStyle={styles.dmList}
             renderItem={({ item }) => <Pressable onPress={() => setActiveDmId(item.id)}><DmCard thread={item} /></Pressable>}
@@ -173,8 +191,9 @@ export function SNSScreen({ state, platform, onOpenSettings, onOpenNotifications
       <FlatList
         data={posts}
         keyExtractor={item => item.id}
-        contentContainerStyle={styles.feed}
-        renderItem={({ item }) => <PostCard post={item} character={state.characters.find(character => character.id === item.characterId)} onLike={() => likePost(item.id)} onComment={content => addComment(item.id, content)} onAiComment={content => addAiComment(item, content)} />}
+        contentContainerStyle={[styles.feed, platform === 'twitter' && styles.twitterFeed]}
+        ListEmptyComponent={<Text style={styles.emptyText}>아직 {selectedCharacter?.name || '이 캐릭터'}의 {platform === 'instagram' ? 'Instagram' : 'Twitter/X'} 게시물이 없습니다.</Text>}
+        renderItem={({ item }) => <PostCard platform={platform} post={item} character={state.characters.find(character => character.id === item.characterId)} onLike={() => likePost(item.id)} onComment={content => addComment(item.id, content)} onAiComment={content => addAiComment(item, content)} />}
       />
     </View>
   );
@@ -238,14 +257,14 @@ function DmModal({ thread, value, onChangeText, onClose, onSend, onAiSend, loadi
   );
 }
 
-function PostCard({ post, character, onLike, onComment, onAiComment }: { post: SNSPost; character?: SNSGodCharacter; onLike: () => void; onComment: (content: string) => void; onAiComment: (content: string) => void }) {
+function PostCard({ platform, post, character, onLike, onComment, onAiComment }: { platform: SNSPost['platform']; post: SNSPost; character?: SNSGodCharacter; onLike: () => void; onComment: (content: string) => void; onAiComment: (content: string) => void }) {
   const [comment, setComment] = useState('');
   function submitComment() {
     onComment(comment);
     setComment('');
   }
   return (
-    <View style={styles.postCard}>
+    <View style={[styles.postCard, platform === 'twitter' && styles.tweetCard]}>
       <View style={styles.postHeader}>
         <Avatar character={character} size={42} />
         <View style={styles.postMeta}>
@@ -254,8 +273,8 @@ function PostCard({ post, character, onLike, onComment, onAiComment }: { post: S
         </View>
         <Text style={styles.more}>...</Text>
       </View>
-      {post.image ? <Image source={{ uri: post.image }} style={styles.postImage} /> : null}
-      <Text style={styles.postContent}>{post.content}</Text>
+      {post.image ? <Image source={{ uri: post.image }} style={[styles.postImage, platform === 'twitter' && styles.tweetImage]} /> : null}
+      <Text style={[styles.postContent, platform === 'twitter' && styles.tweetContent]}>{post.content}</Text>
       {post.hashtags?.length ? <Text style={styles.tags}>{post.hashtags.map(tag => `#${tag}`).join(' ')}</Text> : null}
       <View style={styles.postFooter}>
         <Pressable onPress={onLike}><Text style={styles.footerText}>좋아요 {post.likes || 0}개</Text></Pressable>
@@ -283,9 +302,15 @@ const styles = StyleSheet.create({
   headerTitle: { flex: 1 },
   title: { fontSize: 18, fontWeight: '900', color: colors.text },
   subtitle: { color: colors.sub, fontSize: 12, fontWeight: '700' },
-  headerActions: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  headerActions: { flexDirection: 'row', alignItems: 'center', gap: 7 },
+  actionPill: { minHeight: 38, paddingHorizontal: 12, borderRadius: 19, backgroundColor: '#eee8dc', borderWidth: 1, borderColor: colors.border, alignItems: 'center', justifyContent: 'center' },
+  actionPillActive: { backgroundColor: colors.accent, borderColor: '#c4a842' },
+  actionPillText: { color: colors.text, fontWeight: '900', fontSize: 12 },
+  actionPillTextActive: { color: '#241a00' },
   roundIcon: { width: 40, height: 40, borderRadius: 20, backgroundColor: '#eee8dc', borderWidth: 1, borderColor: colors.border, alignItems: 'center', justifyContent: 'center', position: 'relative' },
-  roundIconText: { color: colors.text, fontWeight: '900', fontSize: 20, lineHeight: 24 },
+  roundIconActive: { backgroundColor: '#111', borderColor: '#111' },
+  roundIconText: { color: colors.text, fontWeight: '900', fontSize: 13, lineHeight: 18 },
+  roundIconTextActive: { color: '#fff' },
   alertBadge: { position: 'absolute', top: -3, right: -4, minWidth: 19, height: 19, borderRadius: 10, overflow: 'hidden', lineHeight: 19, textAlign: 'center', backgroundColor: colors.danger, color: '#fff', fontWeight: '900', fontSize: 11 },
   characterRail: { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.border },
   characterRailContent: { paddingHorizontal: 12, paddingBottom: 12, gap: 10 },
@@ -295,12 +320,15 @@ const styles = StyleSheet.create({
   generator: { margin: 12, padding: 14, borderRadius: 8, borderWidth: 1, borderColor: colors.border, backgroundColor: '#fff' },
   generatorTitle: { fontSize: 16, fontWeight: '900', color: colors.text },
   generatorSub: { marginTop: 3, color: colors.sub, fontSize: 12 },
+  generatorActions: { flexDirection: 'row', gap: 8 },
   primary: { marginTop: 12, minHeight: 42, borderRadius: 8, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' },
   primaryText: { color: '#241a00', fontWeight: '900' },
   secondary: { marginTop: 10, minHeight: 40, borderRadius: 8, borderWidth: 1, borderColor: colors.border, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fffefa' },
   secondaryText: { color: colors.text, fontWeight: '900' },
   pendingImage: { marginTop: 12, width: '100%', height: 180, borderRadius: 8, backgroundColor: '#eee' },
   feed: { padding: 12, gap: 14, paddingBottom: 28 },
+  twitterFeed: { paddingHorizontal: 0, paddingTop: 0, gap: 0 },
+  emptyText: { marginTop: 72, paddingHorizontal: 24, textAlign: 'center', color: colors.sub, fontWeight: '800', lineHeight: 20 },
   dmStrip: { paddingVertical: 10, borderTopWidth: StyleSheet.hairlineWidth, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: colors.border, backgroundColor: '#fffefa' },
   dmTitle: { paddingHorizontal: 12, color: colors.text, fontWeight: '900', marginBottom: 8 },
   dmList: { paddingHorizontal: 12, gap: 8 },
@@ -309,13 +337,16 @@ const styles = StyleSheet.create({
   dmCardBody: { marginTop: 5, color: colors.sub, lineHeight: 18 },
   dmBadge: { position: 'absolute', top: 8, right: 8, minWidth: 20, height: 20, borderRadius: 10, overflow: 'hidden', textAlign: 'center', lineHeight: 20, backgroundColor: colors.danger, color: '#fff', fontWeight: '900' },
   postCard: { borderRadius: 8, borderWidth: 1, borderColor: colors.border, backgroundColor: '#fff', overflow: 'hidden' },
+  tweetCard: { borderRadius: 0, borderLeftWidth: 0, borderRightWidth: 0, borderTopWidth: 0, borderColor: '#d9d9d9' },
   postHeader: { minHeight: 64, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center', gap: 10, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.border },
   postMeta: { flex: 1 },
   postName: { fontSize: 15, fontWeight: '900', color: colors.text },
   postTime: { marginTop: 2, color: colors.sub, fontSize: 12 },
   more: { color: colors.sub, fontWeight: '900' },
   postImage: { width: '100%', aspectRatio: 1, backgroundColor: '#eee' },
+  tweetImage: { marginHorizontal: 16, width: undefined, borderRadius: 16, aspectRatio: 1.6 },
   postContent: { padding: 16, color: colors.text, fontSize: 17, lineHeight: 25 },
+  tweetContent: { paddingTop: 8, fontSize: 16, lineHeight: 23 },
   tags: { paddingHorizontal: 16, paddingBottom: 14, color: '#77b8ff', fontWeight: '800' },
   postFooter: { minHeight: 44, paddingHorizontal: 16, flexDirection: 'row', alignItems: 'center', gap: 16, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.border },
   footerText: { color: colors.sub, fontWeight: '800' },
