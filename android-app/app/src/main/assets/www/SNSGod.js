@@ -34901,6 +34901,192 @@
     };
     // ---------------------------------------------------------------------
 
+    // --- FINAL OPERATIONS LOG / ROOM RELATIONSHIP NOTES / DEBUG TESTS ---
+    function mgEnsureOpsLog() {
+        state.opsLog = Array.isArray(state.opsLog) ? state.opsLog : [];
+        return state.opsLog;
+    }
+
+    function mgLogOperation(type, message, data = {}) {
+        try {
+            const entry = { id: makeId(), type, message, data, createdAt: Date.now() };
+            mgEnsureOpsLog().unshift(entry);
+            state.opsLog = mgEnsureOpsLog().slice(0, 120);
+            logDebug(type, message, data);
+            return entry;
+        } catch (_) {
+            return null;
+        }
+    }
+
+    function mgOpsLogHtml() {
+        const rows = mgEnsureOpsLog().slice(0, 24).map(item => `<div class="mg-debug-row mg-ops-row"><strong>${escapeHtml(item.type)}</strong><span>${escapeHtml(formatTime(item.createdAt))}</span><p>${escapeHtml(item.message || '')}</p><code>${escapeHtml(JSON.stringify(item.data || {}))}</code></div>`).join('');
+        return `<div class="mg-section mg-ops-log"><div class="mg-inline" style="justify-content:space-between"><h3>자동화 / SNS 동작 로그</h3><button class="mg-btn" type="button" data-action="mg-clear-ops-log">로그 지우기</button></div>${rows ? `<div class="mg-debug-list">${rows}</div>` : '<div class="mg-empty">아직 기록된 자동화 동작이 없습니다.</div>'}</div>`;
+    }
+
+    function mgDebugQuickTestsHtml() {
+        const character = currentCharacter() || state.characters?.[0];
+        const room = getCurrentRoom() || getRoomById(state.chatRooms?.[character?.id]?.[0]?.id);
+        const disabled = !character ? 'disabled' : '';
+        const roomName = room?.name || '채팅방 없음';
+        return `<div class="mg-section mg-debug-quick-tests"><div class="mg-inline" style="justify-content:space-between"><h3>기능 빠른 점검</h3><span class="mg-chip">${escapeHtml(character?.name || '캐릭터 없음')} · ${escapeHtml(roomName)}</span></div><p class="mg-help">현재 선택된 캐릭터 기준으로 API 답장, SNS 생성, 이미지 프롬프트 구성을 바로 점검합니다.</p><div class="mg-inline mg-debug-test-buttons"><button class="mg-btn" type="button" data-action="mg-debug-test-reply" ${disabled}>답장 테스트</button><button class="mg-btn" type="button" data-action="mg-debug-test-sns" ${disabled}>SNS 테스트 생성</button><button class="mg-btn" type="button" data-action="mg-debug-test-image-prompt" ${disabled}>이미지 프롬프트 확인</button></div></div>`;
+    }
+
+    const mgBaseDebugHtmlOpsAndTests = debugHtml;
+    debugHtml = function(...args) {
+        let html = String(mgBaseDebugHtmlOpsAndTests.apply(this, args));
+        if (!html.includes('mg-debug-quick-tests')) html = html.replace('<section class="mg-panel mg-settings">', `<section class="mg-panel mg-settings">${mgDebugQuickTestsHtml()}`);
+        if (!html.includes('mg-ops-log')) html = html.replace('</section>', `${mgOpsLogHtml()}</section>`);
+        return html;
+    };
+
+    const mgBaseGenerateSnsPostOpsLog = generateSnsPost;
+    generateSnsPost = async function(character, roomId, hintText = '', options = {}) {
+        mgLogOperation(options?.manual ? 'sns-manual-start' : 'sns-auto-start', `${character?.name || '캐릭터'} SNS 생성 시작`, { roomId, platform: options?.sns?.platform || snsConfigForCharacter?.(character?.id)?.platform || state.config?.sns?.platform || 'twitter' });
+        try {
+            const post = await mgBaseGenerateSnsPostOpsLog(character, roomId, hintText, options);
+            mgLogOperation(options?.manual ? 'sns-manual-done' : 'sns-auto-done', `${character?.name || '캐릭터'} SNS 생성 완료`, { roomId, postId: post?.id, platforms: (post?.platforms || []).map(item => item.platform) });
+            return post;
+        } catch (error) {
+            mgLogOperation('sns-error', `${character?.name || '캐릭터'} SNS 생성 실패: ${error.message}`, { roomId });
+            throw error;
+        }
+    };
+
+    if (typeof maybeCreateAutoSnsPost === 'function') {
+        const mgBaseMaybeCreateAutoSnsPostOpsLog = maybeCreateAutoSnsPost;
+        maybeCreateAutoSnsPost = async function(character, roomId) {
+            mgLogOperation('sns-auto-check', `${character?.name || '캐릭터'} 자동 SNS 조건 확인`, { roomId, enabled: state.config?.autoSnsEnabled !== false && character?.snsAutoEnabled !== false });
+            return mgBaseMaybeCreateAutoSnsPostOpsLog(character, roomId);
+        };
+    }
+
+    const mgBaseNoteIncomingMessageOpsLog = noteIncomingMessage;
+    noteIncomingMessage = function(roomId) {
+        const room = getRoomById(roomId);
+        const before = Number(state.unreadCounts?.[roomId]) || 0;
+        const result = mgBaseNoteIncomingMessageOpsLog(roomId);
+        const after = Number(state.unreadCounts?.[roomId]) || 0;
+        if (roomId && after > before) mgLogOperation('unread', `${room?.name || '채팅방'} 안읽음 +${after - before}`, { roomId, unread: after });
+        return result;
+    };
+
+    const mgBaseSendAutonomousMessageOpsLog = sendAutonomousMessage;
+    sendAutonomousMessage = async function(character) {
+        mgLogOperation('auto-chat-start', `${character?.name || '캐릭터'} 능동 발화 시도`, { characterId: character?.id });
+        try {
+            const result = await mgBaseSendAutonomousMessageOpsLog(character);
+            mgLogOperation('auto-chat-done', `${character?.name || '캐릭터'} 능동 발화 처리 완료`, { characterId: character?.id });
+            return result;
+        } catch (error) {
+            mgLogOperation('auto-chat-error', `${character?.name || '캐릭터'} 능동 발화 실패: ${error.message}`, { characterId: character?.id });
+            throw error;
+        }
+    };
+
+    const mgBaseUnifiedRoomSettingsHtmlRelationshipNote = mgUnifiedRoomSettingsHtml;
+    mgUnifiedRoomSettingsHtml = function(...args) {
+        let html = String(mgBaseUnifiedRoomSettingsHtmlRelationshipNote.apply(this, args));
+        const room = getCurrentRoom();
+        if (!room || html.includes('mg-room-relationship-note')) return html;
+        const noteField = textareaHtml('mg-room-relationship-note', '이 채팅방에서만 적용할 관계/호칭 메모', room.relationshipNote || '');
+        return html.replace('</div><div class="mg-room-bg-preview">', `</div>${noteField}<div class="mg-room-bg-preview">`);
+    };
+
+    const mgBaseApplyUnifiedRoomSettingsRelationshipNote = mgApplyUnifiedRoomSettingsFromForm;
+    mgApplyUnifiedRoomSettingsFromForm = function(options = {}) {
+        const room = getCurrentRoom();
+        if (room && document.getElementById('mg-room-relationship-note')) room.relationshipNote = valueOf('mg-room-relationship-note').trim();
+        return mgBaseApplyUnifiedRoomSettingsRelationshipNote(options);
+    };
+
+    function mgRoomRelationshipPrompt(room) {
+        const note = String(room?.relationshipNote || '').trim();
+        if (!note) return '';
+        return `Current room relationship/nickname note:\n${note}\nApply this only inside this chat room. It may define how the character calls the user, private dynamics, boundaries, or special context.`;
+    }
+
+    const mgBaseBuildMessagesRelationshipNote = buildMessages;
+    buildMessages = async function(character, options = {}) {
+        const messages = await mgBaseBuildMessagesRelationshipNote(character, options);
+        const room = getRoomById(options?.roomId || selectedRoomId);
+        const note = mgRoomRelationshipPrompt(room);
+        if (note && messages?.[0]) messages[0].content = `${contentText(messages[0].content)}\n\n${note}`;
+        return messages;
+    };
+
+    if (typeof buildGroupMessages === 'function') {
+        const mgBaseBuildGroupMessagesRelationshipNote = buildGroupMessages;
+        buildGroupMessages = async function(room, userText = '', mode = 'reply', forcedSpeakerId = '') {
+            const messages = await mgBaseBuildGroupMessagesRelationshipNote(room, userText, mode, forcedSpeakerId);
+            const note = mgRoomRelationshipPrompt(room);
+            if (note && messages?.[0]) messages[0].content = `${contentText(messages[0].content)}\n\n${note}`;
+            return messages;
+        };
+    }
+
+    const mgBaseHandleActionOpsAndTests = handleAction;
+    handleAction = async function(action, element) {
+        if (action === 'mg-clear-ops-log') {
+            state.opsLog = [];
+            await mgFinalPersist('자동화 로그 정리');
+            render();
+            return;
+        }
+        if (action === 'mg-debug-test-reply') {
+            mgLogOperation('test-reply', 'API 답장 테스트 실행', mgCurrentApiSummary());
+            return testApi();
+        }
+        if (action === 'mg-debug-test-sns') {
+            const character = currentCharacter() || state.characters?.[0];
+            if (!character) return;
+            const roomId = selectedRoomId || state.chatRooms?.[character.id]?.[0]?.id || '';
+            const post = await generateSnsPost(character, roomId, 'Debug test SNS post. Keep it short and clearly grounded in the current character.', { manual: true, sns: { ...snsConfigForCharacter(character.id), textOnly: true, autoImage: false } });
+            await mgFinalPersist('SNS 테스트 생성');
+            mgLogOperation('test-sns', 'SNS 테스트 게시물 생성 완료', { postId: post?.id, roomId });
+            if (typeof showTransientNotice === 'function') showTransientNotice('SNS 테스트 게시물을 생성했습니다.');
+            activeTab = 'social';
+            render();
+            return;
+        }
+        if (action === 'mg-debug-test-image-prompt') {
+            const character = currentCharacter() || state.characters?.[0];
+            if (!character) return;
+            const item = { imagePrompt: fallbackSnsImagePrompt(character, 'debug social media image'), imageCaption: 'debug social media image' };
+            try {
+                await prepareImagePrompt(character, item, state.config.imageGeneration || {});
+            } catch (_) {}
+            const prompt = item.finalImagePrompt || item.imagePrompt || '';
+            mgLogOperation('test-image-prompt', '이미지 프롬프트 구성 완료', { characterId: character.id, prompt });
+            alert(prompt || '이미지 프롬프트를 만들 수 없습니다.');
+            return;
+        }
+        return mgBaseHandleActionOpsAndTests(action, element);
+    };
+
+    const mgBaseBindEventsRelationshipNote = bindEvents;
+    bindEvents = function(...args) {
+        mgBaseBindEventsRelationshipNote.apply(this, args);
+        const note = document.getElementById('mg-room-relationship-note');
+        if (note && !note.dataset.mgRelationshipNoteBound) {
+            note.dataset.mgRelationshipNoteBound = '1';
+            note.addEventListener('input', () => mgApplyUnifiedRoomSettingsFromForm({ persist: false }));
+            note.addEventListener('change', () => mgApplyUnifiedRoomSettingsFromForm({ persist: true }));
+        }
+    };
+
+    const mgBaseInjectStylesOpsAndTests = injectStyles;
+    injectStyles = function(...args) {
+        mgBaseInjectStylesOpsAndTests.apply(this, args);
+        mgEnsureStyle('mg-ops-log-tests-style', `
+            .mg-debug-test-buttons{gap:8px;flex-wrap:wrap}
+            .mg-ops-log .mg-debug-list{max-height:360px;overflow:auto}
+            .mg-ops-row code{white-space:pre-wrap;overflow-wrap:anywhere}
+            .mg-unified-room-settings #mg-room-relationship-note{min-height:92px}
+        `);
+    };
+    // ---------------------------------------------------------------------
+
     // --- FINAL BACKUP / IMPORT SUMMARY UX ---
     function mgStateSummaryForUser(data = state) {
         const characters = Array.isArray(data.characters) ? data.characters.length : 0;
