@@ -355,14 +355,15 @@
     }
 
     function getFirstAvailableRoomId() {
-        for (const character of state.characters) if (state.chatRooms[character.id]?.[0]) return state.chatRooms[character.id][0].id;
+        for (const character of state.characters) if (character.enabled !== false && state.chatRooms[character.id]?.[0]) return state.chatRooms[character.id][0].id;
         return '';
     }
 
     function filteredCharacters() {
         const query = searchQuery.trim().toLowerCase();
-        if (!query) return state.characters;
-        return state.characters.filter(character => [character.name, character.handle, character.prompt, ...(character.memories || [])].filter(Boolean).some(value => String(value).toLowerCase().includes(query)));
+        const base = activeTab === 'characters' ? state.characters : state.characters.filter(character => character.enabled !== false);
+        if (!query) return base;
+        return base.filter(character => [character.name, character.handle, character.prompt, ...(character.memories || [])].filter(Boolean).some(value => String(value).toLowerCase().includes(query)));
     }
 
     function escapeHtml(value) {
@@ -34272,6 +34273,7 @@
     function mgKakaoChatEntries() {
         const rows = [];
         for (const character of state.characters || []) {
+            if (character.enabled === false) continue;
             for (const room of state.chatRooms?.[character.id] || []) {
                 const unread = mgUnreadCount(room.id);
                 const preview = mgKakaoRoomPreview(room.id);
@@ -34291,7 +34293,8 @@
         }
         if (typeof ensureGroupRooms === 'function') ensureGroupRooms();
         for (const room of state.groupRooms || []) {
-            const members = typeof groupMembers === 'function' ? groupMembers(room) : [];
+            const members = (typeof groupMembers === 'function' ? groupMembers(room) : []).filter(member => member.enabled !== false);
+            if (!members.length) continue;
             const unread = mgUnreadCount(room.id);
             rows.push({
                 id: room.id,
@@ -34313,9 +34316,13 @@
     function mgKakaoUnreadTotal() {
         let total = 0;
         for (const character of state.characters || []) {
+            if (character.enabled === false) continue;
             for (const room of state.chatRooms?.[character.id] || []) total += mgUnreadCount(room.id);
         }
-        for (const room of state.groupRooms || []) total += mgUnreadCount(room.id);
+        for (const room of state.groupRooms || []) {
+            const members = typeof groupMembers === 'function' ? groupMembers(room) : [];
+            if (members.some(member => member.enabled !== false)) total += mgUnreadCount(room.id);
+        }
         return total;
     }
 
@@ -34334,8 +34341,10 @@
 
     function mgKakaoNewRoomPanelHtml() {
         if (!mgKakaoNewRoomOpen) return '';
-        const selected = selectedCharacterId || state.characters?.[0]?.id || '';
-        const options = (state.characters || []).map(character => `<option value="${escapeHtml(character.id)}" ${String(character.id) === String(selected) ? 'selected' : ''}>${escapeHtml(character.name || character.id)}</option>`).join('');
+        const activeCharacters = (state.characters || []).filter(character => character.enabled !== false);
+        const selected = activeCharacters.some(character => String(character.id) === String(selectedCharacterId)) ? selectedCharacterId : activeCharacters[0]?.id || '';
+        if (!activeCharacters.length) return `<section class="mg-kakao-new-room-panel"><div class="mg-empty">활성화된 캐릭터가 없습니다. 캐릭터 설정에서 활성화를 켜주세요.</div><div><button type="button" class="mg-btn" data-action="mg-kakao-cancel-new-room">닫기</button></div></section>`;
+        const options = activeCharacters.map(character => `<option value="${escapeHtml(character.id)}" ${String(character.id) === String(selected) ? 'selected' : ''}>${escapeHtml(character.name || character.id)}</option>`).join('');
         return `<section class="mg-kakao-new-room-panel">
             <label><span>대상 캐릭터</span><select class="mg-select" id="mg-kakao-new-room-character">${options}</select></label>
             <label><span>대화창 이름</span><input class="mg-field" id="mg-kakao-new-room-name" value="새 채팅" placeholder="예: 새 채팅"></label>
@@ -34384,7 +34393,7 @@
             <header class="mg-top">
                 <button class="mg-icon" title="홈" data-action="mg-phone-home">‹</button>
                 <div class="mg-title"><strong>채팅</strong><span>${escapeHtml(state.config.serviceName || '채팅')}</span></div>
-                <div class="mg-actions">${typeof mgNotificationBellHtml === 'function' ? mgNotificationBellHtml() : ''}<button class="mg-btn" data-action="mg-phone-home">홈</button><button class="mg-btn" data-action="show-settings">설정</button></div>
+                <div class="mg-actions">${typeof mgNotificationBellHtml === 'function' ? mgNotificationBellHtml() : ''}<button class="mg-btn" data-action="mg-phone-home">홈</button><button class="mg-btn mg-kakao-settings-btn" data-action="mg-kakao-show-settings">설정</button></div>
             </header>
             <main class="mg-main mg-kakao-phone-main">${mgKakaoChatListHtml()}</main>
             ${fileInputsHtml()}
@@ -34615,7 +34624,8 @@
 
     const mgBaseAppHtmlKakaoPersistence = appHtml;
     appHtml = function(...args) {
-        if (mgFinalIsKakaoTheme() && mgPhoneApp === 'messenger' && !['chat', 'snsdm', 'social', 'home', ''].includes(activeTab || '')) {
+        const allowedKakaoTabs = ['chat', 'snsdm', 'social', 'home', 'settings', 'characters', 'appearance', 'api', 'image', 'prompts', 'stickers', 'debug', 'lorebook', ''];
+        if (mgFinalIsKakaoTheme() && mgPhoneApp === 'messenger' && !allowedKakaoTabs.includes(activeTab || '')) {
             activeTab = 'home';
             mgMessengerLastTab = 'home';
         }
@@ -34878,7 +34888,7 @@
     // --- FINAL KAKAO ROUTE HARDENING ---
     function mgForceKakaoMessengerHomeIfNeeded() {
         if (!mgFinalIsKakaoTheme() || mgPhoneApp !== 'messenger') return false;
-        if (activeTab === 'chat' || activeTab === 'snsdm') return false;
+        if (['chat', 'snsdm', 'social', 'settings', 'characters', 'appearance', 'api', 'image', 'prompts', 'stickers', 'debug', 'lorebook'].includes(activeTab || '')) return false;
         activeTab = 'home';
         mgMessengerLastTab = 'home';
         return true;
@@ -35289,6 +35299,306 @@
             .mg-view-chat .mg-room-settings-top-btn{display:inline-flex!important;align-items:center!important;justify-content:center!important}
         `);
     };
+    // ---------------------------------------------------------------------
+
+    // --- FINAL KAKAO LIST SETTINGS BUTTON FIX ---
+    const mgBaseHandleActionKakaoListSettings = handleAction;
+    handleAction = async function(action, element) {
+        if (action === 'mg-open-current-character-settings') {
+            const roomCharacterId = getCurrentRoom()?.characterId || selectedCharacterId;
+            const character = getCharacter(roomCharacterId) || currentCharacter();
+            if (character) {
+                selectedCharacterId = character.id;
+                expandedCharacterId = character.id;
+                activeTab = 'characters';
+                showStickerPanel = false;
+                openMessageMenuId = '';
+                if (typeof mgUnifiedRoomSettingsOpen !== 'undefined') mgUnifiedRoomSettingsOpen = false;
+                render();
+                return;
+            }
+        }
+        if ((action === 'mg-kakao-show-settings' || action === 'show-settings') && mgPhoneApp === 'messenger' && (activeTab === 'home' || !activeTab)) {
+            activeTab = 'settings';
+            mgMessengerLastTab = 'settings';
+            showStickerPanel = false;
+            openMessageMenuId = '';
+            if (typeof mgUnifiedRoomSettingsOpen !== 'undefined') mgUnifiedRoomSettingsOpen = false;
+            render();
+            return;
+        }
+        return mgBaseHandleActionKakaoListSettings(action, element);
+    };
+
+    const mgBaseAppHtmlCurrentCharacterSettingsAction = appHtml;
+    appHtml = function(...args) {
+        let html = String(mgBaseAppHtmlCurrentCharacterSettingsAction.apply(this, args));
+        if (activeTab === 'chat') {
+            html = html.replace(/(<button\b(?=[^>]*\bmg-character-settings-top\b)[^>]*data-action=")show-settings("[\s\S]*?<\/button>)/g, '$1mg-open-current-character-settings$2');
+            html = html.replace(/(<button\b(?=[^>]*title="[^"]*캐릭터 설정[^"]*")[^>]*data-action=")show-settings("[\s\S]*?<\/button>)/g, '$1mg-open-current-character-settings$2');
+        }
+        return html;
+    };
+
+    const mgBaseInjectStylesKakaoListSettings = injectStyles;
+    injectStyles = function(...args) {
+        mgBaseInjectStylesKakaoListSettings.apply(this, args);
+        mgEnsureStyle('mg-kakao-list-settings-button-fix-style', `
+            .mg-kakao-phone-shell .mg-top{position:relative!important;z-index:40!important;pointer-events:auto!important}
+            .mg-kakao-phone-shell .mg-top .mg-actions{position:relative!important;z-index:41!important;pointer-events:auto!important}
+            .mg-kakao-phone-shell .mg-top .mg-actions [data-action="mg-kakao-show-settings"],
+            .mg-kakao-phone-shell .mg-top .mg-actions [data-action="show-settings"]{position:relative!important;z-index:42!important;pointer-events:auto!important;touch-action:manipulation!important}
+        `);
+    };
+    // ---------------------------------------------------------------------
+
+    // --- FINAL API KEY ROTATION / FAILOVER ---
+    function mgApiKeySlotsForProfile(profile = {}) {
+        const keys = [];
+        const pushKey = (value) => {
+            const key = String(value || '').trim();
+            if (key && !keys.includes(key)) keys.push(key);
+        };
+        pushKey(profile.apiKey);
+        if (Array.isArray(profile.apiKeys)) profile.apiKeys.forEach(pushKey);
+        while (keys.length < 3) keys.push('');
+        return keys.slice(0, 3);
+    }
+
+    function mgApiKeyValuesFromForm(fallbackProfile = {}) {
+        const fallback = mgApiKeySlotsForProfile(fallbackProfile);
+        return ['api-key', 'api-key-2', 'api-key-3'].map((id, index) => {
+            const element = document.getElementById(id);
+            return String(element ? element.value ?? '' : fallback[index] || '').trim();
+        });
+    }
+
+    function mgApplyApiKeySlots(profile, rawKeys) {
+        if (!profile) return [];
+        const keys = [];
+        (rawKeys || []).forEach((value) => {
+            const key = String(value || '').trim();
+            if (key && !keys.includes(key)) keys.push(key);
+        });
+        profile.apiKeys = keys.slice(0, 3);
+        profile.apiKey = profile.apiKeys[0] || '';
+        const maxIndex = Math.max(0, profile.apiKeys.length - 1);
+        profile.apiKeyIndex = Math.max(0, Math.min(maxIndex, Math.round(Number(profile.apiKeyIndex) || 0)));
+        return profile.apiKeys;
+    }
+
+    function mgApiKeyRotationHtml(profile = {}) {
+        const keys = mgApiKeySlotsForProfile(profile);
+        return `<div class="mg-api-key-rotation">${fieldHtml('api-key', 'API 키 1', keys[0] || '', 'password')}${fieldHtml('api-key-2', 'API 키 2 (실패 시 대체)', keys[1] || '', 'password')}${fieldHtml('api-key-3', 'API 키 3 (실패 시 대체)', keys[2] || '', 'password')}<p class="mg-help mg-api-key-rotation-help">생성 실패 시 1 → 2 → 3 순서로 다른 키를 자동 재시도합니다. 성공한 슬롯은 다음 호출 시작점으로 기억됩니다.</p></div>`;
+    }
+
+    const mgBaseApiHtmlKeyRotation = apiHtml;
+    apiHtml = function(...args) {
+        let html = String(mgBaseApiHtmlKeyRotation.apply(this, args));
+        if (!html.includes('id="api-key"') || html.includes('id="api-key-2"')) return html;
+        const apiType = state.config?.apiType || 'gemini';
+        const profile = state.config?.apiProfiles?.[apiType] || {};
+        const replacement = mgApiKeyRotationHtml(profile);
+        const fieldPattern = /<label class="mg-field-wrap"><span class="mg-label">[^<]*(?:API\s*(?:키|key)|키)[^<]*<\/span><input class="mg-field" id="api-key"[\s\S]*?<\/label>/i;
+        if (fieldPattern.test(html)) return html.replace(fieldPattern, replacement);
+        return html.replace(/(<input class="mg-field" id="api-key"[\s\S]*?<\/label>)/i, replacement);
+    };
+
+    const mgBaseSaveApiFromFormKeyRotation = saveApiFromForm;
+    saveApiFromForm = async function(...args) {
+        const apiTypeElement = document.getElementById('cfg-apiType');
+        const apiType = apiTypeElement?.value || state.config?.apiType || 'gemini';
+        const beforeProfile = mgFinalEnsureApiProfile(apiType);
+        const keysFromForm = mgApiKeyValuesFromForm(beforeProfile);
+        const result = await mgBaseSaveApiFromFormKeyRotation.apply(this, args);
+        const profile = mgFinalEnsureApiProfile(apiType);
+        const keys = mgApplyApiKeySlots(profile, keysFromForm);
+        await mgFinalPersist('API 키 로테이션 저장');
+        logDebug('api-keys', 'API 키 슬롯 저장', { provider: apiType, slots: keys.length, activeSlot: (profile.apiKeyIndex || 0) + 1 });
+        return result;
+    };
+
+    const mgBaseCurrentApiSummaryKeyRotation = mgCurrentApiSummary;
+    mgCurrentApiSummary = function(...args) {
+        const summary = mgBaseCurrentApiSummaryKeyRotation.apply(this, args);
+        const apiType = state.config?.apiType || 'gemini';
+        const profile = state.config?.apiProfiles?.[apiType] || {};
+        const keyCount = mgApiKeySlotsForProfile(profile).filter(Boolean).length;
+        return { ...summary, hasKey: Boolean(summary.hasKey || keyCount), keySlots: keyCount, activeKeySlot: keyCount ? (Math.round(Number(profile.apiKeyIndex) || 0) % keyCount) + 1 : 0 };
+    };
+
+    const mgBaseCallLLMKeyRotation = callLLM;
+    callLLM = async function(messages, overrides = {}) {
+        const apiType = state.config?.apiType || 'gemini';
+        const profile = state.config?.apiProfiles?.[apiType];
+        const keys = mgApiKeySlotsForProfile(profile).filter(Boolean);
+        if (!profile || keys.length <= 1 || apiType === 'risuai' || apiType === 'vertex') {
+            return mgBaseCallLLMKeyRotation(messages, overrides);
+        }
+        const startIndex = Math.max(0, Math.min(keys.length - 1, Math.round(Number(profile.apiKeyIndex) || 0)));
+        let lastError = null;
+        for (let offset = 0; offset < keys.length; offset += 1) {
+            const index = (startIndex + offset) % keys.length;
+            profile.apiKey = keys[index];
+            profile.apiKeyIndex = index;
+            try {
+                if (offset > 0) logDebug('api-key-rotate', `${apiType} API 키 ${index + 1}번으로 재시도`, { provider: apiType, slot: index + 1, totalSlots: keys.length });
+                const payload = await mgBaseCallLLMKeyRotation(messages, overrides);
+                profile.apiKeyIndex = index;
+                profile.apiKey = keys[index];
+                return payload;
+            } catch (error) {
+                lastError = error;
+                logDebug('api-key-failover', `${apiType} API 키 ${index + 1}번 실패`, { provider: apiType, slot: index + 1, totalSlots: keys.length, message: error.message });
+            }
+        }
+        throw lastError || new Error('API 호출 실패');
+    };
+
+    const mgBaseInjectStylesApiKeyRotation = injectStyles;
+    injectStyles = function(...args) {
+        mgBaseInjectStylesApiKeyRotation.apply(this, args);
+        mgEnsureStyle('mg-api-key-rotation-style', `
+            .mg-api-key-rotation{display:contents}
+            .mg-api-key-rotation-help{grid-column:1/-1;margin:0 0 4px}
+            @media(max-width:780px){.mg-api-key-rotation{display:block}.mg-api-key-rotation .mg-field-wrap{margin-bottom:10px}}
+        `);
+    };
+    // ---------------------------------------------------------------------
+
+    // --- FINAL CHARACTER SAVE TARGET / FORCE-CLOSE PERSISTENCE HARDENING ---
+    const mgBaseCharacterEditorHtmlStableSaveTarget = characterEditorHtml;
+    characterEditorHtml = function(character, ...args) {
+        const html = mgBaseCharacterEditorHtmlStableSaveTarget.apply(this, [character, ...args]);
+        if (!character?.id || String(html).includes('data-mg-character-editor-id=')) return html;
+        return `<div class="mg-character-editor-save-target" data-mg-character-editor-id="${escapeHtml(character.id)}">${html}</div>`;
+    };
+
+    function mgOpenCharacterEditorTargetId() {
+        return document.querySelector('[data-mg-character-editor-id]')?.dataset?.mgCharacterEditorId || '';
+    }
+
+    function mgHasElement(id) {
+        return Boolean(document.getElementById(id));
+    }
+
+    function mgCharacterFormSnapshot() {
+        const id = mgOpenCharacterEditorTargetId() || selectedCharacterId;
+        if (!id || !mgHasElement('char-name')) return null;
+        const has = idValue => mgHasElement(idValue);
+        const read = idValue => valueOf(idValue);
+        const checked = idValue => Boolean(document.getElementById(idValue)?.checked);
+        const snapshot = { id, values: {}, checks: {}, calendarEvents: null };
+        [
+            'char-name', 'char-handle', 'char-avatarText', 'char-user-name', 'char-user-description',
+            'char-color', 'char-style', 'char-proactive-style', 'char-proactive-patience',
+            'char-delay-min', 'char-delay-max', 'char-gap-min', 'char-gap-max',
+            'char-response', 'char-thinking', 'char-reactivity', 'char-tone',
+            'char-frequency', 'char-initiative', 'char-location-name', 'char-latitude',
+            'char-longitude', 'char-timezone', 'char-prompt', 'char-illustration-tags',
+            'char-first', 'char-language', 'char-status-message', 'char-profile-message',
+            'char-dynamic-status-chance', 'char-dynamic-avatar-chance',
+            'char-dynamic-avatar-prompt', 'char-profile-avatar-prompt', 'char-profile-cover-prompt'
+        ].forEach(fieldId => {
+            if (has(fieldId)) snapshot.values[fieldId] = read(fieldId);
+        });
+        ['char-enabled', 'char-proactive', 'char-time-context', 'char-weather-enabled', 'char-dynamic-status', 'char-dynamic-avatar'].forEach(fieldId => {
+            if (has(fieldId)) snapshot.checks[fieldId] = checked(fieldId);
+        });
+        if (typeof collectCalendarEventsFromForm === 'function') {
+            const character = getCharacter(id);
+            if (character) snapshot.calendarEvents = collectCalendarEventsFromForm(character);
+        }
+        return snapshot;
+    }
+
+    function mgApplyCharacterFormSnapshot(snapshot) {
+        if (!snapshot?.id) return null;
+        const character = mgEnsureCharacterProfileFields(getCharacter(snapshot.id));
+        if (!character) return null;
+        const values = snapshot.values || {};
+        const checks = snapshot.checks || {};
+        const has = key => Object.prototype.hasOwnProperty.call(values, key);
+        const hasCheck = key => Object.prototype.hasOwnProperty.call(checks, key);
+        if (has('char-name')) character.name = values['char-name'] || character.name;
+        if (has('char-handle')) character.handle = values['char-handle'];
+        if (has('char-avatarText')) character.avatarText = values['char-avatarText'] || String(character.name || '').slice(0, 2);
+        if (has('char-user-name')) character.userName = values['char-user-name'];
+        if (has('char-user-description')) character.userDescription = values['char-user-description'];
+        if (has('char-color')) character.color = typeof mgColorHex === 'function' ? mgColorHex(values['char-color'] || '#8bd3dd', '#8bd3dd') : (values['char-color'] || '#8bd3dd');
+        if (has('char-style')) character.messageStyle = values['char-style'] || 'balanced';
+        if (has('char-proactive-style')) character.proactiveStyle = values['char-proactive-style'] || 'auto';
+        if (has('char-proactive-patience')) character.proactivePatience = clampNumber(values['char-proactive-patience'], 0, 8, 2);
+        if (has('char-delay-min')) character.responseDelayMin = Math.max(1, Math.min(120, Number(values['char-delay-min']) || 1));
+        if (has('char-delay-max')) character.responseDelayMax = Math.max(character.responseDelayMin || 1, Math.min(120, Number(values['char-delay-max']) || 120));
+        if (has('char-gap-min')) character.messageGapMin = Math.max(1, Math.min(10, Number(values['char-gap-min']) || 1));
+        if (has('char-gap-max')) character.messageGapMax = Math.max(character.messageGapMin || 1, Math.min(10, Number(values['char-gap-max']) || 10));
+        if (has('char-response')) character.responseTime = clampNumber(values['char-response'], 1, 10, 3);
+        if (has('char-thinking')) character.thinkingTime = clampNumber(values['char-thinking'], 1, 10, 5);
+        if (has('char-reactivity')) character.reactivity = clampNumber(values['char-reactivity'], 1, 10, 5);
+        if (has('char-tone')) character.tone = clampNumber(values['char-tone'], 1, 10, 5);
+        if (has('char-frequency')) character.frequencyMinutes = Math.max(1, Number(values['char-frequency']) || 10);
+        if (has('char-initiative')) character.initiative = clampNumber(values['char-initiative'], 0, 100, 40);
+        if (has('char-location-name')) character.locationName = values['char-location-name'] || character.locationName || 'Seoul';
+        if (has('char-latitude')) character.latitude = Number.isFinite(Number(values['char-latitude'])) ? Number(values['char-latitude']) : character.latitude || 37.5665;
+        if (has('char-longitude')) character.longitude = Number.isFinite(Number(values['char-longitude'])) ? Number(values['char-longitude']) : character.longitude || 126.9780;
+        if (has('char-timezone')) character.timeZone = values['char-timezone'] || character.timeZone || 'Asia/Seoul';
+        if (has('char-prompt')) character.prompt = values['char-prompt'];
+        if (has('char-illustration-tags')) character.illustrationTags = values['char-illustration-tags'];
+        if (has('char-first')) character.firstMessage = values['char-first'];
+        if (has('char-language')) character.language = values['char-language'] || '';
+        if (has('char-status-message')) character.statusMessage = values['char-status-message'] || '접속 중';
+        if (has('char-profile-message')) character.profileMessage = values['char-profile-message'];
+        if (has('char-dynamic-status-chance')) character.dynamicStatusChance = mgChance(values['char-dynamic-status-chance'], 8);
+        if (has('char-dynamic-avatar-chance')) character.dynamicAvatarChance = mgChance(values['char-dynamic-avatar-chance'], 2);
+        if (has('char-dynamic-avatar-prompt')) character.dynamicAvatarPrompt = values['char-dynamic-avatar-prompt'] || 'portrait shot, profile icon, casual expression, looking at viewer';
+        if (has('char-profile-avatar-prompt')) character.profileAvatarPrompt = values['char-profile-avatar-prompt'] || MG_PROFILE_AVATAR_DEFAULT_PROMPT;
+        if (has('char-profile-cover-prompt')) character.profileCoverPrompt = values['char-profile-cover-prompt'] || MG_PERSONLESS_COVER_PROMPT;
+        if (hasCheck('char-enabled')) character.enabled = checks['char-enabled'];
+        if (hasCheck('char-proactive')) character.proactiveEnabled = checks['char-proactive'];
+        if (hasCheck('char-time-context')) character.timeContextEnabled = checks['char-time-context'];
+        if (hasCheck('char-weather-enabled')) character.weatherEnabled = checks['char-weather-enabled'];
+        if (hasCheck('char-dynamic-status')) character.dynamicStatusEnabled = checks['char-dynamic-status'];
+        if (hasCheck('char-dynamic-avatar')) character.dynamicAvatarEnabled = checks['char-dynamic-avatar'];
+        if (Array.isArray(snapshot.calendarEvents)) character.calendarEvents = snapshot.calendarEvents;
+        selectedCharacterId = character.id;
+        scheduleCharacter(character, false);
+        return character;
+    }
+
+    const mgBaseSaveCharacterStableTarget = saveCharacterFromForm;
+    saveCharacterFromForm = async function(...args) {
+        const snapshot = mgCharacterFormSnapshot();
+        if (snapshot?.id) selectedCharacterId = snapshot.id;
+        const result = await mgBaseSaveCharacterStableTarget.apply(this, args);
+        const character = mgApplyCharacterFormSnapshot(snapshot);
+        if (character) {
+            await mgFinalPersist('캐릭터 설정 저장');
+            showTransientNotice(`${character.name || '캐릭터'} 설정이 저장됐습니다.`);
+            render();
+        }
+        return result;
+    };
+
+    const mgBaseHandleAvatarFileStableTarget = handleAvatarFileSelect;
+    handleAvatarFileSelect = async function(event, ...args) {
+        const targetId = mgOpenCharacterEditorTargetId();
+        if (targetId) selectedCharacterId = targetId;
+        const result = await mgBaseHandleAvatarFileStableTarget.call(this, event, ...args);
+        await mgFinalPersist('아바타 이미지 저장');
+        return result;
+    };
+
+    if (typeof mgHandleProfileMediaFileSelect === 'function') {
+        const mgBaseHandleProfileMediaFileStableTarget = mgHandleProfileMediaFileSelect;
+        mgHandleProfileMediaFileSelect = async function(event, kind, ...args) {
+            const targetId = mgOpenCharacterEditorTargetId();
+            if (targetId) selectedCharacterId = targetId;
+            const result = await mgBaseHandleProfileMediaFileStableTarget.call(this, event, kind, ...args);
+            await mgFinalPersist(kind === 'cover' ? '프로필 배경사진 저장' : '프로필 사진 저장');
+            return result;
+        };
+    }
     // ---------------------------------------------------------------------
 
     // --- FINAL BACKUP / IMPORT SUMMARY UX ---

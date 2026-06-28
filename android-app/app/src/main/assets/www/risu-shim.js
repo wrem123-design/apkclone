@@ -30,6 +30,11 @@
             const parsed = JSON.parse(raw);
             if (!parsed || typeof parsed !== 'object' || !parsed.config || !Array.isArray(parsed.characters)) return;
             const hash = hashText(raw);
+            if (localStorage.getItem(storagePrefix + 'msgod_state_v2')) {
+                if (!localStorage.getItem(bootstrapBackupMarkerKey)) localStorage.setItem(bootstrapBackupMarkerKey, hash);
+                window.__SNSGOD_BOOTSTRAP_IMPORT = { imported: false, hash, reason: 'existing-state' };
+                return;
+            }
             if (localStorage.getItem(bootstrapBackupMarkerKey) === hash) return;
             localStorage.setItem(storagePrefix + 'msgod_state_v2', raw);
             localStorage.setItem(bootstrapBackupMarkerKey, hash);
