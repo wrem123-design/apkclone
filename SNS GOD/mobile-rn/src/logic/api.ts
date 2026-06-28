@@ -1,0 +1,130 @@
+import { ApiProfile, SNSGodState } from '../types';
+
+type ChatMessage = { role: 'system' | 'user' | 'assistant'; content: string };
+
+export type LLMReply = {
+  reactionDelay: number;
+  messages: { delay?: number; content: string; sticker?: string; imagePrompt?: string; imageCaption?: string }[];
+  newMemory?: string;
+};
+
+function apiKeys(profile: ApiProfile): string[] {
+  const keys = [profile.apiKey, ...(profile.apiKeys || [])].map(value => String(value || '').trim()).filter(Boolean);
+  return Array.from(new Set(keys));
+}
+
+function parseJsonish(text: string): LLMReply {
+  const trimmed = text.trim();
+  const match = trimmed.match(/\{[\s\S]*\}/);
+  const raw = match ? match[0] : trimmed;
+  try {
+    const parsed = JSON.parse(raw) as Partial<LLMReply>;
+    const messages = Array.isArray(parsed.messages) ? parsed.messages : [];
+    return {
+      reactionDelay: Number(parsed.reactionDelay || 0),
+      messages: messages.map(item => ({ ...item, content: String(item.content || '').trim() })).filter(item => item.content || item.sticker || item.imagePrompt),
+      newMemory: typeof parsed.newMemory === 'string' ? parsed.newMemory : undefined
+    };
+  } catch {
+    return { reactionDelay: 0, messages: [{ content: trimmed || '응.' }] };
+  }
+}
+
+async function callGemini(profile: ApiProfile, key: string, messages: ChatMessage[]): Promise<string> {
+  const endpoint = String(profile.apiEndpoint || 'https://generativelanguage.googleapis.com/v1beta').replace(/\/$/, '');
+  const model = String(profile.apiModel || 'gemini-2.5-flash').replace(/^models\//, '');
+  const response = await fetch(`${endpoint}/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: messages.map(message => ({ role: message.role === 'assistant' ? 'model' : 'user', parts: [{ text: message.content }] })),
+      generationConfig: { maxOutputTokens: Number(profile.maxTokens || 700), temperature: Number(profile.temperature || 0.85) }
+    })
+  });
+  const text = await response.text();
+  if (!response.ok) throw new Error(`Gemini ${response.status}: ${text.slice(0, 240)}`);
+  const data = JSON.parse(text);
+  return data.candidates?.[0]?.content?.parts?.map((part: { text?: string }) => part.text || '').join('') || '';
+}
+
+async function callOpenAI(profile: ApiProfile, key: string, messages: ChatMessage[]): Promise<string> {
+  const endpoint = String(profile.apiEndpoint || 'https://api.openai.com/v1/responses');
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+    body: JSON.stringify({
+      model: profile.apiModel || 'gpt-4.1-mini',
+      input: messages,
+      max_output_tokens: Number(profile.maxTokens || 700),
+      temperature: Number(profile.temperature || 0.85)
+    })
+  });
+  const text = await response.text();
+  if (!response.ok) throw new Error(`OpenAI ${response.status}: ${text.slice(0, 240)}`);
+  const data = JSON.parse(text);
+  return data.output_text || data.output?.flatMap((item: { content?: { text?: string }[] }) => item.content || []).map((item: { text?: string }) => item.text || '').join('') || '';
+}
+
+async function callAnthropic(profile: ApiProfile, key: string, messages: ChatMessage[]): Promise<string> {
+  const system = messages.find(message => message.role === 'system')?.content || '';
+  const bodyMessages = messages.filter(message => message.role !== 'system').map(message => ({ role: message.role === 'assistant' ? 'assistant' : 'user', content: message.content }));
+  const response = await fetch(String(profile.apiEndpoint || 'https://api.anthropic.com/v1/messages'), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' },
+    body: JSON.stringify({
+      model: profile.apiModel || 'claude-haiku-4-5',
+      system,
+      messages: bodyMessages.length ? bodyMessages : [{ role: 'user', content: system }],
+      max_tokens: Number(profile.maxTokens || 700),
+      temperature: Number(profile.temperature || 0.85)
+    })
+  });
+  const text = await response.text();
+  if (!response.ok) throw new Error(`Anthropic ${response.status}: ${text.slice(0, 240)}`);
+  const data = JSON.parse(text);
+  return data.content?.map((part: { text?: string }) => part.text || '').join('') || '';
+}
+
+async function callWithProvider(state: SNSGodState, profile: ApiProfile, key: string, messages: ChatMessage[]): Promise<string> {
+  if (state.config.apiType === 'gemini' || state.config.apiType === 'vertex') return callGemini(profile, key, messages);
+  if (state.config.apiType === 'openai') return callOpenAI(profile, key, messages);
+  if (state.config.apiType === 'anthropic') return callAnthropic(profile, key, messages);
+  if (state.config.apiType === 'custom') return callOpenAI(profile, key, messages);
+  throw new Error('RisuAI provider는 단독 RN 앱에서 직접 호출할 수 없습니다. Gemini/OpenAI/Anthropic/Custom API를 설정하세요.');
+}
+
+export async function callLLM(state: SNSGodState, messages: ChatMessage[]): Promise<{ reply: LLMReply; keyIndex: number }> {
+  const profile = state.config.apiProfiles[state.config.apiType] || {};
+  const keys = apiKeys(profile);
+  if (!keys.length) throw new Error('API 키가 없습니다. 설정에서 API 키를 입력하세요.');
+  const start = Math.max(0, Math.min(keys.length - 1, Number(profile.apiKeyIndex || 0)));
+  const errors: string[] = [];
+  for (let offset = 0; offset < keys.length; offset += 1) {
+    const index = (start + offset) % keys.length;
+    try {
+      const text = await callWithProvider(state, profile, keys[index], messages);
+      return { reply: parseJsonish(text), keyIndex: index };
+    } catch (error) {
+      errors.push(`키 ${index + 1}: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+  throw new Error(`API 호출에 실패했습니다.\n${errors.join('\n')}`);
+}
+
+export async function callLLMText(state: SNSGodState, messages: ChatMessage[]): Promise<{ text: string; keyIndex: number }> {
+  const profile = state.config.apiProfiles[state.config.apiType] || {};
+  const keys = apiKeys(profile);
+  if (!keys.length) throw new Error('API 키가 없습니다. 설정에서 API 키를 입력하세요.');
+  const start = Math.max(0, Math.min(keys.length - 1, Number(profile.apiKeyIndex || 0)));
+  const errors: string[] = [];
+  for (let offset = 0; offset < keys.length; offset += 1) {
+    const index = (start + offset) % keys.length;
+    try {
+      const text = await callWithProvider(state, profile, keys[index], messages);
+      return { text, keyIndex: index };
+    } catch (error) {
+      errors.push(`키 ${index + 1}: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+  throw new Error(`API 호출에 실패했습니다.\n${errors.join('\n')}`);
+}
