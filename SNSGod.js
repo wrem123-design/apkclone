@@ -35087,6 +35087,74 @@
     };
     // ---------------------------------------------------------------------
 
+    // --- FINAL SNS THEME APPLY / ROOM SETTINGS DISCOVERY FIX ---
+    function mgSelectedSnsThemeFromDom() {
+        return String(document.getElementById('ui-sns-theme')?.value || '').trim();
+    }
+
+    async function mgApplySnsThemeImmediately(theme) {
+        const nextTheme = String(theme || mgSnsThemeValue?.() || MG_SNS_THEME_DEFAULT);
+        uiConfig().snsTheme = nextTheme;
+        await mgFinalPersist('SNS 테마 저장');
+        if (nextTheme === MG_SNS_THEME_KAKAO) {
+            mgPhoneApp = 'messenger';
+            activeTab = 'home';
+            mgMessengerLastTab = 'home';
+        }
+        render();
+    }
+
+    const mgBaseSaveAppearanceFinalThemeApply = saveAppearanceFromForm;
+    saveAppearanceFromForm = async function(...args) {
+        const selectedSnsTheme = mgSelectedSnsThemeFromDom();
+        const result = await mgBaseSaveAppearanceFinalThemeApply.apply(this, args);
+        if (selectedSnsTheme) await mgApplySnsThemeImmediately(selectedSnsTheme);
+        return result;
+    };
+
+    function mgRoomSettingsFloatingButtonHtml() {
+        if (activeTab !== 'chat' || !getCurrentRoom()) return '';
+        if (typeof mgUnifiedRoomSettingsOpen !== 'undefined' && mgUnifiedRoomSettingsOpen) return '';
+        return `<button class="mg-room-settings-fab" type="button" data-action="mg-toggle-room-settings" title="채팅방 설정">방 설정</button>`;
+    }
+
+    const mgBaseAppHtmlRoomSettingsDiscovery = appHtml;
+    appHtml = function(...args) {
+        let html = String(mgBaseAppHtmlRoomSettingsDiscovery.apply(this, args));
+        const fab = mgRoomSettingsFloatingButtonHtml();
+        if (fab && !html.includes('mg-room-settings-fab')) {
+            html = html.includes('</main>') ? html.replace('</main>', `${fab}</main>`) : `${html}${fab}`;
+        }
+        if (typeof mgUnifiedRoomSettingsHtml === 'function' && typeof mgUnifiedRoomSettingsOpen !== 'undefined' && mgUnifiedRoomSettingsOpen && !html.includes('mg-unified-room-settings')) {
+            html = html.includes('</main>') ? html.replace('</main>', `</main>${mgUnifiedRoomSettingsHtml()}`) : `${html}${mgUnifiedRoomSettingsHtml()}`;
+        }
+        return html;
+    };
+
+    const mgBaseBindEventsSnsThemeApply = bindEvents;
+    bindEvents = function(...args) {
+        mgBaseBindEventsSnsThemeApply.apply(this, args);
+        const snsTheme = document.getElementById('ui-sns-theme');
+        if (snsTheme && !snsTheme.dataset.mgSnsThemeApplyBound) {
+            snsTheme.dataset.mgSnsThemeApplyBound = '1';
+            snsTheme.addEventListener('change', () => {
+                uiConfig().snsTheme = snsTheme.value || MG_SNS_THEME_DEFAULT;
+                saveState().catch(console.warn);
+            });
+        }
+    };
+
+    const mgBaseInjectStylesThemeApplyRoomFab = injectStyles;
+    injectStyles = function(...args) {
+        mgBaseInjectStylesThemeApplyRoomFab.apply(this, args);
+        mgEnsureStyle('mg-theme-apply-room-fab-style', `
+            .mg-room-settings-fab{position:fixed;right:14px;bottom:calc(82px + env(safe-area-inset-bottom,0px));z-index:9998;height:38px;padding:0 14px;border-radius:999px;border:1px solid rgba(181,139,50,.45);background:var(--accent);color:#201609;font-weight:950;box-shadow:0 12px 30px rgba(0,0,0,.22)}
+            .mg-room-settings-fab:active{transform:translateY(1px)}
+            @media(min-width:900px){.mg-room-settings-fab{right:22px;bottom:22px}}
+        `);
+    };
+    // ---------------------------------------------------------------------
+
     // --- FINAL BACKUP / IMPORT SUMMARY UX ---
     function mgStateSummaryForUser(data = state) {
         const characters = Array.isArray(data.characters) ? data.characters.length : 0;
